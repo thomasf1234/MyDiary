@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyDiary</string>
+    <string name="debug_dialog_title">Debug</string>
 </resources>

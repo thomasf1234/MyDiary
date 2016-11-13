@@ -4,8 +4,12 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +21,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
     public Animation scaleAnimation;
@@ -25,6 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            Utilities.clearCache(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         this.scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
         Button cameraButton = (Button) findViewById(R.id.cameraButton);
@@ -41,7 +56,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.cameraButton:
                 view.startAnimation(scaleAnimation);
-                dispatchTakePictureIntent();
+                try {
+                    dispatchTakePictureIntent();
+                } catch (Exception e) {
+
+                    Toast.makeText(this, "An error occurred while taking the photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -63,21 +83,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
+    //http://stackoverflow.com/questions/7720383/camera-intent-not-saving-photo
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    // your authority, must be the same as in your manifest file
+    private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.abstractx1.fileprovider";
+private String capturedImagePath;
 
-    private void dispatchTakePictureIntent() {
+    private void dispatchTakePictureIntent() throws IOException {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+
+            File photoFile = Utilities.createFile("image", ".jpg", getCacheDir());
+            //capturedImagePath = photoFile.getAbsolutePath();
+            Uri photoURI = FileProvider.getUriForFile(this, CAPTURE_IMAGE_FILE_PROVIDER, photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    private void showDebugDialog() {
+        AlertDialog.Builder builder = new DebugDialogBuilder(this);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ((ImageView) findViewById(R.id.screenShotImageView)).setImageBitmap(imageBitmap);
+            File file = new File(getCacheDir()+"/image.jpg");
+            ((ImageView) findViewById(R.id.screenShotImageView)).setImageURI(Uri.fromFile(file));
         }
     }
 
@@ -100,9 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void showDebugDialog() {
-        AlertDialog.Builder builder = new DebugDialogBuilder(this);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            Utilities.clearCache(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

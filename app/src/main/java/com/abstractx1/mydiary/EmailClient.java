@@ -2,14 +2,7 @@ package com.abstractx1.mydiary;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.os.Parcelable;
 import android.widget.Toast;
-
-import java.io.File;
-import java.util.List;
-import java.util.Stack;
 
 /**
  * Created by tfisher on 12/11/2016.

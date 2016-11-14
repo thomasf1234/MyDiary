@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.PorterDuff;
+import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Environment;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +26,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
     public Animation scaleAnimation;
@@ -34,12 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        try {
-            Utilities.clearCache(getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         this.scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
         Button cameraButton = (Button) findViewById(R.id.cameraButton);
@@ -111,8 +105,33 @@ private String capturedImagePath;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            File file = new File(getCacheDir()+"/image.jpg");
-            ((ImageView) findViewById(R.id.screenShotImageView)).setImageURI(Uri.fromFile(file));
+            String filePath = getCacheDir()+"/image.jpg";
+            try {
+                Bitmap bmp = BitmapFactory.decodeFile(filePath);
+                ExifInterface exif = new ExifInterface(filePath);
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                Matrix matrix = new Matrix();
+                switch (orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        matrix.postRotate(90);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        matrix.postRotate(180);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        matrix.postRotate(270);
+                        break;
+                    default:
+                        break;
+                }
+                bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true); // rotating bitmap
+                //((ImageView) findViewById(R.id.screenShotImageView)).setImageURI(Uri.fromFile(file));
+                ImageView thumbnail = (ImageView) findViewById(R.id.screenShotImageView);
+                thumbnail.setImageBitmap(bmp);
+                thumbnail.invalidate();
+            } catch (IOException e) {
+                Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -132,16 +151,6 @@ private String capturedImagePath;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            Utilities.clearCache(getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

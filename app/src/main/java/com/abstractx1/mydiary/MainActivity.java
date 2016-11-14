@@ -24,22 +24,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
     public Animation scaleAnimation;
+    public Button cameraButton;
+    private CameraHandler cameraHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cameraHandler = new CameraHandler(this, getCacheDir() + "/image3.jpg");
+        initializeWidgets();
+    }
 
+    public void initializeWidgets() {
         this.scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
-        Button cameraButton = (Button) findViewById(R.id.cameraButton);
+        this.cameraButton = (Button) findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(this);
         cameraButton.setOnTouchListener(this);
 
+        //disable the camera button if we do not have camera
         if(!this.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             ButtonHelper.disable(cameraButton);
         }
@@ -51,9 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cameraButton:
                 view.startAnimation(scaleAnimation);
                 try {
-                    dispatchTakePictureIntent();
+                    cameraHandler.dispatchTakePictureIntent();
                 } catch (Exception e) {
-
                     Toast.makeText(this, "An error occurred while taking the photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -77,25 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    //http://stackoverflow.com/questions/7720383/camera-intent-not-saving-photo
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    // your authority, must be the same as in your manifest file
-    private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.abstractx1.fileprovider";
-private String capturedImagePath;
-
-    private void dispatchTakePictureIntent() throws IOException {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-
-            File photoFile = Utilities.createFile("image", ".jpg", getCacheDir());
-            //capturedImagePath = photoFile.getAbsolutePath();
-            Uri photoURI = FileProvider.getUriForFile(this, CAPTURE_IMAGE_FILE_PROVIDER, photoFile);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
     private void showDebugDialog() {
         AlertDialog.Builder builder = new DebugDialogBuilder(this);
         AlertDialog dialog = builder.create();
@@ -104,30 +90,10 @@ private String capturedImagePath;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            String filePath = getCacheDir()+"/image.jpg";
+        if (requestCode == CameraHandler.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-                Bitmap bmp = BitmapFactory.decodeFile(filePath);
-                ExifInterface exif = new ExifInterface(filePath);
-                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                Matrix matrix = new Matrix();
-                switch (orientation) {
-                    case ExifInterface.ORIENTATION_ROTATE_90:
-                        matrix.postRotate(90);
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_180:
-                        matrix.postRotate(180);
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_270:
-                        matrix.postRotate(270);
-                        break;
-                    default:
-                        break;
-                }
-                bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true); // rotating bitmap
-                //((ImageView) findViewById(R.id.screenShotImageView)).setImageURI(Uri.fromFile(file));
                 ImageView thumbnail = (ImageView) findViewById(R.id.screenShotImageView);
-                thumbnail.setImageBitmap(bmp);
+                thumbnail.setImageBitmap(cameraHandler.getBitmap());
                 thumbnail.invalidate();
             } catch (IOException e) {
                 Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();

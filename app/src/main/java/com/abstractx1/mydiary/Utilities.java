@@ -66,6 +66,13 @@ public class Utilities {
         return file;
     }
 
+    public static File createFile(String path) throws IOException {
+        File file = new File(path);
+        file.createNewFile();
+
+        return file;
+    }
+
     private static String getDateTime() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));

@@ -1,10 +1,8 @@
 package com.abstractx1.mydiary;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -70,8 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.screenShotImageView:
                 try {
-                    ScreenShotDialog dialog = new ScreenShotDialog(this, cameraHandler.getBitmap());
-                    dialog.show();
+                    if(cameraHandler.hasImage()) {
+                        ScreenShotDialog dialog = new ScreenShotDialog(this, cameraHandler.getBitmap());
+                        dialog.show();
+                    } else {
+                        Toast.makeText(this, "An image has not been taken.", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 } catch (IOException e) {
                     Toast.makeText(this, "An error occurred while clicking the photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         if(getResources().getBoolean(R.bool.debug_mode))
-            inflater.inflate(R.menu.main_menu, menu);
+            inflater.inflate(R.menu.debug_menu, menu);
         return true;
     }
 
@@ -127,6 +129,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.debug:
                 showDebugDialog();
+                return true;
+            case R.id.clearCache:
+                Utilities.clearCache(getApplicationContext());
+                Toast.makeText(this, "Cleared cache", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

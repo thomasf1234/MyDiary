@@ -21,12 +21,18 @@ import java.util.TimeZone;
 public class Utilities {
     public static void clearCache(Context context) {
         try {
-            File dir = context.getCacheDir();
-            if (dir != null && dir.isDirectory()) {
-                deleteDir(dir);
-            }
+            purgeDirectory(context.getCacheDir());
         } catch (Exception e) {
             Toast.makeText(context, "ERROR Could not clear cache", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void purgeDirectory(File dir) {
+        for (File file: dir.listFiles()) {
+            if (file.isDirectory()) {
+                purgeDirectory(file);
+            }
+            file.delete();
         }
     }
 

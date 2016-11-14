@@ -17,6 +17,10 @@ import java.io.IOException;
  * Created by tfisher on 14/11/2016.
  */
 
+/*
+
+ */
+
 public class CameraHandler {
     //http://stackoverflow.com/questions/7720383/camera-intent-not-saving-photo
     public static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -67,5 +71,15 @@ public class CameraHandler {
         }
 
         return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true); // rotating bitmap
+    }
+
+    public boolean hasImage() {
+        File file = new File(filePath);
+        if(file.exists()) {
+            int fileSize = Integer.parseInt(String.valueOf(file.length()));
+            return fileSize > 0;
+        } else {
+            return false;
+        }
     }
 }

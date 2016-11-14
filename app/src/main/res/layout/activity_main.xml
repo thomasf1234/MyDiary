@@ -11,18 +11,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.abstractx1.mydiary.MainActivity">
 
-    <Button
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/camera_button"
-        android:id="@+id/cameraButton" />
-
     <ImageView
         app:srcCompat="@android:drawable/screen_background_dark"
         android:id="@+id/screenShotImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/cameraButton" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:keepScreenOn="false"
+        android:isScrollContainer="false"
+        android:antialias="true" />
+
+    <Button
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="@drawable/camera_button"
+        android:id="@+id/cameraButton"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp" />
+
 </RelativeLayout>

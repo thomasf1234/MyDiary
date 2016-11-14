@@ -65,6 +65,7 @@ public class CameraHandler {
             default:
                 break;
         }
+
         return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true); // rotating bitmap
     }
 }

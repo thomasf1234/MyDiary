@@ -1,9 +1,11 @@
 package com.abstractx1.mydiary;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
 
 import java.io.IOException;
 
@@ -50,8 +52,9 @@ public class DataCollector {
 
     }
 
-    public void setImage(Bitmap bmp) throws IOException {
-        this.image = bmp;
+    public void setImage(Activity activity, Uri imageUri) throws IOException {
+        String imagePath = Utilities.getImagePath(activity, imageUri);
+        setImage(imagePath);
     }
 
     public Bitmap getImage() {

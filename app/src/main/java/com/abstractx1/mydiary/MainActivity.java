@@ -172,8 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if(requestCode == REQUEST_GET_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                DataCollector.getInstance().setImage(bitmap);
+                DataCollector.getInstance().setImage(this, selectedImage);
                 screenShotImageView.setImageBitmap(DataCollector.getInstance().getImage());
                 screenShotImageView.invalidate();
             } catch (IOException e) {

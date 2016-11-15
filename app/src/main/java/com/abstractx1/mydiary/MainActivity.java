@@ -3,9 +3,12 @@ package com.abstractx1.mydiary;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -23,11 +26,13 @@ import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
     public Animation scaleAnimation;
     public Button cameraButton;
+    public Button uploadButton;
     private CameraHandler cameraHandler;
     private ImageView screenShotImageView;
+    private static int REQUEST_GET_FROM_GALLERY = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +45,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void initializeWidgets() {
         this.scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
         this.cameraButton = (Button) findViewById(R.id.cameraButton);
+        this.uploadButton = (Button) findViewById(R.id.uploadButton);
         this.screenShotImageView = (ImageView) findViewById(R.id.screenShotImageView);
         cameraButton.setOnClickListener(this);
         cameraButton.setOnTouchListener(this);
-        cameraButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MainActivity.this, "Take Picture", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
+        cameraButton.setOnLongClickListener(this);
+        uploadButton.setOnClickListener(this);
+        uploadButton.setOnTouchListener(this);
+        uploadButton.setOnLongClickListener(this);
 
         screenShotImageView.setOnClickListener(this);
 
@@ -75,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "An error occurred while taking the photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.uploadButton:
+                try {
+                    startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), REQUEST_GET_FROM_GALLERY);
+                } catch (Exception e) {
+                    Toast.makeText(this, "An error occurred while uploading the photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                break;
             case R.id.screenShotImageView:
                 try {
                     if(cameraHandler.hasImage()) {
@@ -92,23 +101,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                view.setBackgroundResource(R.drawable.camera_button_hover);
-                view.startAnimation(scaleAnimation);
-                view.invalidate();
+        switch (view.getId()) {
+            case R.id.cameraButton:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        view.setBackgroundResource(R.drawable.camera_button_hover);
+                        view.startAnimation(scaleAnimation);
+                        view.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        view.setBackgroundResource(R.drawable.camera_button);
+                        view.clearAnimation();
+                        scaleAnimation.cancel();
+                        scaleAnimation.reset();
+                        view.invalidate();
+                        break;
+                    }
+                }
                 break;
-            }
-            case MotionEvent.ACTION_UP: {
-                view.setBackgroundResource(R.drawable.camera_button);
-                view.clearAnimation();
-                scaleAnimation.cancel();
-                scaleAnimation.reset();
-                view.invalidate();
-                break;
-            }
+            case R.id.uploadButton:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        view.setBackgroundResource(R.drawable.upload_button_hover);
+                        view.startAnimation(scaleAnimation);
+                        view.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        view.setBackgroundResource(R.drawable.upload_button);
+                        view.clearAnimation();
+                        scaleAnimation.cancel();
+                        scaleAnimation.reset();
+                        view.invalidate();
+                        break;
+                    }
+                }
         }
         return false;
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        switch (view.getId()) {
+            case R.id.cameraButton:
+                Toast.makeText(MainActivity.this, "Take Picture", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.uploadButton:
+                Toast.makeText(MainActivity.this, "Upload Picture", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.screenShotImageView:
+                Toast.makeText(MainActivity.this, "View Picture", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return true;
+        }
     }
 
     private void showDebugDialog() {
@@ -122,6 +169,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CameraHandler.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 screenShotImageView.setImageBitmap(cameraHandler.getBitmap());
+                screenShotImageView.invalidate();
+            } catch (IOException e) {
+                Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        } else if(requestCode == REQUEST_GET_FROM_GALLERY && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                screenShotImageView.setImageBitmap(bitmap);
                 screenShotImageView.invalidate();
             } catch (IOException e) {
                 Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -152,11 +208,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private int getDisplayWidth() {
+    public int getDisplayWidth() {
         return getDisplayMetrics().widthPixels;
     }
 
-    private int getDisplayHeight() {
+    public int getDisplayHeight() {
         return getDisplayMetrics().heightPixels;
     }
 

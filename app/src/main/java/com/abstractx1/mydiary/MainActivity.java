@@ -43,6 +43,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.screenShotImageView = (ImageView) findViewById(R.id.screenShotImageView);
         cameraButton.setOnClickListener(this);
         cameraButton.setOnTouchListener(this);
+        cameraButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(MainActivity.this, "Take Picture", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
 
         screenShotImageView.setOnClickListener(this);
 

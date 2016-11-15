@@ -27,17 +27,17 @@ public class CameraHandler {
     // your authority, must be the same as in your manifest file
     private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.abstractx1.fileprovider";
     private final Activity activity;
-    public String filePath;
+    public String imagePath;
 
-    public CameraHandler(Activity activity, String filePath) {
+    public CameraHandler(Activity activity, String imagePath) {
         this.activity = activity;
-        this.filePath = filePath;
+        this.imagePath = imagePath;
     }
 
     public void dispatchTakePictureIntent() throws IOException {
         if (hasCameraApp()) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File photoFile = Utilities.createFile(this.filePath);
+            File photoFile = Utilities.createFile(this.imagePath);
             Uri photoURI = FileProvider.getUriForFile(activity, CAPTURE_IMAGE_FILE_PROVIDER, photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -51,35 +51,7 @@ public class CameraHandler {
         return takePictureIntent.resolveActivity(activity.getPackageManager()) != null;
     }
 
-    public Bitmap getBitmap() throws IOException {
-        Bitmap bmp = BitmapFactory.decodeFile(filePath);
-        ExifInterface exif = new ExifInterface(filePath);
-        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        Matrix matrix = new Matrix();
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.postRotate(90);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.postRotate(180);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.postRotate(270);
-                break;
-            default:
-                break;
-        }
-
-        return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true); // rotating bitmap
-    }
-
-    public boolean hasImage() {
-        File file = new File(filePath);
-        if(file.exists()) {
-            int fileSize = Integer.parseInt(String.valueOf(file.length()));
-            return fileSize > 0;
-        } else {
-            return false;
-        }
+    public String getImagePath() {
+        return imagePath;
     }
 }

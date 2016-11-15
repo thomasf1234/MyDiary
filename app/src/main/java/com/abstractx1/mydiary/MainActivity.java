@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -85,17 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.screenShotImageView:
-                try {
-                    if(cameraHandler.hasImage()) {
-                        ScreenShotDialog dialog = new ScreenShotDialog(this, cameraHandler.getBitmap());
-                        dialog.show();
-                    } else {
-                        Toast.makeText(this, "An image has not been taken.", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                } catch (IOException e) {
-                    Toast.makeText(this, "An error occurred while clicking the photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                if(DataCollector.getInstance().hasImage()) {
+                    ScreenShotDialog dialog = new ScreenShotDialog(this, DataCollector.getInstance().getImage());
+                    dialog.show();
+                } else {
+                    Toast.makeText(this, "An image has not been taken.", Toast.LENGTH_SHORT).show();
                 }
+                break;
         }
     }
 
@@ -168,7 +163,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CameraHandler.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-                screenShotImageView.setImageBitmap(cameraHandler.getBitmap());
+                DataCollector.getInstance().setImage(cameraHandler.getImagePath());
+                screenShotImageView.setImageBitmap(DataCollector.getInstance().getImage());
                 screenShotImageView.invalidate();
             } catch (IOException e) {
                 Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -177,7 +173,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Uri selectedImage = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                screenShotImageView.setImageBitmap(bitmap);
+                DataCollector.getInstance().setImage(bitmap);
+                screenShotImageView.setImageBitmap(DataCollector.getInstance().getImage());
                 screenShotImageView.invalidate();
             } catch (IOException e) {
                 Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();

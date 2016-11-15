@@ -3,12 +3,9 @@ package com.abstractx1.mydiary;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,10 +19,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
+import com.abstractx1.mydiary.jobs.GetAndSetExternalBitmapJob;
+import com.example.demo.job.PermissionActivity;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
+public class MainActivity extends PermissionActivity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
     public Animation scaleAnimation;
     public Button cameraButton;
     public Button uploadButton;
@@ -172,10 +171,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if(requestCode == REQUEST_GET_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
             try {
-                DataCollector.getInstance().setImage(this, selectedImage);
-                screenShotImageView.setImageBitmap(DataCollector.getInstance().getImage());
-                screenShotImageView.invalidate();
-            } catch (IOException e) {
+                triggerJob(new GetAndSetExternalBitmapJob(this, selectedImage, screenShotImageView));
+            } catch (Exception e) {
                 Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }

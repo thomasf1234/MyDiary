@@ -16,8 +16,11 @@ public class TitleActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
 
-        findViewById(R.id.contactResearcherButton).setOnClickListener(this);
-        findViewById(R.id.yesTitleScreenButton).setOnClickListener(this);
+        contactResearcherButton = (Button) findViewById(R.id.contactResearcherButton);
+        yesButton = (Button) findViewById(R.id.yesTitleScreenButton);
+
+        contactResearcherButton.setOnClickListener(this);
+        yesButton.setOnClickListener(this);
     }
 
     @Override
@@ -25,7 +28,7 @@ public class TitleActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.contactResearcherButton:
                 EmailClient emailClient = new EmailClient(TitleActivity.this);
-                emailClient.open("test@testtest.com");
+                emailClient.open(getResources().getString(R.string.to_email_address));
                 break;
             case R.id.yesTitleScreenButton:
                 Intent intent = new Intent(this, MainActivity.class);

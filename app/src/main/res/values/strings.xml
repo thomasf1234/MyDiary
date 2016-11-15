@@ -2,4 +2,5 @@
     <string name="app_name">MyDiary</string>
     <string name="debug_dialog_title">Debug</string>
     <string name="screen_shot_dialog_title">Screen Shot Details</string>
+    <string name="to_email_address">test@test.com</string>
 </resources>

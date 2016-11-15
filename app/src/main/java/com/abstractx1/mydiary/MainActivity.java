@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
@@ -58,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cameraButton:
-                view.startAnimation(scaleAnimation);
                 try {
                     cameraHandler.dispatchTakePictureIntent();
                     break;
@@ -85,12 +86,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onTouch(View view, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                view.getBackground().setColorFilter(0x77000000, PorterDuff.Mode.SRC_ATOP);
+                view.setBackgroundResource(R.drawable.camera_button_hover);
+                view.startAnimation(scaleAnimation);
                 view.invalidate();
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                view.getBackground().clearColorFilter();
+                view.setBackgroundResource(R.drawable.camera_button);
+                view.clearAnimation();
+                scaleAnimation.cancel();
+                scaleAnimation.reset();
                 view.invalidate();
                 break;
             }

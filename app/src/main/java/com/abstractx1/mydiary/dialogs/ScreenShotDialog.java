@@ -1,19 +1,17 @@
-package com.abstractx1.mydiary;
+package com.abstractx1.mydiary.dialogs;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import java.io.File;
+import com.abstractx1.mydiary.R;
 
 /**
  * Created by tfisher on 27/10/2016.
  */
 
+//http://www.mkyong.com/android/android-custom-dialog-example/
 public class ScreenShotDialog extends Dialog {
     private Bitmap image;
 

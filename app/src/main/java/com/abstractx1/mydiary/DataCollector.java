@@ -57,4 +57,8 @@ public class DataCollector {
     public boolean hasImage() {
         return image != null;
     }
+
+    public void clearImage() {
+        this.image = null;
+    }
 }

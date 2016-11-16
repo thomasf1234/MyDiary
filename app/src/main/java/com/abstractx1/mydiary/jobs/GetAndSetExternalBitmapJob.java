@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import com.abstractx1.mydiary.ButtonHelper;
 import com.abstractx1.mydiary.DataCollector;
 import com.example.demo.job.PermissionJob;
 
@@ -22,13 +24,16 @@ public class GetAndSetExternalBitmapJob extends PermissionJob {
     public static final String[] PERMISSIONS = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     public static final int PERMISSION_REQUEST_ID = 0;
 
-    private ImageView imageView;
     private Uri imageUri;
+    private ImageView imageView;
+    private Button clearPictureButton;
 
-    public GetAndSetExternalBitmapJob(AppCompatActivity appCompatActivity, Uri imageUri, ImageView imageView) {
+
+    public GetAndSetExternalBitmapJob(AppCompatActivity appCompatActivity, Uri imageUri, ImageView imageView, Button clearPicturButton) {
         super(appCompatActivity);
         this.imageView = imageView;
         this.imageUri = imageUri;
+        this.clearPictureButton = clearPicturButton;
     }
 
     @Override
@@ -36,6 +41,7 @@ public class GetAndSetExternalBitmapJob extends PermissionJob {
         DataCollector.getInstance().setImage(getImagePath(imageUri));
         imageView.setImageBitmap(DataCollector.getInstance().getImage());
         imageView.invalidate();
+        ButtonHelper.enable(clearPictureButton);
     }
 
     @Override

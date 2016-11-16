@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,8 +27,7 @@ import java.io.IOException;
 
 public class PhotoActivity extends PermissionActivity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
     public Animation scaleAnimation;
-    public Button cameraButton;
-    public Button uploadButton;
+    public Button cameraButton, uploadButton, clearPictureButton, nextButton;
     private CameraHandler cameraHandler;
     private ImageView screenShotImageView;
     private static int REQUEST_GET_FROM_GALLERY = 2;
@@ -44,6 +44,8 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
         this.scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
         this.cameraButton = (Button) findViewById(R.id.cameraButton);
         this.uploadButton = (Button) findViewById(R.id.uploadButton);
+        this.clearPictureButton = (Button) findViewById(R.id.clearPictureButton);
+        this.nextButton = (Button) findViewById(R.id.nextButtonToRecordActivity);
         this.screenShotImageView = (ImageView) findViewById(R.id.screenShotImageView);
         cameraButton.setOnClickListener(this);
         cameraButton.setOnTouchListener(this);
@@ -51,11 +53,17 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
         uploadButton.setOnClickListener(this);
         uploadButton.setOnTouchListener(this);
         uploadButton.setOnLongClickListener(this);
+        clearPictureButton.setOnClickListener(this);
+        clearPictureButton.setOnTouchListener(this);
+        clearPictureButton.setOnLongClickListener(this);
+        nextButton.setOnClickListener(this);
+        ButtonHelper.disable(clearPictureButton);
 
         screenShotImageView.setOnClickListener(this);
 
-        screenShotImageView.getLayoutParams().height = getDisplayWidth() / 2;
-        screenShotImageView.getLayoutParams().width = getDisplayWidth() / 2;
+        //TODO: get smallest of height or width and use
+        screenShotImageView.getLayoutParams().height = (int) (getDisplayWidth() / 1.5);
+        screenShotImageView.getLayoutParams().width = (int) (getDisplayWidth() / 1.5);
         screenShotImageView.setBackgroundColor(Color.BLACK);
 
         //disable the camera button if we do not have camera
@@ -82,6 +90,16 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
                     Toast.makeText(this, "An error occurred while uploading the photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.clearPictureButton:
+                try {
+                    DataCollector.getInstance().clearImage();
+                    screenShotImageView.setImageBitmap(null);
+                    screenShotImageView.invalidate();
+                    ButtonHelper.disable(clearPictureButton);
+                } catch (Exception e) {
+                    Toast.makeText(this, "An error occurred while clearing the selected photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                break;
             case R.id.screenShotImageView:
                 if(DataCollector.getInstance().hasImage()) {
                     ScreenShotDialog dialog = new ScreenShotDialog(this, DataCollector.getInstance().getImage());
@@ -89,6 +107,10 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
                 } else {
                     Toast.makeText(this, "An image has not been taken.", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.nextButtonToRecordActivity:
+                Intent intent = new Intent(this, RecordActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -131,6 +153,25 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
                         break;
                     }
                 }
+                break;
+            case R.id.clearPictureButton:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        view.setBackgroundResource(R.drawable.delete_button_hover);
+                        view.startAnimation(scaleAnimation);
+                        view.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        view.setBackgroundResource(R.drawable.delete_button);
+                        view.clearAnimation();
+                        scaleAnimation.cancel();
+                        scaleAnimation.reset();
+                        view.invalidate();
+                        break;
+                    }
+                }
+                break;
         }
         return false;
     }
@@ -139,13 +180,16 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
     public boolean onLongClick(View view) {
         switch (view.getId()) {
             case R.id.cameraButton:
-                Toast.makeText(PhotoActivity.this, "Take Picture", Toast.LENGTH_SHORT).show();
+                showToolTip("Take Picture");
                 return true;
             case R.id.uploadButton:
-                Toast.makeText(PhotoActivity.this, "Upload Picture", Toast.LENGTH_SHORT).show();
+                showToolTip("Upload Picture");
+                return true;
+            case R.id.clearPictureButton:
+                showToolTip("Clear Picture");
                 return true;
             case R.id.screenShotImageView:
-                Toast.makeText(PhotoActivity.this, "View Picture", Toast.LENGTH_SHORT).show();
+                showToolTip("View Picture");
                 return true;
             default:
                 return true;
@@ -158,6 +202,12 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
         dialog.show();
     }
 
+    private void showToolTip(String message) {
+        Toast toast = Toast.makeText(PhotoActivity.this, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CameraHandler.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -165,13 +215,14 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
                 DataCollector.getInstance().setImage(cameraHandler.getImagePath());
                 screenShotImageView.setImageBitmap(DataCollector.getInstance().getImage());
                 screenShotImageView.invalidate();
+                ButtonHelper.enable(clearPictureButton);
             } catch (IOException e) {
                 Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         } else if(requestCode == REQUEST_GET_FROM_GALLERY && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
             try {
-                triggerJob(new GetAndSetExternalBitmapJob(this, selectedImage, screenShotImageView));
+                triggerJob(new GetAndSetExternalBitmapJob(this, selectedImage, screenShotImageView, clearPictureButton));
             } catch (Exception e) {
                 Toast.makeText(this, "An error occurred reading the photo file:" + e.getMessage(), Toast.LENGTH_LONG).show();
             }

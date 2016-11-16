@@ -24,7 +24,7 @@ import com.example.demo.job.PermissionActivity;
 
 import java.io.IOException;
 
-public class MainActivity extends PermissionActivity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
+public class PhotoActivity extends PermissionActivity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
     public Animation scaleAnimation;
     public Button cameraButton;
     public Button uploadButton;
@@ -35,7 +35,7 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_photo);
         cameraHandler = new CameraHandler(this, getCacheDir() + "/image3.jpg");
         initializeWidgets();
     }
@@ -139,13 +139,13 @@ public class MainActivity extends PermissionActivity implements View.OnClickList
     public boolean onLongClick(View view) {
         switch (view.getId()) {
             case R.id.cameraButton:
-                Toast.makeText(MainActivity.this, "Take Picture", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PhotoActivity.this, "Take Picture", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.uploadButton:
-                Toast.makeText(MainActivity.this, "Upload Picture", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PhotoActivity.this, "Upload Picture", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.screenShotImageView:
-                Toast.makeText(MainActivity.this, "View Picture", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PhotoActivity.this, "View Picture", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return true;

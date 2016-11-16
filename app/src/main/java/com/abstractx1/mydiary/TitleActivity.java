@@ -31,7 +31,7 @@ public class TitleActivity extends AppCompatActivity implements View.OnClickList
                 emailClient.open(getResources().getString(R.string.to_email_address));
                 break;
             case R.id.yesTitleScreenButton:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, PhotoActivity.class);
                 startActivity(intent);
                 break;
         }

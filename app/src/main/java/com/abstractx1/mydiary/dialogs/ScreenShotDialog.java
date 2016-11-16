@@ -1,12 +1,11 @@
 package com.abstractx1.mydiary.dialogs;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.widget.ImageView;
 
-import com.abstractx1.mydiary.MainActivity;
+import com.abstractx1.mydiary.PhotoActivity;
 import com.abstractx1.mydiary.R;
 
 /**
@@ -16,9 +15,9 @@ import com.abstractx1.mydiary.R;
 //http://www.mkyong.com/android/android-custom-dialog-example/
 public class ScreenShotDialog extends Dialog {
     private Bitmap image;
-    private MainActivity activity;
+    private PhotoActivity activity;
 
-    public ScreenShotDialog(MainActivity activity, Bitmap image) {
+    public ScreenShotDialog(PhotoActivity activity, Bitmap image) {
         super(activity);
         this.activity = activity;
         this.image = image;

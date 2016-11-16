@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import java.io.File;
@@ -94,5 +95,11 @@ public class Utilities {
         File from = new File(src);
         File to = new File(dst);
         from.renameTo(to);
+    }
+
+    public static void showToolTip(Activity activity, String message) {
+        Toast toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 }

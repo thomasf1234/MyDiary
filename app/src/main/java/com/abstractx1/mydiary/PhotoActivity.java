@@ -25,7 +25,7 @@ import com.example.demo.job.PermissionActivity;
 
 import java.io.IOException;
 
-public class PhotoActivity extends PermissionActivity implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
+public class PhotoActivity extends PermissionActivity implements View.OnClickListener {
     public Animation scaleAnimation;
     public Button cameraButton, uploadButton, clearPictureButton, nextButton;
     private CameraHandler cameraHandler;
@@ -47,16 +47,16 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
         this.clearPictureButton = (Button) findViewById(R.id.clearPictureButton);
         this.nextButton = (Button) findViewById(R.id.nextButtonToRecordActivity);
         this.screenShotImageView = (ImageView) findViewById(R.id.screenShotImageView);
+
+        ButtonHelper.customize(this, cameraButton, R.drawable.camera_button, R.drawable.camera_button_hover, scaleAnimation, "Take Picture");
+        ButtonHelper.customize(this, uploadButton, R.drawable.upload_button, R.drawable.upload_button_hover, scaleAnimation, "Upload Picture");
+        ButtonHelper.customize(this, clearPictureButton, R.drawable.delete_button, R.drawable.delete_button_hover, scaleAnimation, "Clear Selected Picture");
+
         cameraButton.setOnClickListener(this);
-        cameraButton.setOnTouchListener(this);
-        cameraButton.setOnLongClickListener(this);
         uploadButton.setOnClickListener(this);
-        uploadButton.setOnTouchListener(this);
-        uploadButton.setOnLongClickListener(this);
         clearPictureButton.setOnClickListener(this);
-        clearPictureButton.setOnTouchListener(this);
-        clearPictureButton.setOnLongClickListener(this);
         nextButton.setOnClickListener(this);
+        
         ButtonHelper.disable(clearPictureButton);
 
         screenShotImageView.setOnClickListener(this);
@@ -115,97 +115,10 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
         }
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        switch (view.getId()) {
-            case R.id.cameraButton:
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        view.setBackgroundResource(R.drawable.camera_button_hover);
-                        view.startAnimation(scaleAnimation);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        view.setBackgroundResource(R.drawable.camera_button);
-                        view.clearAnimation();
-                        scaleAnimation.cancel();
-                        scaleAnimation.reset();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                break;
-            case R.id.uploadButton:
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        view.setBackgroundResource(R.drawable.upload_button_hover);
-                        view.startAnimation(scaleAnimation);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        view.setBackgroundResource(R.drawable.upload_button);
-                        view.clearAnimation();
-                        scaleAnimation.cancel();
-                        scaleAnimation.reset();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                break;
-            case R.id.clearPictureButton:
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        view.setBackgroundResource(R.drawable.delete_button_hover);
-                        view.startAnimation(scaleAnimation);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        view.setBackgroundResource(R.drawable.delete_button);
-                        view.clearAnimation();
-                        scaleAnimation.cancel();
-                        scaleAnimation.reset();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                break;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        switch (view.getId()) {
-            case R.id.cameraButton:
-                showToolTip("Take Picture");
-                return true;
-            case R.id.uploadButton:
-                showToolTip("Upload Picture");
-                return true;
-            case R.id.clearPictureButton:
-                showToolTip("Clear Picture");
-                return true;
-            case R.id.screenShotImageView:
-                showToolTip("View Picture");
-                return true;
-            default:
-                return true;
-        }
-    }
-
     private void showDebugDialog() {
         AlertDialog.Builder builder = new DebugDialogBuilder(this);
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    private void showToolTip(String message) {
-        Toast toast = Toast.makeText(PhotoActivity.this, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
     }
 
     @Override

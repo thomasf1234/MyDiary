@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abstractx1.mydiary.record.RecordHandler;
@@ -20,6 +21,7 @@ public class RecordActivity extends PermissionActivity {
     public Animation scaleAnimation;
     public Button recordButton, playButton, clearRecordingButton;
     public SeekBar recordingSeekBar;
+    public TextView recordingDurationTextView;
 
     private RecordHandler recordHandler;
 
@@ -36,19 +38,21 @@ public class RecordActivity extends PermissionActivity {
         this.playButton = (Button) findViewById(R.id.playButton);
         this.clearRecordingButton = (Button) findViewById(R.id.clearRecordingButton);
         this.recordingSeekBar = (SeekBar) findViewById(R.id.recordingSeekBar);
-
+        this.recordingDurationTextView = (TextView) findViewById(R.id.recordingDurationTextView);
 
         ButtonHelper.customize(this, recordButton, R.drawable.record_button, R.drawable.record_button_hover, scaleAnimation, "Record Audio");
         ButtonHelper.customize(this, playButton, R.drawable.play_button, R.drawable.play_button_hover, scaleAnimation, "Play Recorded Audio");
         ButtonHelper.customize(this, clearRecordingButton, R.drawable.delete_button, R.drawable.delete_button_hover, scaleAnimation, "Clear Audio");
 
-        recordingSeekBar.setEnabled(false);
-        ButtonHelper.disable(playButton);
-        ButtonHelper.disable(clearRecordingButton);
-
-        //disable the record button if we do not have camera
-        if(!this.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
-            ButtonHelper.disable(recordButton);
+        try {
+            recordHandler = new RecordHandler(this,
+                    recordButton,
+                    playButton,
+                    clearRecordingButton,
+                    recordingSeekBar,
+                    recordingDurationTextView);
+        } catch (Exception e) {
+            Utilities.showToolTip(this, "Could not instantiate RecordHandler: " + e.getMessage());
         }
     }
 

@@ -8,34 +8,65 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/main_background"
     tools:context="com.abstractx1.mydiary.RecordActivity">
 
-   <RelativeLayout 
-        android:id="@+id/InnerRelativeLayout"
+
+    <TextView
+        android:text="@string/zero_seconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" > 
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/recordingDurationTextView"
+        android:textSize="50sp" />
+
+    <SeekBar
+            android:id="@+id/recordingSeekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:progress="0"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/recordingDurationTextView" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/nextButtonToWritingActivity"
+        android:id="@+id/recordButtonsLayout">
     <Button
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:background="@drawable/record_button"
         android:id="@+id/recordButton"
         android:layout_marginTop="12dp" />
+
     <Button
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:background="@drawable/play_button"
         android:id="@+id/playButton"
-        android:layout_marginTop="12dp"
-        android:layout_toRightOf="@id/recordButton" />
+        android:layout_marginTop="12dp" />
+    <Button
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="@drawable/delete_button"
+        android:id="@+id/clearRecordingButton"
+        android:layout_marginTop="12dp" />
+    </LinearLayout>
 
-    <TextView
-        android:text="@string/zero_seconds"
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recordingLength"
-        tools:textSize="25sp"
-        android:layout_alignBaseline="@+id/playButton"
-        android:layout_toRightOf="@+id/playButton" />
-    </RelativeLayout>
+        android:background="?attr/selectableItemBackground"
+        android:textAllCaps="false"
+        android:text="Next"
+        android:id="@+id/nextButtonToWritingActivity"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:ignore="HardcodedText" />
 </RelativeLayout>

@@ -10,15 +10,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.abstractx1.mydiary.record.RecordHandler;
 import com.example.demo.job.PermissionActivity;
 
-public class RecordActivity extends PermissionActivity implements View.OnTouchListener, View.OnLongClickListener {
+public class RecordActivity extends PermissionActivity {
     public Animation scaleAnimation;
-    public Button recordButton;
-    public Button playButton;
+    public Button recordButton, playButton, clearRecordingButton;
+    public SeekBar recordingSeekBar;
 
     private RecordHandler recordHandler;
 
@@ -33,12 +34,17 @@ public class RecordActivity extends PermissionActivity implements View.OnTouchLi
         this.scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
         this.recordButton = (Button) findViewById(R.id.recordButton);
         this.playButton = (Button) findViewById(R.id.playButton);
-        //recordButton.setOnClickListener(this);
-        recordButton.setOnTouchListener(this);
-        recordButton.setOnLongClickListener(this);
-        //playButton.setOnClickListener(this);
-        playButton.setOnTouchListener(this);
-        playButton.setOnLongClickListener(this);
+        this.clearRecordingButton = (Button) findViewById(R.id.clearRecordingButton);
+        this.recordingSeekBar = (SeekBar) findViewById(R.id.recordingSeekBar);
+
+
+        ButtonHelper.customize(this, recordButton, R.drawable.record_button, R.drawable.record_button_hover, scaleAnimation, "Record Audio");
+        ButtonHelper.customize(this, playButton, R.drawable.play_button, R.drawable.play_button_hover, scaleAnimation, "Play Recorded Audio");
+        ButtonHelper.customize(this, clearRecordingButton, R.drawable.delete_button, R.drawable.delete_button_hover, scaleAnimation, "Clear Audio");
+
+        recordingSeekBar.setEnabled(false);
+        ButtonHelper.disable(playButton);
+        ButtonHelper.disable(clearRecordingButton);
 
         //disable the record button if we do not have camera
         if(!this.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
@@ -46,61 +52,11 @@ public class RecordActivity extends PermissionActivity implements View.OnTouchLi
         }
     }
 
-
-
     @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        switch (view.getId()) {
-            case R.id.recordButton:
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        view.setBackgroundResource(R.drawable.record_button_hover);
-                        view.startAnimation(scaleAnimation);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        view.setBackgroundResource(R.drawable.record_button);
-                        view.clearAnimation();
-                        scaleAnimation.cancel();
-                        scaleAnimation.reset();
-                        view.invalidate();
-                        break;
-                    }
-                }
-                break;
-            case R.id.playButton:
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        view.setBackgroundResource(R.drawable.play_button_hover);
-                        view.startAnimation(scaleAnimation);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        view.setBackgroundResource(R.drawable.play_button);
-                        view.clearAnimation();
-                        scaleAnimation.cancel();
-                        scaleAnimation.reset();
-                        view.invalidate();
-                        break;
-                    }
-                }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        switch (view.getId()) {
-            case R.id.recordButton:
-                Toast.makeText(RecordActivity.this, "Record Audio", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.playButton:
-                Toast.makeText(RecordActivity.this, "Play Recorded Audio", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return true;
-        }
+    protected void onPause() {
+        super.onPause();
+        // Another activity is taking focus (this activity is about to be "paused").
+        Utilities.showToolTip(this, "Recording Cancelled");
+        //TODO : Cancel recording if currently recording
     }
 }

@@ -17,6 +17,9 @@ import com.abstractx1.mydiary.Utilities;
 import com.abstractx1.mydiary.lib.states.State6;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,9 +32,21 @@ public class RecordHandler extends State6 {
     public static State DISABLED = State.ONE;
     public static State EMPTY = State.TWO;
     public static State RECORDING = State.THREE;
-    public static State IDLE = State.FOUR;
+    public static State READY = State.FOUR;
     public static State PLAYING = State.FIVE;
     public static State PAUSED = State.SIX;
+
+    private static final Map<State, State[]> validStateTransitions;
+    static {
+        Map<State, State[]> _validStateTransitions = new HashMap<State, State[]>();
+        _validStateTransitions.put(DISABLED, new State[]{});
+        _validStateTransitions.put(EMPTY, new State[]{RECORDING});
+        _validStateTransitions.put(RECORDING, new State[]{READY});
+        _validStateTransitions.put(READY, new State[]{EMPTY, PLAYING});
+        _validStateTransitions.put(PLAYING, new State[]{READY, PAUSED});
+        _validStateTransitions.put(PAUSED, new State[]{PLAYING, EMPTY});
+        validStateTransitions = Collections.unmodifiableMap(_validStateTransitions);
+    }
 
     private Activity activity;
     private Animation hoverAnimation;
@@ -59,7 +74,7 @@ public class RecordHandler extends State6 {
         this.recordingDurationTextView = recordingDurationTextView;
         this.handler = new Handler();
         State initialState = hasMic() ? EMPTY : DISABLED;
-        setState(initialState);
+        transitionTo(initialState);
         setUpUpdateUISchedule();
     }
 
@@ -139,8 +154,6 @@ public class RecordHandler extends State6 {
         return state == PLAYING;
     }
 
-    public boolean inIdle() { return state == IDLE; }
-
     public void setUpNewRecorder() throws Exception {
         this.recorder = new Recorder();
     }
@@ -153,9 +166,9 @@ public class RecordHandler extends State6 {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 try {
-                    setState(IDLE);
+                    transitionTo(READY);
                 } catch (Exception e) {
-                    Utilities.showToolTip(activity, "Error when recording playback finished.");
+                    Utilities.showToolTip(activity, "Error when recording playback finished: " + e.getMessage());
                 }
             }
 
@@ -164,12 +177,12 @@ public class RecordHandler extends State6 {
 
     public void startRecording() throws Exception {
         recorder.record();
-        setState(RECORDING);
+        transitionTo(RECORDING);
     }
 
     public void startPlaying() throws Exception {
         recordingPlayer.play();
-        setState(PLAYING);
+        transitionTo(PLAYING);
     }
 
     public void setPlayFrom() {
@@ -182,18 +195,18 @@ public class RecordHandler extends State6 {
 
     public void pausePlaying() throws Exception {
         recordingPlayer.pause();
-        setState(PAUSED);
+        transitionTo(PAUSED);
     }
 
     public void stopRecording() throws Exception {
         recorder.stop();
         DataCollector.getInstance().setRecording(recorder.getOutputFile());
         setUpNewRecordingPlayer();
-        setState(IDLE);
+        transitionTo(READY);
     }
 
     public void clearRecording() throws Exception {
-        setState(EMPTY);
+        transitionTo(EMPTY);
     }
 
     public void cancelRecording() throws Exception {
@@ -266,6 +279,11 @@ public class RecordHandler extends State6 {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         else
             activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    protected Map<State, State[]> getValidStateTransitions() {
+        return validStateTransitions;
     }
 }
 

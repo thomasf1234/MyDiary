@@ -130,7 +130,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                 break;
             case R.id.clearRecordingButton:
                 try {
-                    recordHandler.setState(RecordHandler.EMPTY);
+                    recordHandler.transitionTo(RecordHandler.EMPTY);
                 } catch (Exception e) {
                     Utilities.showToolTip(this, "Error clearing recording: " + e.getMessage());
                 }

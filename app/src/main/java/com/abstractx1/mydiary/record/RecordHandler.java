@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -59,10 +60,12 @@ public class RecordHandler extends State6 {
         this.handler = new Handler();
         State initialState = hasMic() ? EMPTY : DISABLED;
         setState(initialState);
+        setUpUpdateUISchedule();
     }
 
     @Override
     protected void onSetStateONE() throws Exception {
+        keepScreenAwake(false);
         ButtonHelper.disable(recordButton);
         ButtonHelper.disable(playButton);
         ButtonHelper.disable(clearRecordingButton);
@@ -72,6 +75,7 @@ public class RecordHandler extends State6 {
 
     @Override
     protected void onSetStateTWO() throws Exception {
+        keepScreenAwake(false);
         if (DataCollector.getInstance().hasRecording()) { DataCollector.getInstance().clearRecording(); }
         ButtonHelper.enable(recordButton);
         ButtonHelper.disable(playButton);
@@ -79,10 +83,12 @@ public class RecordHandler extends State6 {
         recordingSeekBar.setProgress(0);
         recordingSeekBar.setEnabled(false);
         recordingDurationTextView.setText(R.string.zero_seconds);
+        recordingDurationTextView.invalidate();
     }
 
     @Override
     protected void onSetStateTHREE() throws Exception {
+        keepScreenAwake(true);
         ButtonHelper.enable(recordButton);
         ButtonHelper.customize(activity, recordButton, R.drawable.stop_button, R.drawable.stop_button_hover, hoverAnimation, "Stop Recording");
         ButtonHelper.disable(playButton);
@@ -94,6 +100,7 @@ public class RecordHandler extends State6 {
 
     @Override
     protected void onSetStateFOUR() throws Exception {
+        keepScreenAwake(false);
         ButtonHelper.customize(activity, recordButton, R.drawable.record_button, R.drawable.record_button_hover, hoverAnimation, "Start Recording");
         ButtonHelper.disable(recordButton);
         ButtonHelper.customize(activity, playButton, R.drawable.play_button, R.drawable.play_button_hover, hoverAnimation, "Play Recording");
@@ -101,10 +108,12 @@ public class RecordHandler extends State6 {
         ButtonHelper.enable(clearRecordingButton);
         recordingSeekBar.setEnabled(true);
         recordingDurationTextView.setText(Utilities.formatSeconds((int) recorder.getRecordingDuration()));
+        recordingSeekBar.setProgress(recordingSeekBar.getMax());
     }
 
     @Override
     protected void onSetStateFIVE() throws Exception {
+        keepScreenAwake(true);
         ButtonHelper.customize(activity, playButton, R.drawable.pause_button, R.drawable.pause_button_hover, hoverAnimation, "Pause Recording");
         ButtonHelper.disable(recordButton);
         ButtonHelper.enable(playButton);
@@ -114,10 +123,11 @@ public class RecordHandler extends State6 {
 
     @Override
     protected void onSetStateSIX() throws Exception {
+        keepScreenAwake(false);
         ButtonHelper.customize(activity, playButton, R.drawable.play_button, R.drawable.play_button_hover, hoverAnimation, "Resume Recording");
         ButtonHelper.disable(recordButton);
         ButtonHelper.enable(playButton);
-        ButtonHelper.disable(clearRecordingButton);
+        ButtonHelper.enable(clearRecordingButton);
         recordingSeekBar.setEnabled(true);
     }
 
@@ -128,6 +138,8 @@ public class RecordHandler extends State6 {
     public boolean playingInProgress() {
         return state == PLAYING;
     }
+
+    public boolean inIdle() { return state == IDLE; }
 
     public void setUpNewRecorder() throws Exception {
         this.recorder = new Recorder();
@@ -141,8 +153,6 @@ public class RecordHandler extends State6 {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 try {
-                    timer.cancel();
-                    recordingSeekBar.setProgress(recordingSeekBar.getMax());
                     setState(IDLE);
                 } catch (Exception e) {
                     Utilities.showToolTip(activity, "Error when recording playback finished.");
@@ -153,27 +163,12 @@ public class RecordHandler extends State6 {
     }
 
     public void startRecording() throws Exception {
-        setUpTimer();
         recorder.record();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                updateRecordingDuration();
-            }
-        }, 0, 200);
         setState(RECORDING);
     }
 
     public void startPlaying() throws Exception {
-        setUpTimer();
-        setPlayFrom();
         recordingPlayer.play();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                updatePlayingDuration();
-            }
-        }, 0, 20);
         setState(PLAYING);
     }
 
@@ -185,15 +180,13 @@ public class RecordHandler extends State6 {
         return (int) Math.floor((recordingSeekBar.getProgress() / 100f) * recorder.getRecordingDurationMilliSeconds());
     }
 
-    public void stopPlaying() throws Exception {
+    public void pausePlaying() throws Exception {
         recordingPlayer.pause();
-        timer.cancel();
         setState(PAUSED);
     }
 
     public void stopRecording() throws Exception {
         recorder.stop();
-        timer.cancel();
         DataCollector.getInstance().setRecording(recorder.getOutputFile());
         setUpNewRecordingPlayer();
         setState(IDLE);
@@ -212,13 +205,17 @@ public class RecordHandler extends State6 {
         return activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE);
     }
 
-    private void setUpTimer() {
-      if (timer == null)
-          timer = new Timer();
-      else {
-          timer.cancel();
-          timer = new Timer();
-      }
+    public void setUpUpdateUISchedule() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (recordingInProgress())
+                    updateRecordingDuration();
+                else if (playingInProgress())
+                    updatePlayingDuration();
+            }
+        }, 0, 20);
     }
 
     // This gets executed in a non-UI thread:
@@ -243,6 +240,32 @@ public class RecordHandler extends State6 {
                 recordingSeekBar.setProgress(progress);
             }
         });
+    }
+
+    public void onDestroy() {
+        cancelTimer();
+        if (recorder.isRecording()) {
+            recorder.stop();
+        }
+        recorder.release();
+        if (recordingPlayer.isPlaying()) {
+            recordingPlayer.stop();
+        }
+        recordingPlayer.release();
+        keepScreenAwake(false);
+        Utilities.showToolTip(activity, "Stopping playing/recording and wiping timer tasks as Activity Stopping");
+    }
+
+    private void cancelTimer() {
+        timer.cancel();
+        timer.purge();
+    }
+
+    private void keepScreenAwake(boolean keepAwake) {
+        if (keepAwake)
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        else
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }
 

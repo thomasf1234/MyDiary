@@ -41,6 +41,14 @@ public class Recorder {
         createAndSetOutputFile();
     }
 
+    public boolean isRecording() {
+        return microphone.isRecording();
+    }
+
+    public void release() {
+        microphone.release();
+    }
+
     public File getOutputFile() {
         return outputFile;
     }

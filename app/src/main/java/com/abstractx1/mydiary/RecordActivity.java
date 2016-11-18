@@ -62,7 +62,6 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
 
     @Override
     protected void onPause() {
-        super.onPause();
         // Another activity is taking focus (this activity is about to be "paused").
         if (recordHandler.recordingInProgress()) {
             try {
@@ -71,9 +70,30 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
             } catch (Exception e) {
                 Utilities.showToolTip(this, "Error cancelling recording: " + e.getMessage());
             }
-            //TODO : Cancel recording if currently recording
         }
+        else if (recordHandler.playingInProgress()) {
+            try {
+                recordHandler.pausePlaying();
+                Utilities.showToolTip(this, "Recording playback paused");
+            } catch (Exception e) {
+                Utilities.showToolTip(this, "Error pausing the recording playback: " + e.getMessage());
+            }
+        }
+        super.onPause();
     }
+
+    //http://stackoverflow.com/questions/19793194/is-onstop-always-preceded-by-onpause
+    @Override
+    protected void onDestroy() {
+        try {
+            recordHandler.onDestroy();
+        } catch (Exception e) {
+            Utilities.showToolTip(this, "Error Destroying the Record Handler: " + e.getMessage());
+        }
+        super.onDestroy();
+    }
+
+
 
     @Override
     public void onClick(View view) {
@@ -96,7 +116,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
             case R.id.playButton:
                 if (recordHandler.playingInProgress()) {
                     try {
-                        recordHandler.stopPlaying();
+                        recordHandler.pausePlaying();
                     } catch (Exception e) {
                         Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
                     }
@@ -128,7 +148,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     case MotionEvent.ACTION_DOWN: {
                         if (recordHandler.playingInProgress()) {
                             try {
-                                recordHandler.stopPlaying();
+                                recordHandler.pausePlaying();
                             } catch (Exception e) {
                                 Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
                             }

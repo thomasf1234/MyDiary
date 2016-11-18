@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.abstractx1.mydiary.jobs.startRecordingJob;
+import com.abstractx1.mydiary.jobs.StartRecordingJob;
 import com.abstractx1.mydiary.record.RecordHandler;
 import com.example.demo.job.PermissionActivity;
 
@@ -62,8 +62,15 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
     protected void onPause() {
         super.onPause();
         // Another activity is taking focus (this activity is about to be "paused").
-        Utilities.showToolTip(this, "Recording Cancelled");
-        //TODO : Cancel recording if currently recording
+        if (recordHandler.recordingInProgress()) {
+            try {
+                recordHandler.cancelRecording();
+                Utilities.showToolTip(this, "Recording Cancelled");
+            } catch (Exception e) {
+                Utilities.showToolTip(this, "Error cancelling recording: " + e.getMessage());
+            }
+            //TODO : Cancel recording if currently recording
+        }
     }
 
     @Override
@@ -78,7 +85,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     }
                 } else {
                     try {
-                        triggerJob(new startRecordingJob(this, recordHandler));
+                        triggerJob(new StartRecordingJob(this, recordHandler));
                     } catch (Exception e) {
                         Utilities.showToolTip(this, "Error starting recording: " + e.getMessage());
                     }

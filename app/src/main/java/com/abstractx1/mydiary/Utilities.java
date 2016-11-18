@@ -99,7 +99,7 @@ public class Utilities {
 
     public static void showToolTip(Activity activity, String message) {
         Toast toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
 }

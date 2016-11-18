@@ -190,6 +190,15 @@ public class RecordHandler extends State6 {
         setState(IDLE);
     }
 
+    public void clearRecording() throws Exception {
+        setState(EMPTY);
+    }
+
+    public void cancelRecording() throws Exception {
+        stopRecording();
+        clearRecording();
+    }
+
     private boolean hasMic() {
         return activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE);
     }

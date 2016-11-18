@@ -29,7 +29,11 @@ public class Recorder {
     }
 
     public float getRecordingDuration() {
-        return stopwatch.getElapsedTime();
+        return stopwatch.getElapsedTimeSeconds();
+    }
+
+    public int getRecordingDurationMilliSeconds() {
+        return stopwatch.getElapsedTimeMilliSeconds();
     }
 
     public void reset() throws IOException {

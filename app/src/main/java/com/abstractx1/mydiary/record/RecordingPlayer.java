@@ -2,6 +2,7 @@ package com.abstractx1.mydiary.record;
 
 import android.media.MediaPlayer;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -9,19 +10,16 @@ import java.io.IOException;
  */
 
 public class RecordingPlayer extends MediaPlayer {
-    private Stopwatch stopwatch;
-
-    public RecordingPlayer() {
-        this.stopwatch = new Stopwatch();
-    }
-
-    public void play() throws IOException {
-        stopwatch.start();
-        prepare();
+    public void play() {
         start();
     }
 
     public float getPlayingDuration() {
-        return stopwatch.getElapsedTime();
+        return getCurrentPosition() / 1000f;
+    }
+
+    public void setInputFile(File file) throws IOException {
+        setDataSource(file.getAbsolutePath());
+        prepare();
     }
 }

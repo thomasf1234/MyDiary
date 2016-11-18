@@ -27,11 +27,15 @@ public class Stopwatch {
             this.elapsedTime = millisecondsElapsed();
     }
 
-    public float getElapsedTime() {
+    public float getElapsedTimeSeconds() {
+        return getElapsedTimeMilliSeconds() / 1000f;
+    }
+
+    public int getElapsedTimeMilliSeconds() {
         if (elapsedTime > 0)
-            return elapsedTime / 1000f;
+            return (int) elapsedTime;
         else
-            return millisecondsElapsed() / 1000f;
+            return millisecondsElapsed();
     }
 
     private boolean isRunning() {

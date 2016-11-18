@@ -135,7 +135,7 @@ public class RecordHandler extends State6 {
 
     public void setUpNewRecordingPlayer() throws IOException {
         this.recordingPlayer = new RecordingPlayer();
-        recordingPlayer.setDataSource(DataCollector.getInstance().getRecording().getAbsolutePath());
+        recordingPlayer.setInputFile(DataCollector.getInstance().getRecording());
         recordingPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
@@ -166,7 +166,7 @@ public class RecordHandler extends State6 {
 
     public void startPlaying() throws Exception {
         setUpTimer();
-        setUpNewRecordingPlayer();
+        setPlayFrom();
         recordingPlayer.play();
         timer.schedule(new TimerTask() {
             @Override
@@ -175,6 +175,14 @@ public class RecordHandler extends State6 {
             }
         }, 0, 20);
         setState(PLAYING);
+    }
+
+    public void setPlayFrom() {
+        recordingPlayer.seekTo(getCurrentSelectedMilliSeconds());
+    }
+
+    public int getCurrentSelectedMilliSeconds() {
+        return (int) Math.floor((recordingSeekBar.getProgress() / 100f) * recorder.getRecordingDurationMilliSeconds());
     }
 
     public void stopPlaying() throws Exception {
@@ -187,6 +195,7 @@ public class RecordHandler extends State6 {
         recorder.stop();
         timer.cancel();
         DataCollector.getInstance().setRecording(recorder.getOutputFile());
+        setUpNewRecordingPlayer();
         setState(IDLE);
     }
 

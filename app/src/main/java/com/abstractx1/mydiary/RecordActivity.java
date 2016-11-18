@@ -1,6 +1,7 @@
 package com.abstractx1.mydiary;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,7 +13,7 @@ import com.abstractx1.mydiary.jobs.StartRecordingJob;
 import com.abstractx1.mydiary.record.RecordHandler;
 import com.example.demo.job.PermissionActivity;
 
-public class RecordActivity extends PermissionActivity implements View.OnClickListener {
+public class RecordActivity extends PermissionActivity implements View.OnClickListener, View.OnTouchListener {
     public Animation scaleAnimation;
     public Button recordButton, playButton, clearRecordingButton;
     public SeekBar recordingSeekBar;
@@ -42,6 +43,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
         recordButton.setOnClickListener(this);
         playButton.setOnClickListener(this);
         clearRecordingButton.setOnClickListener(this);
+        recordingSeekBar.setOnTouchListener(this);
 
         try {
             recordHandler = new RecordHandler(this,
@@ -115,6 +117,33 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        switch (view.getId()) {
+            case R.id.recordingSeekBar:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        if (recordHandler.playingInProgress()) {
+                            try {
+                                recordHandler.stopPlaying();
+                            } catch (Exception e) {
+                                Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
+                            }
+                        }
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        recordHandler.setPlayFrom();
+                        recordHandler.updatePlayingDuration();
+                        break;
+                    }
+                }
+                return false;
+            default:
+                return false;
         }
     }
 }

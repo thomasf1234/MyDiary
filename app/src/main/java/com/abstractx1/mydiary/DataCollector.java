@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -26,6 +27,7 @@ public class DataCollector {
     }
 
     private Bitmap image;
+    private File recording;
 
     public void setImage(String path) throws IOException {
         Bitmap bmp = BitmapFactory.decodeFile(path);
@@ -60,5 +62,18 @@ public class DataCollector {
 
     public void clearImage() {
         this.image = null;
+    }
+
+    public void setRecording(File recording) {
+        this.recording = recording;
+    }
+
+    public void clearRecording() {
+        recording.delete();
+        this.recording = null;
+    }
+
+    public boolean hasRecording() {
+        return recording != null;
     }
 }

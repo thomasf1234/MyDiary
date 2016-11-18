@@ -58,5 +58,7 @@ public class ButtonHelper {
                 return true;
             }
         });
+        button.setBackgroundResource(defaultImage);
+        button.invalidate();
     }
 }

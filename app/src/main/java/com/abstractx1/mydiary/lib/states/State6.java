@@ -8,7 +8,7 @@ package com.abstractx1.mydiary.lib.states;
 public abstract class State6 {
     public enum State { ONE, TWO, THREE, FOUR, FIVE, SIX }
 
-    private State state;
+    protected State state;
 
     public void setState(State state) throws Exception {
         this.state = state;

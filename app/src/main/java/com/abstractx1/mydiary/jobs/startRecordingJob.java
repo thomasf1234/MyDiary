@@ -14,20 +14,21 @@ import com.example.demo.job.PermissionJob;
  * Created by tfisher on 25/10/2016.
  */
 
-public class RecordJob extends PermissionJob {
+public class startRecordingJob extends PermissionJob {
     public static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO};
-    public static final int PERMISSION_REQUEST_ID = 0;
+    public static final int PERMISSION_REQUEST_ID = 1;
 
-    private RecordHandler recordButtonHandler;
+    private RecordHandler recordHandler;
 
-    public RecordJob(AppCompatActivity appCompatActivity, RecordHandler recordButtonHandler) {
+    public startRecordingJob(AppCompatActivity appCompatActivity, RecordHandler recordHandler) {
         super(appCompatActivity);
-        this.recordButtonHandler = recordButtonHandler;
+        this.recordHandler = recordHandler;
     }
 
     @Override
     public void perform() throws Exception {
-        //recordButtonHandler.initializeAndRecord();
+        recordHandler.setUpNewRecorder();
+        recordHandler.startRecording();
     }
 
     @Override

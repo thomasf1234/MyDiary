@@ -28,7 +28,7 @@ public class Recorder {
         stopwatch.stop();
     }
 
-    public int getRecordingDuration() {
+    public float getRecordingDuration() {
         return stopwatch.getElapsedTime();
     }
 

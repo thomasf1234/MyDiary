@@ -68,6 +68,10 @@ public class DataCollector {
         this.recording = recording;
     }
 
+    public File getRecording() {
+        return recording;
+    }
+
     public void clearRecording() {
         recording.delete();
         this.recording = null;

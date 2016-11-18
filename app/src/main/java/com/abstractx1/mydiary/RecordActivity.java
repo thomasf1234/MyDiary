@@ -40,6 +40,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
         ButtonHelper.customize(this, clearRecordingButton, R.drawable.delete_button, R.drawable.delete_button_hover, scaleAnimation, "Clear Audio");
 
         recordButton.setOnClickListener(this);
+        playButton.setOnClickListener(this);
         clearRecordingButton.setOnClickListener(this);
 
         try {
@@ -80,6 +81,21 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                         triggerJob(new startRecordingJob(this, recordHandler));
                     } catch (Exception e) {
                         Utilities.showToolTip(this, "Error starting recording: " + e.getMessage());
+                    }
+                }
+                break;
+            case R.id.playButton:
+                if (recordHandler.playingInProgress()) {
+                    try {
+                        recordHandler.stopPlaying();
+                    } catch (Exception e) {
+                        Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
+                    }
+                } else {
+                    try {
+                        recordHandler.startPlaying();
+                    } catch (Exception e) {
+                        Utilities.showToolTip(this, "Error playing recording: " + e.getMessage());
                     }
                 }
                 break;

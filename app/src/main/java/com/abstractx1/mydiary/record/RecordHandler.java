@@ -73,7 +73,7 @@ public class RecordHandler extends State6 {
         this.recordingSeekBar = recordingSeekBar;
         this.recordingDurationTextView = recordingDurationTextView;
         this.handler = new Handler();
-        State initialState = hasMic() ? EMPTY : DISABLED;
+        State initialState = hasSystemMicrophoneFeature() ? EMPTY : DISABLED;
         transitionTo(initialState);
         setUpUpdateUISchedule();
     }
@@ -205,7 +205,7 @@ public class RecordHandler extends State6 {
         //Utilities.showToolTip(activity, "Stopping playing/recording and wiping timer tasks as Activity Stopping");
     }
 
-    private boolean hasMic() {
+    private boolean hasSystemMicrophoneFeature() {
         return activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE);
     }
 

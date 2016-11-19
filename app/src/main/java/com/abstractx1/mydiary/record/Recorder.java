@@ -19,13 +19,13 @@ public class Recorder {
     }
 
     public void record() throws IOException {
-        stopwatch.start();
         microphone.record();
+        stopwatch.start();
     }
 
     public void stop() {
-        microphone.finish();
         stopwatch.stop();
+        microphone.finish();
     }
 
     public float getRecordingDuration() {

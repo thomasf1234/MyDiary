@@ -1,5 +1,7 @@
 package com.abstractx1.mydiary;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
 import com.abstractx1.mydiary.jobs.StartRecordingJob;
 import com.abstractx1.mydiary.record.RecordHandler;
 import com.example.demo.job.PermissionActivity;
@@ -20,6 +23,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
     public TextView recordingDurationTextView;
 
     private RecordHandler recordHandler;
+    private AlertDialog clearRecordingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
         } catch (Exception e) {
             Utilities.showToolTip(this, "Could not instantiate RecordHandler: " + e.getMessage());
         }
+        initializeClearRecordingDialog();
     }
 
 
@@ -129,11 +134,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                 }
                 break;
             case R.id.clearRecordingButton:
-                try {
-                    recordHandler.transitionTo(RecordHandler.EMPTY);
-                } catch (Exception e) {
-                    Utilities.showToolTip(this, "Error clearing recording: " + e.getMessage());
-                }
+                clearRecordingDialog.show();
                 break;
             default:
                 break;
@@ -157,6 +158,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     }
                     case MotionEvent.ACTION_UP: {
                         recordHandler.setPlayFrom();
+                        recordHandler.updatePlayingDuration();
                         break;
                     }
                 }
@@ -164,5 +166,27 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
             default:
                 return false;
         }
+    }
+
+    private void initializeClearRecordingDialog() {
+        ConfirmationDialogBuilder builder = new ConfirmationDialogBuilder(this, "Are you sure you want clear the recording?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked Yes button
+                try {
+                    recordHandler.transitionTo(RecordHandler.EMPTY);
+                } catch (Exception e) {
+                    Utilities.showToolTip(RecordActivity.this, "Error clearing recording: " + e.getMessage());
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked No button
+                dialog.dismiss();
+            }
+        });
+        this.clearRecordingDialog = builder.create();
     }
 }

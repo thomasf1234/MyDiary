@@ -1,8 +1,11 @@
-package com.abstractx1.mydiary;
+package com.abstractx1.mydiary.dialog_builders;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import com.abstractx1.mydiary.R;
+import com.abstractx1.mydiary.Utilities;
 
 import java.io.File;
 

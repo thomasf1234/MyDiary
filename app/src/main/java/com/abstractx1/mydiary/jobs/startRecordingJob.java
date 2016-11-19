@@ -27,8 +27,7 @@ public class StartRecordingJob extends PermissionJob {
 
     @Override
     public void perform() throws Exception {
-        recordHandler.setUpNewRecorder();
-        recordHandler.startRecording();
+        recordHandler.transitionTo(RecordHandler.RECORDING);
     }
 
     @Override

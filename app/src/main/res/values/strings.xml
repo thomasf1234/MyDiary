@@ -3,5 +3,5 @@
     <string name="debug_dialog_title">Debug</string>
     <string name="screen_shot_dialog_title">Screen Shot Details</string>
     <string name="to_email_address">test@test.com</string>
-    <string name="zero_seconds">0:00</string>
+    <string name="zero_seconds">0:00:00</string>
 </resources>

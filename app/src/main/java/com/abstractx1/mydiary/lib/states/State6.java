@@ -15,7 +15,9 @@ public abstract class State6 {
     protected State state;
 
     public synchronized void transitionTo(State toState) throws Exception {
-        if(state == null)
+        if(state == toState)
+            return;
+        else if(state == null)
             setState(toState);
         else if(getValidStateTransitions().containsKey(state)
                 && Arrays.asList(getValidStateTransitions().get(state)).contains(toState)) {

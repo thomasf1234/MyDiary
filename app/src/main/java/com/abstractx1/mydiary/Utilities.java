@@ -70,6 +70,13 @@ public class Utilities {
         return String.format("%01d:%02d", pTime / 60, pTime % 60);
     }
 
+    public static String formatMilliSeconds(long milliSeconds) {
+        long cs = (long) Math.floor((milliSeconds % 1000) / 10f);
+        long s = (milliSeconds / 1000) % 60;
+        long m = (milliSeconds / (1000 * 60)) % 60;
+        return String.format("%01d:%02d:%02d", m, s, cs);
+    }
+
     public static File createFile(String name, String extension, File directory) throws IOException {
         File file = new File(directory, name + extension);
         file.createNewFile();

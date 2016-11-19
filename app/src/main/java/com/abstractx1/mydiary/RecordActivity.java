@@ -73,7 +73,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
         }
         else if (recordHandler.playingInProgress()) {
             try {
-                recordHandler.pausePlaying();
+                recordHandler.transitionTo(RecordHandler.PAUSED);
                 Utilities.showToolTip(this, "Recording playback paused");
             } catch (Exception e) {
                 Utilities.showToolTip(this, "Error pausing the recording playback: " + e.getMessage());
@@ -101,7 +101,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
             case R.id.recordButton:
                 if (recordHandler.recordingInProgress()) {
                     try {
-                        recordHandler.stopRecording();
+                        recordHandler.transitionTo(RecordHandler.READY);
                     } catch (Exception e) {
                         Utilities.showToolTip(this, "Error stopping recording: " + e.getMessage());
                     }
@@ -116,13 +116,13 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
             case R.id.playButton:
                 if (recordHandler.playingInProgress()) {
                     try {
-                        recordHandler.pausePlaying();
+                        recordHandler.transitionTo(RecordHandler.PAUSED);
                     } catch (Exception e) {
                         Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
                     }
                 } else {
                     try {
-                        recordHandler.startPlaying();
+                        recordHandler.transitionTo(RecordHandler.PLAYING);
                     } catch (Exception e) {
                         Utilities.showToolTip(this, "Error playing recording: " + e.getMessage());
                     }
@@ -148,7 +148,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     case MotionEvent.ACTION_DOWN: {
                         if (recordHandler.playingInProgress()) {
                             try {
-                                recordHandler.pausePlaying();
+                                recordHandler.transitionTo(RecordHandler.PAUSED);
                             } catch (Exception e) {
                                 Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
                             }
@@ -157,7 +157,6 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     }
                     case MotionEvent.ACTION_UP: {
                         recordHandler.setPlayFrom();
-                        recordHandler.updatePlayingDuration();
                         break;
                     }
                 }

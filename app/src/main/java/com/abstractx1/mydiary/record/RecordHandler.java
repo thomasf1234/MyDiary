@@ -199,8 +199,8 @@ public class RecordHandler extends State6 {
 
     public void onDestroy() {
         cancelTimer();
-        cancelRecorder();
-        cancelRecordingPlayer();
+        if (hasRecorder()) { cancelRecorder(); }
+        if (hasRecordingPlayer()) { cancelRecordingPlayer(); }
         keepScreenAwake(false);
         //Utilities.showToolTip(activity, "Stopping playing/recording and wiping timer tasks as Activity Stopping");
     }

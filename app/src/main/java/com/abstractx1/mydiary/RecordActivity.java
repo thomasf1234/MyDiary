@@ -158,7 +158,6 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     }
                     case MotionEvent.ACTION_UP: {
                         recordHandler.setPlayFrom();
-                        recordHandler.updatePlayingDuration();
                         break;
                     }
                 }

@@ -1,15 +1,27 @@
 package com.abstractx1.mydiary;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ViewFlipper;
+
+import com.abstractx1.mydiary.dialogs.IntroductionDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class TitleActivity extends AppCompatActivity implements View.OnClickListener {
@@ -48,21 +60,30 @@ public class TitleActivity extends AppCompatActivity implements View.OnClickList
 //    http://stackoverflow.com/questions/8631095/android-preventing-going-back-to-the-previous-activity
 
     private void validateParticipantInformedOfStudy() {
-        if (!hasPermission(RESEARCH_PARTICIPANT)) {
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setCancelable(false);
-            alertBuilder.setTitle("Permission required");
-            alertBuilder.setMessage("By granting the following permission, you accept and agree to the following terms and conditions: 1) You are a participant taking part in a research study, 2) the data you send from this app will only be to the researcher");
-            alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        AlertDialog alertDialog = IntroductionDialog.create(this);
+        alertDialog.show();
+//use a viewflip
+        //http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65
+//http://stackoverflow.com/questions/3477422/what-does-layoutinflater-in-android-do
 
-                public void onClick(DialogInterface dialog, int which) {
-                    ActivityCompat.requestPermissions(TitleActivity.this, new String[]{RESEARCH_PARTICIPANT}, MY_PERMISSIONS_REQUEST_RESEARCH_PARTICIPANT);
-                }
-            });
+//        IntroductionDialog dialog = new IntroductionDialog(this);
+//        dialog.show();
 
-            AlertDialog alert = alertBuilder.create();
-            alert.show();
-        }
+//        if (!hasPermission(RESEARCH_PARTICIPANT)) {
+//            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+//            alertBuilder.setCancelable(false);
+//            alertBuilder.setTitle("Permission required");
+//            alertBuilder.setMessage("By granting the following permission, you accept and agree to the following terms and conditions: 1) You are a participant taking part in a research study, 2) the data you send from this app will only be to the researcher");
+//            alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//
+//                public void onClick(DialogInterface dialog, int which) {
+//                    ActivityCompat.requestPermissions(TitleActivity.this, new String[]{RESEARCH_PARTICIPANT}, MY_PERMISSIONS_REQUEST_RESEARCH_PARTICIPANT);
+//                }
+//            });
+//
+//            AlertDialog alert = alertBuilder.create();
+//            alert.show();
+//        }
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -77,4 +98,6 @@ public class TitleActivity extends AppCompatActivity implements View.OnClickList
     private boolean hasPermission(String permission) {
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
+
+
 }

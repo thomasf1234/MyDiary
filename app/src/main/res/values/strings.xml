@@ -2,6 +2,7 @@
     <string name="app_name">MyDiary</string>
     <string name="debug_dialog_title">Debug</string>
     <string name="screen_shot_dialog_title">Screen Shot Details</string>
+    <string name="introduction_dialog_title">Setup</string>
     <string name="to_email_address">test@test.com</string>
     <string name="zero_seconds">0:00:00</string>
     <string name="research_participant_permission_descriptions">collect and submit the data you input within the app to the researcher</string>

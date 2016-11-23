@@ -1,7 +1,9 @@
 package com.abstractx1.mydiary;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.widget.Toast;
@@ -14,6 +16,8 @@ import java.util.List;
  */
 
 public class EmailClient {
+    private static final String EMAIL_CLIENT_PACKAGE_NAME_KEY = "email_client_package_name";
+    private static final String MESSAGE_TYPE = "message/rfc822";
     private Activity activity;
 
     public EmailClient(Activity activity) {
@@ -24,10 +28,11 @@ public class EmailClient {
         String[] TO = {toAddress};
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("message/rfc822");
+        emailIntent.setType(MESSAGE_TYPE);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
 
         try {
+            emailIntent.setPackage(getChosenEmailAppPackage());
             Intent gmailIntent = Intent.createChooser(emailIntent, "Send mail...");
             activity.startActivity(gmailIntent);
             activity.finish();
@@ -50,55 +55,26 @@ public class EmailClient {
 
     private List<ResolveInfo> getInstalledEmailAppsResolveInfo() {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("message/rfc822");
+        emailIntent.setType(MESSAGE_TYPE);
         return activity.getPackageManager().queryIntentActivities( emailIntent, 0);
     }
 
-//    public void setChosenEmailApp() {
-//
-//    }
+    public void setChosenEmailApp(AppInfo appInfo) {
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(GlobalApplicationValues.USER_SETTINGS_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(EMAIL_CLIENT_PACKAGE_NAME_KEY, appInfo.getPackageName());
+        editor.commit();
+    }
 
-    //Title Screen = main screen
-    //One Dialog
-    //disable continue button
-    //ask user to select an email app to use
-    //display "No email applications installed." if none
-    //upon selection, enable continue
-    /*
-|
-|  Please select an email client
-|  icon1 w/name  [x]
-|  icon2  "      []
-|  icon3  "      []
-|             [continue] (enabled after click)
-|_____________
-continue buttton sets new layout.
-http://stackoverflow.com/questions/10434473/how-can-i-get-the-icons-of-the-applications-in-a-list
-http://stackoverflow.com/questions/32316002/get-the-name-icon-and-package-name-of-all-the-installed-applications-in-android
-https://www.tutorialspoint.com/android/android_list_view.htm
-Write into Shared preferences the name
+    public String getChosenEmailAppPackage() {
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(GlobalApplicationValues.USER_SETTINGS_KEY, Context.MODE_PRIVATE);
+        if (sharedpreferences.contains(EMAIL_CLIENT_PACKAGE_NAME_KEY)) {
+            return sharedpreferences.getString(EMAIL_CLIENT_PACKAGE_NAME_KEY, "");
+        } else
+            return null;
+    }
 
-or
-|
-|  No email clients installed.
-|  This app requires an email
-|  client such that the researcher
-|  can be contacted etc.
-|             [continue] (disabled)
-|_____________
-
-Next
-|
-|  Please read our terms and conditions
-|  | .....            |^|
-|  |                  | |
-|  |__________________|v|
-|
-|   I agree and accept .. [x]
-|             [continue] (disabled until checkbox)
-|_____________
-
-
-
-     */
+    public boolean hasChosenEmailAppPackage() {
+        return getChosenEmailAppPackage() != null;
+    }
 }

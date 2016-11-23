@@ -27,11 +27,10 @@ import java.util.stream.Collectors;
 public class TitleActivity extends AppCompatActivity implements View.OnClickListener {
     public Button contactResearcherButton;
     public Button yesButton;
-    public static String RESEARCH_PARTICIPANT = "com.abstractx1.permission.RESEARCH_PARTICIPANT";
-    public static int MY_PERMISSIONS_REQUEST_RESEARCH_PARTICIPANT = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        validateParticipantInformedOfStudy();
+        if(!new EmailClient(this).hasChosenEmailAppPackage()) { validateParticipantInformedOfStudy();}
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
 
@@ -62,42 +61,5 @@ public class TitleActivity extends AppCompatActivity implements View.OnClickList
     private void validateParticipantInformedOfStudy() {
         AlertDialog alertDialog = IntroductionDialog.create(this);
         alertDialog.show();
-//use a viewflip
-        //http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65
-//http://stackoverflow.com/questions/3477422/what-does-layoutinflater-in-android-do
-
-//        IntroductionDialog dialog = new IntroductionDialog(this);
-//        dialog.show();
-
-//        if (!hasPermission(RESEARCH_PARTICIPANT)) {
-//            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-//            alertBuilder.setCancelable(false);
-//            alertBuilder.setTitle("Permission required");
-//            alertBuilder.setMessage("By granting the following permission, you accept and agree to the following terms and conditions: 1) You are a participant taking part in a research study, 2) the data you send from this app will only be to the researcher");
-//            alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//
-//                public void onClick(DialogInterface dialog, int which) {
-//                    ActivityCompat.requestPermissions(TitleActivity.this, new String[]{RESEARCH_PARTICIPANT}, MY_PERMISSIONS_REQUEST_RESEARCH_PARTICIPANT);
-//                }
-//            });
-//
-//            AlertDialog alert = alertBuilder.create();
-//            alert.show();
-//        }
     }
-
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_RESEARCH_PARTICIPANT) {
-            if (!hasPermission(RESEARCH_PARTICIPANT)) {
-                Utilities.showToolTip(this, "Exiting now");
-                finish();
-            }
-        }
-    }
-
-    private boolean hasPermission(String permission) {
-        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
-    }
-
-
 }

@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.abstractx1.mydiary">
-    <permission
-        android:name="com.abstractx1.permission.RESEARCH_PARTICIPANT"
-        android:label="Research Participant"
-        android:protectionLevel="dangerous"
-        android:description="@string/research_participant_permission_descriptions"
-        android:icon="@drawable/my_diary_launcher_icon"></permission>
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="com.abstractx1.permission.RESEARCH_PARTICIPANT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 

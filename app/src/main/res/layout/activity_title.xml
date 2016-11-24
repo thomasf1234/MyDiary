@@ -11,39 +11,14 @@
     android:background="@drawable/main_background"
     tools:context="com.abstractx1.mydiary.TitleActivity">
 
-    <Button
+    <ListView
+        android:id="@+id/mainMenuListView"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:textAllCaps="false"
-        android:text="Any questions? Contact researcher"
-        android:id="@+id/contactResearcherButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:text="I have been informed about the study and am happy to continue with my diary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:textSize="25dp"
-        android:id="@+id/titleDescriptionTextView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="89dp"
-        tools:ignore="HardcodedText,SpUsage" />
-
-    <Button
-        android:text="Yes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/yesTitleScreenButton"
-        tools:ignore="HardcodedText" />
-
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:choiceMode="singleChoice"
+        android:descendantFocusability="beforeDescendants"/>
 </RelativeLayout>

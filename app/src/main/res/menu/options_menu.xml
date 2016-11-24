@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/emailPreferenceMenuOption"
+        android:title="Email Preference"/>
+    <item
+        android:id="@+id/contactResearcherMenuOption"
+        android:title="Contact Researcher"/>
+    <item
+        android:id="@+id/debugMenuOption"
+        android:title="Files"/>
+    <item
+        android:id="@+id/clearCacheMenuOption"
+        android:title="Clear Cache"/>
+</menu>

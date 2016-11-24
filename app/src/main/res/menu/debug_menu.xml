@@ -1,9 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:id="@+id/debug"
-        android:title="Debug"/>
-    <item
-        android:id="@+id/clearCache"
-        android:title="Clear Cache"/>
-        android:showAsAction="ifRoom"
-</menu>

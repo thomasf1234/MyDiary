@@ -27,7 +27,7 @@ public class ButtonHelper {
         button.getBackground().setAlpha(SEMI_TRANSPARENT);
     }
 
-    public static void customize(final Activity activity, Button button, final int defaultImage, final int hoverImage, final Animation hoverAnimation, final String tooltip) {
+    public static void customize(final MyDiaryActivity activity, Button button, final int defaultImage, final int hoverImage, final Animation hoverAnimation, final String tooltip) {
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -54,7 +54,7 @@ public class ButtonHelper {
         button.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Utilities.showToolTip(activity, tooltip);
+                activity.alert(tooltip);
                 return true;
             }
         });

@@ -14,9 +14,8 @@ import android.widget.TextView;
 import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
 import com.abstractx1.mydiary.jobs.StartRecordingJob;
 import com.abstractx1.mydiary.record.RecordHandler;
-import com.example.demo.job.PermissionActivity;
 
-public class RecordActivity extends PermissionActivity implements View.OnClickListener, View.OnTouchListener {
+public class RecordActivity extends MyDiaryActivity implements View.OnClickListener, View.OnTouchListener {
     public Animation scaleAnimation;
     public Button recordButton, playButton, clearRecordingButton;
     public SeekBar recordingSeekBar;
@@ -58,7 +57,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     recordingSeekBar,
                     recordingDurationTextView);
         } catch (Exception e) {
-            Utilities.showToolTip(this, "Could not instantiate RecordHandler: " + e.getMessage());
+            alert("Could not instantiate RecordHandler: " + e.getMessage());
         }
         initializeClearRecordingDialog();
     }
@@ -71,17 +70,17 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
         if (recordHandler.recordingInProgress()) {
             try {
                 recordHandler.cancelRecording();
-                Utilities.showToolTip(this, "Recording Cancelled");
+                alert("Recording Cancelled");
             } catch (Exception e) {
-                Utilities.showToolTip(this, "Error cancelling recording: " + e.getMessage());
+                alert("Error cancelling recording: " + e.getMessage());
             }
         }
         else if (recordHandler.playingInProgress()) {
             try {
                 recordHandler.transitionTo(RecordHandler.PAUSED);
-                Utilities.showToolTip(this, "Recording playback paused");
+                alert("Recording playback paused");
             } catch (Exception e) {
-                Utilities.showToolTip(this, "Error pausing the recording playback: " + e.getMessage());
+                alert("Error pausing the recording playback: " + e.getMessage());
             }
         }
         super.onPause();
@@ -93,7 +92,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
         try {
             recordHandler.onDestroy();
         } catch (Exception e) {
-            Utilities.showToolTip(this, "Error Destroying the Record Handler: " + e.getMessage());
+            alert("Error Destroying the Record Handler: " + e.getMessage());
         }
         super.onDestroy();
     }
@@ -108,13 +107,13 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     try {
                         recordHandler.transitionTo(RecordHandler.READY);
                     } catch (Exception e) {
-                        Utilities.showToolTip(this, "Error stopping recording: " + e.getMessage());
+                        alert("Error stopping recording: " + e.getMessage());
                     }
                 } else {
                     try {
                         triggerJob(new StartRecordingJob(this, recordHandler));
                     } catch (Exception e) {
-                        Utilities.showToolTip(this, "Error starting recording: " + e.getMessage());
+                        alert("Error starting recording: " + e.getMessage());
                     }
                 }
                 break;
@@ -123,13 +122,13 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                     try {
                         recordHandler.transitionTo(RecordHandler.PAUSED);
                     } catch (Exception e) {
-                        Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
+                        alert("Error pausing recording: " + e.getMessage());
                     }
                 } else {
                     try {
                         recordHandler.transitionTo(RecordHandler.PLAYING);
                     } catch (Exception e) {
-                        Utilities.showToolTip(this, "Error playing recording: " + e.getMessage());
+                        alert("Error playing recording: " + e.getMessage());
                     }
                 }
                 break;
@@ -151,7 +150,7 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                             try {
                                 recordHandler.transitionTo(RecordHandler.PAUSED);
                             } catch (Exception e) {
-                                Utilities.showToolTip(this, "Error pausing recording: " + e.getMessage());
+                                alert("Error pausing recording: " + e.getMessage());
                             }
                         }
                         break;
@@ -174,8 +173,9 @@ public class RecordActivity extends PermissionActivity implements View.OnClickLi
                 // User clicked Yes button
                 try {
                     recordHandler.transitionTo(RecordHandler.EMPTY);
+                    alert("Cleared recording successfully");
                 } catch (Exception e) {
-                    Utilities.showToolTip(RecordActivity.this, "Error clearing recording: " + e.getMessage());
+                    alert("Error clearing recording: " + e.getMessage());
                 }
                 dialog.dismiss();
             }

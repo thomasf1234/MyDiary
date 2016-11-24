@@ -33,6 +33,13 @@ public class ApplicationArrayAdapter extends ArrayAdapter<AppInfo> {
         this.selectedIndex = -1;
     }
 
+    public ApplicationArrayAdapter(Context context, int resource, List<AppInfo> appInfos, int defaultSelectedIndex) {
+        super(context, resource, appInfos);
+        this.context = context;
+        this.appInfos = appInfos;
+        this.selectedIndex = defaultSelectedIndex;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         AppInfo appInfo = appInfos.get(position);
 
@@ -43,12 +50,8 @@ public class ApplicationArrayAdapter extends ArrayAdapter<AppInfo> {
         ImageView icon = (ImageView) view.findViewById(R.id.emailClientListViewElementIconImageView);
         RadioButton radioButton = (RadioButton) view.findViewById(R.id.emailClientListViewElementRadiobutton);
 
-        if(selectedIndex == position){
-            radioButton.setChecked(true);
-        }
-        else{
-            radioButton.setChecked(false);
-        }
+        Boolean checked = (selectedIndex == position) ? true : false;
+        radioButton.setChecked(checked);
 
         name.setText(appInfo.getName());
         icon.setImageDrawable(appInfo.getIcon());

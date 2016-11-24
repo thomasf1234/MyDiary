@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="12dp" >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:id="@+id/termsAndConditionsScrollView" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="12dp" >
+
+        <TextView
+            android:id="@+id/termsAndConditionsPlaceHolderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="@string/terms_and_conditions_text"  />
+    </RelativeLayout>
+    </ScrollView>
+    <CheckBox
+        android:id="@+id/acceptTermsAndConditionsCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/accept_terms_and_conditions_check_box_text" 
+        android:layout_below="@id/termsAndConditionsScrollView"/>
+</RelativeLayout>

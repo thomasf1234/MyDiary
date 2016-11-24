@@ -1,15 +1,12 @@
 package com.abstractx1.mydiary;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,18 +14,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
 import com.abstractx1.mydiary.dialog_builders.DebugDialogBuilder;
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
 import com.abstractx1.mydiary.jobs.GetAndSetExternalBitmapJob;
-import com.example.demo.job.PermissionActivity;
 
 import java.io.IOException;
 
-public class PhotoActivity extends PermissionActivity implements View.OnClickListener {
+public class PhotoActivity extends MyDiaryActivity implements View.OnClickListener {
     public Animation scaleAnimation;
     public Button cameraButton, uploadButton, clearPictureButton, nextButton;
     private CameraHandler cameraHandler;
     private ImageView screenShotImageView;
+    private AlertDialog clearImageDialog;
     private static int REQUEST_GET_FROM_GALLERY = 2;
 
     @Override
@@ -37,6 +35,7 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
         setContentView(R.layout.activity_photo);
         cameraHandler = new CameraHandler(this, getCacheDir() + "/image3.jpg");
         initializeWidgets();
+        initializeClearRecordingDialog();
     }
 
     public void initializeWidgets() {
@@ -91,10 +90,7 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
                 break;
             case R.id.clearPictureButton:
                 try {
-                    DataCollector.getInstance().clearImage();
-                    screenShotImageView.setImageBitmap(null);
-                    screenShotImageView.invalidate();
-                    ButtonHelper.disable(clearPictureButton);
+                    clearImageDialog.show();
                 } catch (Exception e) {
                     Toast.makeText(this, "An error occurred while clearing the selected photo." + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -141,40 +137,29 @@ public class PhotoActivity extends PermissionActivity implements View.OnClickLis
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        if(getResources().getBoolean(R.bool.debug_mode))
-            inflater.inflate(R.menu.debug_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.debug:
-                showDebugDialog();
-                return true;
-            case R.id.clearCache:
-                Utilities.clearCache(getApplicationContext());
-                Toast.makeText(this, "Cleared cache", Toast.LENGTH_LONG).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public int getDisplayWidth() {
-        return getDisplayMetrics().widthPixels;
-    }
-
-    public int getDisplayHeight() {
-        return getDisplayMetrics().heightPixels;
-    }
-
-    private DisplayMetrics getDisplayMetrics() {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        return displaymetrics;
+    private void initializeClearRecordingDialog() {
+        ConfirmationDialogBuilder builder = new ConfirmationDialogBuilder(this, "Are you sure you want clear the image?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked Yes button
+                try {
+                    DataCollector.getInstance().clearImage();
+                    screenShotImageView.setImageBitmap(null);
+                    screenShotImageView.invalidate();
+                    ButtonHelper.disable(clearPictureButton);
+                    alert("Cleared image successfully");
+                } catch (Exception e) {
+                    alert("Error clearing image: " + e.getMessage());
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked No button
+                dialog.dismiss();
+            }
+        });
+        this.clearImageDialog = builder.create();
     }
 }

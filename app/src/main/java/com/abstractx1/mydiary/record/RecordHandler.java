@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.abstractx1.mydiary.ButtonHelper;
 import com.abstractx1.mydiary.DataCollector;
+import com.abstractx1.mydiary.MyDiaryActivity;
 import com.abstractx1.mydiary.R;
 import com.abstractx1.mydiary.Utilities;
 import com.abstractx1.mydiary.lib.states.State6;
@@ -48,7 +49,7 @@ public class RecordHandler extends State6 {
         validStateTransitions = Collections.unmodifiableMap(_validStateTransitions);
     }
 
-    private Activity activity;
+    private MyDiaryActivity activity;
     private Animation hoverAnimation;
     private Button recordButton, playButton, clearRecordingButton;
     private SeekBar recordingSeekBar;
@@ -58,7 +59,7 @@ public class RecordHandler extends State6 {
     private Handler handler;
     private Timer timer;
 
-    public RecordHandler(Activity activity,
+    public RecordHandler(MyDiaryActivity activity,
                          Animation hoverAnimation,
                          Button recordButton,
                          Button playButton,
@@ -230,7 +231,7 @@ public class RecordHandler extends State6 {
                     //Can be called if paused near the end, so must allow transition from PAUSED to READY
                     transitionTo(READY);
                 } catch (Exception e) {
-                    Utilities.showToolTip(activity, "Error when recording playback finished: " + e.getMessage());
+                    activity.alert("Error when recording playback finished: " + e.getMessage());
                 }
             }
 

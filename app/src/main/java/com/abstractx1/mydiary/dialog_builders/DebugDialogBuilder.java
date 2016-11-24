@@ -36,8 +36,16 @@ public class DebugDialogBuilder extends AlertDialog.Builder {
         String message = "";
 
         File[] cacheFiles = Utilities.getCacheFiles(getContext());
-        message += "File count: " + Integer.toString(cacheFiles.length) + "\r\n";
+        File[] internalFiles = Utilities.getFiles(getContext());
+
+        message += "Cache File count: " + Integer.toString(cacheFiles.length) + "\r\n";
         for (File file : cacheFiles) {
+            int fileSize = Integer.parseInt(String.valueOf(file.length()/1024));
+            message += "  Path: " + file.getPath() + ", size: " + Integer.toString(fileSize) + "KB\r\n";
+        }
+
+        message += "Internal File count: " + Integer.toString(internalFiles.length) + "\r\n";
+        for (File file : internalFiles) {
             int fileSize = Integer.parseInt(String.valueOf(file.length()/1024));
             message += "  Path: " + file.getPath() + ", size: " + Integer.toString(fileSize) + "KB\r\n";
         }

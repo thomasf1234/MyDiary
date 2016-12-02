@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -17,9 +19,10 @@ import com.abstractx1.mydiary.record.RecordHandler;
 
 public class RecordActivity extends MyDiaryActivity implements View.OnClickListener, View.OnTouchListener {
     public Animation scaleAnimation;
-    public Button recordButton, playButton, clearRecordingButton;
+    public ImageButton recordButton, playButton, clearRecordingButton;
     public SeekBar recordingSeekBar;
     public TextView recordingDurationTextView;
+    public Button saveInputButton;
 
     private RecordHandler recordHandler;
     private AlertDialog clearRecordingDialog;
@@ -33,15 +36,16 @@ public class RecordActivity extends MyDiaryActivity implements View.OnClickListe
 
     public void initializeWidgets() {
         this.scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale);
-        this.recordButton = (Button) findViewById(R.id.recordButton);
-        this.playButton = (Button) findViewById(R.id.playButton);
-        this.clearRecordingButton = (Button) findViewById(R.id.clearRecordingButton);
+        this.recordButton = (ImageButton) findViewById(R.id.recordButton);
+        this.playButton = (ImageButton) findViewById(R.id.playButton);
+        this.clearRecordingButton = (ImageButton) findViewById(R.id.clearRecordingButton);
         this.recordingSeekBar = (SeekBar) findViewById(R.id.recordingSeekBar);
         this.recordingDurationTextView = (TextView) findViewById(R.id.recordingDurationTextView);
+        this.saveInputButton = (Button) findViewById(R.id.saveButton);
 
-        ButtonHelper.customize(this, recordButton, R.drawable.record_button, R.drawable.record_button_hover, scaleAnimation, "Record Audio");
-        ButtonHelper.customize(this, playButton, R.drawable.play_button, R.drawable.play_button_hover, scaleAnimation, "Play Recorded Audio");
-        ButtonHelper.customize(this, clearRecordingButton, R.drawable.delete_button, R.drawable.delete_button_hover, scaleAnimation, "Clear Audio");
+        ButtonHelper.customizeAndroidStyle(this, recordButton, android.R.drawable.ic_btn_speak_now, "Record Audio");
+        ButtonHelper.customizeAndroidStyle(this, playButton, android.R.drawable.ic_media_play, "Play Recorded Audio");
+        ButtonHelper.customizeAndroidStyle(this, clearRecordingButton, android.R.drawable.ic_menu_delete, "Clear Recorded Audio");
 
         recordButton.setOnClickListener(this);
         playButton.setOnClickListener(this);
@@ -105,6 +109,7 @@ public class RecordActivity extends MyDiaryActivity implements View.OnClickListe
             case R.id.recordButton:
                 if (recordHandler.recordingInProgress()) {
                     try {
+                        view.playSoundEffect(SoundEffectConstants.CLICK);
                         recordHandler.transitionTo(RecordHandler.READY);
                     } catch (Exception e) {
                         alert("Error stopping recording: " + e.getMessage());
@@ -133,6 +138,7 @@ public class RecordActivity extends MyDiaryActivity implements View.OnClickListe
                 }
                 break;
             case R.id.clearRecordingButton:
+                view.playSoundEffect(SoundEffectConstants.CLICK);
                 clearRecordingDialog.show();
                 break;
             default:

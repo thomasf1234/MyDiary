@@ -60,8 +60,8 @@ public class PhotoActivity extends MyDiaryActivity implements View.OnClickListen
         screenShotImageView.setOnClickListener(this);
 
         //TODO: get smallest of height or width and use
-        screenShotImageView.getLayoutParams().height = (int) (getDisplayWidth() / 1.5);
-        screenShotImageView.getLayoutParams().width = (int) (getDisplayWidth() / 1.5);
+        screenShotImageView.getLayoutParams().height = (int) (getDisplayWidth() / 1.2);
+        screenShotImageView.getLayoutParams().width = (int) (getDisplayWidth() / 1.2);
         screenShotImageView.setBackgroundColor(Color.BLACK);
 
         //disable the camera button if we do not have camera

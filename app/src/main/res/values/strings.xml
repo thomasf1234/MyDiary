@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyDiary</string>
+    <string name="app_name">ParticipantJournal</string>
     <string name="debug_dialog_title">Debug</string>
     <string name="screen_shot_dialog_title">Screen Shot Details</string>
     <string name="introduction_dialog_title">Setup</string>

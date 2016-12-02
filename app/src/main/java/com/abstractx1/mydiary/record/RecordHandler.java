@@ -1,12 +1,11 @@
 package com.abstractx1.mydiary.record;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -51,7 +50,7 @@ public class RecordHandler extends State6 {
 
     private MyDiaryActivity activity;
     private Animation hoverAnimation;
-    private Button recordButton, playButton, clearRecordingButton;
+    private ImageButton recordButton, playButton, clearRecordingButton;
     private SeekBar recordingSeekBar;
     private TextView recordingDurationTextView;
     private Recorder recorder;
@@ -61,9 +60,9 @@ public class RecordHandler extends State6 {
 
     public RecordHandler(MyDiaryActivity activity,
                          Animation hoverAnimation,
-                         Button recordButton,
-                         Button playButton,
-                         Button clearRecordingButton,
+                         ImageButton recordButton,
+                         ImageButton playButton,
+                         ImageButton clearRecordingButton,
                          SeekBar recordingSeekBar,
                          TextView recordingDurationTextView) throws Exception {
         this.activity = activity;
@@ -111,7 +110,7 @@ public class RecordHandler extends State6 {
         recorder.record();
         keepScreenAwake(true);
         ButtonHelper.enable(recordButton);
-        ButtonHelper.customize(activity, recordButton, R.drawable.stop_button, R.drawable.stop_button_hover, hoverAnimation, "Stop Recording");
+        ButtonHelper.customizeAndroidStyle(activity, recordButton, android.R.drawable.presence_audio_busy, "Stop Recording");
         ButtonHelper.disable(playButton);
         ButtonHelper.disable(clearRecordingButton);
         recordingSeekBar.setEnabled(false);
@@ -126,9 +125,9 @@ public class RecordHandler extends State6 {
             setUpNewRecordingPlayer();
         }
         keepScreenAwake(false);
-        ButtonHelper.customize(activity, recordButton, R.drawable.record_button, R.drawable.record_button_hover, hoverAnimation, "Start Recording");
+        ButtonHelper.customizeAndroidStyle(activity, recordButton, android.R.drawable.ic_btn_speak_now, "Start Recording");
         ButtonHelper.disable(recordButton);
-        ButtonHelper.customize(activity, playButton, R.drawable.play_button, R.drawable.play_button_hover, hoverAnimation, "Play Recording");
+        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_play, "Play Recording");
         ButtonHelper.enable(playButton);
         ButtonHelper.enable(clearRecordingButton);
         recordingDurationTextView.setText(Utilities.formatMilliSeconds(recordingPlayer.getDuration()));
@@ -142,7 +141,7 @@ public class RecordHandler extends State6 {
     protected void onSetStateFIVE() throws Exception {
         recordingPlayer.play();
         keepScreenAwake(true);
-        ButtonHelper.customize(activity, playButton, R.drawable.pause_button, R.drawable.pause_button_hover, hoverAnimation, "Pause Recording");
+        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_pause, "Pause Recording");
         ButtonHelper.disable(recordButton);
         ButtonHelper.enable(playButton);
         ButtonHelper.disable(clearRecordingButton);
@@ -154,7 +153,7 @@ public class RecordHandler extends State6 {
     protected void onSetStateSIX() throws Exception {
         recordingPlayer.pause();
         keepScreenAwake(false);
-        ButtonHelper.customize(activity, playButton, R.drawable.play_button, R.drawable.play_button_hover, hoverAnimation, "Resume Recording");
+        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_play, "Resume Recording");
         ButtonHelper.disable(recordButton);
         ButtonHelper.enable(playButton);
         ButtonHelper.enable(clearRecordingButton);

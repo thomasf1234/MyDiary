@@ -12,22 +12,32 @@ import java.io.IOException;
  * Created by tfisher on 15/11/2016.
  */
 //singleton class
-public class DataCollector {
-
-    private static DataCollector instance = null;
-    private DataCollector() {
-        // Exists only to defeat instantiation.
-    }
-
-    public static DataCollector getInstance() {
-        if(instance == null) {
-            instance = new DataCollector();
-        }
-        return instance;
-    }
-
+public class DataCollection {
+    private String question;
     private Bitmap image;
     private File recording;
+    private String answer;
+
+    public DataCollection(String question) {
+        this.question = question;
+        setAnswer("");
+    }
+
+    public static DataCollection getInstance(){
+        return new DataCollection("f");
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public void setImage(String path) throws IOException {
         Bitmap bmp = BitmapFactory.decodeFile(path);

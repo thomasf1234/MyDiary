@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.abstractx1.mydiary.ButtonHelper;
-import com.abstractx1.mydiary.DataCollector;
+import com.abstractx1.mydiary.DataCollection;
 import com.example.demo.job.PermissionJob;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.io.IOException;
  * Created by tfisher on 15/11/2016.
  */
 
-//requests READ_EXTERNAL_STORAGE permission and then sets the external bitmap on the DataCollector Singleton
+//requests READ_EXTERNAL_STORAGE permission and then sets the external bitmap on the DataCollection Singleton
 // and sets the image on the passed ImageView
 public class GetAndSetExternalBitmapJob extends PermissionJob {
     public static final String[] PERMISSIONS = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -38,8 +38,8 @@ public class GetAndSetExternalBitmapJob extends PermissionJob {
 
     @Override
     public void perform() throws IOException {
-        DataCollector.getInstance().setImage(getImagePath(imageUri));
-        imageView.setImageBitmap(DataCollector.getInstance().getImage());
+        DataCollection.getInstance().setImage(getImagePath(imageUri));
+        imageView.setImageBitmap(DataCollection.getInstance().getImage());
         imageView.invalidate();
         ButtonHelper.enable(clearPictureButton);
     }

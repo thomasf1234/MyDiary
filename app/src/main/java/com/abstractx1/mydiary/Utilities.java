@@ -76,8 +76,10 @@ public class Utilities {
         return subFiles;
     }
 
-    public static String formatSeconds(int pTime) {
-        return String.format("%01d:%02d", pTime / 60, pTime % 60);
+    public static String formatMilliSecondsShort(long milliSeconds) {
+        long s = (milliSeconds / 1000) % 60;
+        long m = (milliSeconds / (1000 * 60)) % 60;
+        return String.format("%01d:%02d", m, s);
     }
 
     public static String formatMilliSeconds(long milliSeconds) {

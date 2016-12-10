@@ -24,7 +24,7 @@ public class ButtonHelper {
     public static void disable(View button) {
         button.setEnabled(false);
         //button.getBackground().setAlpha(SEMI_TRANSPARENT);
-        button.setVisibility(View.GONE);
+        button.setVisibility(View.INVISIBLE);
     }
 
     public static void customize(final MyDiaryActivity activity, Button button, final int defaultImage, final int hoverImage, final Animation hoverAnimation, final String tooltip) {

@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.abstractx1.mydiary.dialog_builders.DebugDialogBuilder;
@@ -69,13 +70,20 @@ public abstract class MyDiaryActivity extends PermissionActivity {
         toast.show();
     }
 
+    public void keepScreenAwake(boolean keepAwake) {
+        if (keepAwake)
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        else
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
     private DisplayMetrics getDisplayMetrics() {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         return displaymetrics;
     }
 
-    private boolean isInDebugMode() {
+    protected boolean isInDebugMode() {
         return getResources().getBoolean(R.bool.debug_mode);
     }
 }

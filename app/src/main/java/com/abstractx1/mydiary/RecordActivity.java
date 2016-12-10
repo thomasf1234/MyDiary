@@ -54,12 +54,11 @@ public class RecordActivity extends MyDiaryActivity implements View.OnClickListe
 
         try {
             recordHandler = new RecordHandler(this,
-                    scaleAnimation,
                     recordButton,
                     playButton,
                     clearRecordingButton,
                     recordingSeekBar,
-                    recordingDurationTextView);
+                    recordingDurationTextView, new DataCollection("test"));
         } catch (Exception e) {
             alert("Could not instantiate RecordHandler: " + e.getMessage());
         }

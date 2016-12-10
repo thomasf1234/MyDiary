@@ -96,8 +96,8 @@ public class PhotoActivity extends MyDiaryActivity implements View.OnClickListen
                 }
                 break;
             case R.id.screenShotImageView:
-                if(DataCollector.getInstance().hasImage()) {
-                    ScreenShotDialog dialog = new ScreenShotDialog(this, DataCollector.getInstance().getImage());
+                if(DataCollection.getInstance().hasImage()) {
+                    ScreenShotDialog dialog = new ScreenShotDialog(this, DataCollection.getInstance().getImage());
                     dialog.show();
                 } else {
                     Toast.makeText(this, "An image has not been taken.", Toast.LENGTH_SHORT).show();
@@ -120,8 +120,8 @@ public class PhotoActivity extends MyDiaryActivity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CameraHandler.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-                DataCollector.getInstance().setImage(cameraHandler.getImagePath());
-                screenShotImageView.setImageBitmap(DataCollector.getInstance().getImage());
+                DataCollection.getInstance().setImage(cameraHandler.getImagePath());
+                screenShotImageView.setImageBitmap(DataCollection.getInstance().getImage());
                 screenShotImageView.invalidate();
                 ButtonHelper.enable(clearPictureButton);
             } catch (IOException e) {
@@ -143,7 +143,7 @@ public class PhotoActivity extends MyDiaryActivity implements View.OnClickListen
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked Yes button
                 try {
-                    DataCollector.getInstance().clearImage();
+                    DataCollection.getInstance().clearImage();
                     screenShotImageView.setImageBitmap(null);
                     screenShotImageView.invalidate();
                     ButtonHelper.disable(clearPictureButton);

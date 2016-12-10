@@ -1,0 +1,9 @@
+<resources>
+    <string-array name="questions">
+        <item>How many zeroes in 100?</item>
+        <item>How many hairs in a piece of horse hair?</item>
+        <item>How many rain drops make up the sea</item>
+        <item>How many neutrons are in the most common isotope of carbon?</item>
+        <item>How much do I love Rachel?</item>
+    </string-array>
+</resources>

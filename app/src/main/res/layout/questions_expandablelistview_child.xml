@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/recordingLinearLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="25dp">
+
+        <!--<RelativeLayout-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_margin="3dp"-->
+            <!--android:layout_above="@+id/writingLinearLayout">-->
+
+            <!--<TextView-->
+                <!--android:text="@string/zero_seconds"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_margin="3dp"-->
+                <!--android:id="@+id/recordingDurationTextViewChild"-->
+                <!--android:textSize="20sp"-->
+                <!--android:layout_alignParentLeft="true"/>-->
+
+            <!--<SeekBar-->
+                <!--android:id="@+id/recordingSeekBarChild"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_margin="3dp"-->
+                <!--android:progress="0"-->
+               <!---->
+                <!--android:layout_toRightOf="@+id/recordingDurationTextViewChild" />-->
+
+            <!--<ImageButton-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_margin="1dp"-->
+                <!--app:srcCompat="@android:drawable/ic_btn_speak_now"-->
+                <!--android:background="?selectableItemBackgroundBorderless"-->
+                <!--android:id="@+id/recordButtonChild"-->
+                <!--android:layout_toRightOf="@+id/recordingSeekBarChild" />-->
+
+            <!--<ImageButton-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_margin="1dp"-->
+                <!--app:srcCompat="@android:drawable/ic_media_play"-->
+                <!--android:background="?selectableItemBackgroundBorderless"-->
+                <!--android:id="@+id/playButtonChild"-->
+                <!--android:layout_toRightOf="@+id/recordButtonChild"/>-->
+
+            <!--<ImageButton-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_margin="1dp"-->
+                <!--app:srcCompat="@android:drawable/ic_menu_delete"-->
+                <!--android:background="?selectableItemBackgroundBorderless"-->
+                <!--android:id="@+id/clearRecordingButtonChild"-->
+                <!--android:layout_alignParentRight="true"/>-->
+        <!--</RelativeLayout>-->
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:text="@string/zero_seconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:id="@+id/recordingDurationTextViewChild"
+                android:textSize="20sp" />
+
+            <SeekBar
+                android:id="@+id/recordingSeekBarChild"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:progress="0"
+                android:layout_weight="7.59"
+                android:gravity="center_vertical" />
+
+            <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@color/white"
+                android:layout_weight="0.3"
+                android:gravity="center" >
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_centerVertical="true"
+                app:srcCompat="@android:drawable/ic_btn_speak_now"
+                android:background="?selectableItemBackgroundBorderless"
+                android:id="@+id/recordButtonChild"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="1dp"
+                app:srcCompat="@android:drawable/ic_media_play"
+                android:background="?selectableItemBackgroundBorderless"
+                android:id="@+id/playButtonChild"
+                android:layout_toRightOf="@+id/recordButtonChild"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="1dp"
+                app:srcCompat="@android:drawable/ic_menu_delete"
+                android:background="?selectableItemBackgroundBorderless"
+                android:id="@+id/clearRecordingButtonChild"
+                android:layout_toRightOf="@+id/playButtonChild"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/writingLinearLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="25dp"
+        android:orientation="horizontal"
+        android:background="@drawable/customborder"
+        android:layout_below="@+id/recordingLinearLayout"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/answerEditText"
+            android:layout_width="0dp"
+            android:layout_weight=".80"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:inputType="text|textAutoCorrect|textMultiLine"
+            android:maxLines="5"
+            android:scrollbars="vertical"
+            android:background="@color/white"
+            android:drawableRight="@android:drawable/ic_menu_edit"
+            android:drawableEnd="@android:drawable/ic_menu_edit"
+            android:hint="Answer here..."
+            android:textSize="20dp"
+            android:imeOptions="flagNoFullscreen"/>
+    </LinearLayout>
+
+</RelativeLayout>

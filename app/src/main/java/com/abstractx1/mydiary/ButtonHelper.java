@@ -11,19 +11,13 @@ import android.widget.ImageButton;
  */
 
 public class ButtonHelper {
-    public static final int SEMI_TRANSPARENT = 127;
-    public static final int OPAQUE = 255;
-
     public static void enable(View button) {
         button.setEnabled(true);
-//        button.setAlpha(1);
-//        button.getBackground().setAlpha(OPAQUE);
         button.setVisibility(View.VISIBLE);
     }
 
     public static void disable(View button) {
         button.setEnabled(false);
-        //button.getBackground().setAlpha(SEMI_TRANSPARENT);
         button.setVisibility(View.INVISIBLE);
     }
 

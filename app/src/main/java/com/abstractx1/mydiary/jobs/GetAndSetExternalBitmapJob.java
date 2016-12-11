@@ -38,10 +38,10 @@ public class GetAndSetExternalBitmapJob extends PermissionJob {
 
     @Override
     public void perform() throws IOException {
-        DataCollection.getInstance().setImage(getImagePath(imageUri));
-        imageView.setImageBitmap(DataCollection.getInstance().getImage());
-        imageView.invalidate();
-        ButtonHelper.enable(clearPictureButton);
+        //DataCollection.getInstance().setImage(getImagePath(imageUri));
+        //imageView.setImageBitmap(DataCollection.getInstance().getImage());
+        //imageView.invalidate();
+        //ButtonHelper.enable(clearPictureButton);
     }
 
     @Override

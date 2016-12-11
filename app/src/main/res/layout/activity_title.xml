@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/activity_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
-    android:background="@android:color/darker_gray"
+    android:background="@android:color/white"
                 tools:context="com.abstractx1.mydiary.TitleActivity">
 
     <ExpandableListView
             android:id="@+id/questionsExpandableListView"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:background="@android:color/white"
             android:cacheColorHint="@android:color/transparent"
             android:choiceMode="singleChoice"
             android:descendantFocusability="beforeDescendants"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_below="@+id/questionsExpandableListView"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:scaleType="fitXY"
+        android:id="@+id/sendButton"/>
 </RelativeLayout>

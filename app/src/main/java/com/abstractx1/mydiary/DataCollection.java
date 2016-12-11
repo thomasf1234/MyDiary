@@ -13,19 +13,19 @@ import java.io.IOException;
  */
 //singleton class
 public class DataCollection {
+    private int questionNumber;
     private String question;
     private Bitmap image;
     private File recording;
     private String answer;
 
-    public DataCollection(String question) {
+    public DataCollection(int questionNumber, String question) {
+        this.questionNumber = questionNumber;
         this.question = question;
         setAnswer("");
     }
 
-    public static DataCollection getInstance(){
-        return new DataCollection("f");
-    }
+    public int getQuestionNumber() { return questionNumber; }
 
     public String getQuestion() {
         return question;

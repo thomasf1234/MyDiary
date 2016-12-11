@@ -44,9 +44,9 @@ public class Microphone extends MediaRecorder {
     }
 
     private void initialize() {
-        setAudioSource(MediaRecorder.AudioSource.MIC);
-        setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        setAudioSource(AudioSource.MIC);
+        setOutputFormat(OutputFormat.MPEG_4);
+        setAudioEncoder(AudioEncoder.AAC);
         this.state = State.NOT_RECORDING;
     }
 }

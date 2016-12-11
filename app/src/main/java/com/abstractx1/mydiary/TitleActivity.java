@@ -2,9 +2,13 @@ package com.abstractx1.mydiary;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 
 
 import com.abstractx1.mydiary.adapters.QuestionsExpandableListAdapter;
@@ -12,10 +16,12 @@ import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.record.RecordHandler;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 
 public class TitleActivity extends MyDiaryActivity {
     public ExpandableListView questionsExpandableListView;
+    private ImageButton sendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +30,8 @@ public class TitleActivity extends MyDiaryActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_title);
-        alert("Being created! " + Researcher.getInstance().getDataCollections().size() );
         questionsExpandableListView = (ExpandableListView) findViewById(R.id.questionsExpandableListView);
+        sendButton = (ImageButton) findViewById(R.id.sendButton);
 
         if (savedInstanceState != null) {
             if (!Researcher.getInstance().hasData()) {
@@ -34,7 +40,7 @@ public class TitleActivity extends MyDiaryActivity {
                     DataCollection dataCollection = Researcher.getInstance().getDataCollections().get(i);
                     dataCollection.setAnswer(savedInstanceState.getString("answer" + i));
                     if (savedInstanceState.containsKey("recordingPath" + i)) {
-                        alert("recording loaded");
+                        if (isInDebugMode()) { alert("recording loaded"); }
                         dataCollection.setRecording(new File(savedInstanceState.getString("recordingPath" + i)));
                     }
                 }
@@ -62,14 +68,29 @@ public class TitleActivity extends MyDiaryActivity {
         });
 
         questionsExpandableListView.setAdapter(questionsExpandableListViewAdapter);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    new Compress(new String[]{Researcher.getInstance().getDataCollections().get(0).getRecording().getAbsolutePath()}, Environment.getExternalStorageDirectory() + File.separator + "myZip.zip").zip();
+                    EmailClient emailClient = new EmailClient(TitleActivity.this);
+                    emailClient.open("abstractunderstandings@gmail.com", new String[] {Environment.getExternalStorageDirectory() + File.separator + "myZip.zip"});
+                } catch (Exception e) {
+                    alert("Error compressing: " + e.getMessage());
+                }
+            }
+        });
     }
 
     private void setupResearcher() {
         Resources res = getResources();
         String[] questions = res.getStringArray(R.array.questions);
 
-        for (String question : questions) {
-            Researcher.getInstance().getDataCollections().add(new DataCollection(question));
+        for (int i=0; i<questions.length; ++i) {
+            String question = questions[i];
+            int questionNumber = i + 1;
+            Researcher.getInstance().getDataCollections().add(new DataCollection(questionNumber, question));
         }
     }
 
@@ -85,7 +106,7 @@ public class TitleActivity extends MyDiaryActivity {
             DataCollection dataCollection = Researcher.getInstance().getDataCollections().get(i);
             savedInstanceState.putString("answer" + i, dataCollection.getAnswer());
             if(dataCollection.hasRecording()) {
-                alert("recording saved");
+                if (isInDebugMode()) { alert("recording saved"); }
                 savedInstanceState.putString("recordingPath" + i, dataCollection.getRecording().getAbsolutePath());
             }
         }

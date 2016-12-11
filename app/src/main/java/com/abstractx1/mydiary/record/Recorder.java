@@ -10,11 +10,13 @@ import java.io.IOException;
 public class Recorder {
     private Microphone microphone;
     private File outputFile;
+    private String outputFileName;
     private Stopwatch stopwatch;
 
-    public Recorder() throws IOException {
+    public Recorder(String outputFileName) throws IOException {
         this.microphone = new Microphone();
         this.stopwatch = new Stopwatch();
+        this.outputFileName = outputFileName;
         createAndSetOutputFile();
     }
 
@@ -54,7 +56,7 @@ public class Recorder {
     }
 
     private void createAndSetOutputFile() throws IOException {
-        outputFile = File.createTempFile("microphone_recording", ".3gp");
+        outputFile = File.createTempFile(outputFileName, ".mp4");
         outputFile.deleteOnExit();
         microphone.setOutputFile(outputFile.getAbsolutePath());
     }

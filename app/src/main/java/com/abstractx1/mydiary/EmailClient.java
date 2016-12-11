@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,29 @@ public class EmailClient {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType(MESSAGE_TYPE);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+
+        try {
+            emailIntent.setPackage(getChosenEmailAppPackage());
+            Intent gmailIntent = Intent.createChooser(emailIntent, "Send mail...");
+            activity.startActivity(gmailIntent);
+            activity.finish();
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(activity, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void open(String toAddress, String[] attachments) {
+        String[] TO = {toAddress};
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType(MESSAGE_TYPE);
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        String subjectTitle = "Test";
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subjectTitle);
+        for (String file_path : attachments) {
+            emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file_path)));
+        }
 
         try {
             emailIntent.setPackage(getChosenEmailAppPackage());

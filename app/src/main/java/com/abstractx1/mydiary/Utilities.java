@@ -115,16 +115,4 @@ public class Utilities {
         File to = new File(dst);
         from.renameTo(to);
     }
-
-//    public static void showToolTip(Activity activity, String message) {
-//        Toast toast = Toast.makeText(activity, message, Toast.LENGTH_LONG);
-//        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-//        toast.show();
-//    }
-//
-//    public static void showToolTip(Context context, String message) {
-//        Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
-//        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-//        toast.show();
-//    }
 }

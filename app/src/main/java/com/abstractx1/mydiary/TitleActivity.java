@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 
 import com.abstractx1.mydiary.adapters.QuestionsExpandableListAdapter;
@@ -36,12 +37,11 @@ public class TitleActivity extends MyDiaryActivity {
         if (savedInstanceState != null) {
             if (!Researcher.getInstance().hasData()) {
                 setupResearcher();
-                for(int i=0; i<Researcher.getInstance().getDataCollections().size(); ++i) {
-                    DataCollection dataCollection = Researcher.getInstance().getDataCollections().get(i);
-                    dataCollection.setAnswer(savedInstanceState.getString("answer" + i));
-                    if (savedInstanceState.containsKey("recordingPath" + i)) {
-                        if (isInDebugMode()) { alert("recording loaded"); }
-                        dataCollection.setRecording(new File(savedInstanceState.getString("recordingPath" + i)));
+                for (DataCollection dataCollection : Researcher.getInstance().getDataCollections()) {
+                    dataCollection.setAnswer(savedInstanceState.getString("answer" + dataCollection.getQuestionNumber()));
+                    if (savedInstanceState.containsKey("recordingPath" + dataCollection.getQuestionNumber())) {
+                        debugAlert("recording loaded");
+                        dataCollection.setRecording(new File(savedInstanceState.getString("recordingPath" + dataCollection.getQuestionNumber())));
                     }
                 }
             }
@@ -50,20 +50,28 @@ public class TitleActivity extends MyDiaryActivity {
         }
 
         final ExpandableListAdapter questionsExpandableListViewAdapter = new QuestionsExpandableListAdapter(this);
-        questionsExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+        questionsExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onGroupExpand(int groupPosition) {
-                QuestionsExpandableListAdapter customExpandAdapter = (QuestionsExpandableListAdapter) questionsExpandableListView.getExpandableListAdapter();
-                if (customExpandAdapter == null) {return;}
-                for (int i = 0; i < customExpandAdapter.getGroupCount(); i++) {
-                    if (i != groupPosition) {
-                        customExpandAdapter.haltGroup(i);
-                        questionsExpandableListView.collapseGroup(i);
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+
+                int groupPosition = i;
+
+                if (expandableListView.isGroupExpanded(groupPosition)) {
+                    expandableListView.collapseGroup(groupPosition);
+                } else {
+                    closeKeyboard();
+                    for (int j = 0; j < questionsExpandableListViewAdapter.getGroupCount(); j++) {
+                        if (j != groupPosition) {
+                            questionsExpandableListView.collapseGroup(j);
+                        }
                     }
+
+                    clearFocus();
+                    expandableListView.expandGroup(groupPosition);
                 }
 
-                questionsExpandableListView.setFocusableInTouchMode(true);
-                questionsExpandableListView.requestFocus();
+                return true;
             }
         });
 
@@ -72,13 +80,13 @@ public class TitleActivity extends MyDiaryActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    new Compress(new String[]{Researcher.getInstance().getDataCollections().get(0).getRecording().getAbsolutePath()}, Environment.getExternalStorageDirectory() + File.separator + "myZip.zip").zip();
-                    EmailClient emailClient = new EmailClient(TitleActivity.this);
-                    emailClient.open("abstractunderstandings@gmail.com", new String[] {Environment.getExternalStorageDirectory() + File.separator + "myZip.zip"});
-                } catch (Exception e) {
-                    alert("Error compressing: " + e.getMessage());
-                }
+//                try {
+//                    new Compress(new String[]{Researcher.getInstance().getDataCollections().get(0).getRecording().getAbsolutePath()}, Environment.getExternalStorageDirectory() + File.separator + "myZip.zip").zip();
+//                    EmailClient emailClient = new EmailClient(TitleActivity.this);
+//                    emailClient.open("abstractunderstandings@gmail.com", new String[] {Environment.getExternalStorageDirectory() + File.separator + "myZip.zip"});
+//                } catch (Exception e) {
+//                    alert("Error compressing: " + e.getMessage());
+//                }
             }
         });
     }
@@ -102,16 +110,20 @@ public class TitleActivity extends MyDiaryActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
-        for(int i=0; i<Researcher.getInstance().getDataCollections().size(); ++i) {
-            DataCollection dataCollection = Researcher.getInstance().getDataCollections().get(i);
-            savedInstanceState.putString("answer" + i, dataCollection.getAnswer());
+        for (DataCollection dataCollection : Researcher.getInstance().getDataCollections()) {
+            savedInstanceState.putString("answer" + dataCollection.getQuestionNumber(), dataCollection.getAnswer());
             if(dataCollection.hasRecording()) {
                 if (isInDebugMode()) { alert("recording saved"); }
-                savedInstanceState.putString("recordingPath" + i, dataCollection.getRecording().getAbsolutePath());
+                savedInstanceState.putString("recordingPath" + dataCollection.getQuestionNumber(), dataCollection.getRecording().getAbsolutePath());
             }
         }
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    private void clearFocus() {
+        RelativeLayout focuslayout = (RelativeLayout) findViewById(R.id.RequestFocusLayout);
+        focuslayout.requestFocus();
     }
 }

@@ -1,6 +1,7 @@
 package com.abstractx1.mydiary;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.abstractx1.mydiary.dialog_builders.DebugDialogBuilder;
@@ -71,10 +73,22 @@ public abstract class MyDiaryActivity extends PermissionActivity {
         toast.show();
     }
 
+    public void debugAlert(String message) {
+        if (isInDebugMode()) { alert(message); }
+    }
+
     public void toolTipUnderView(View view, String text) {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.setGravity( Gravity.TOP, view.getLeft() - view.getWidth() / 2 - toast.getView().getWidth() / 2, view.getBottom());
         toast.show();
+    }
+
+    protected void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     public void keepScreenAwake(boolean keepAwake) {

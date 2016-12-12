@@ -23,8 +23,14 @@ public class Researcher {
         return dataCollections;
     }
 
-    public void setDataCollections(List<DataCollection> dataCollections) {
-        this.dataCollections = dataCollections;
+    public DataCollection getDataCollection(int questionNumber) {
+        for (DataCollection dataCollection : dataCollections) {
+            if (dataCollection.getQuestionNumber() == questionNumber) {
+                return dataCollection;
+            }
+        }
+
+        return null;
     }
 
     public boolean hasData() {

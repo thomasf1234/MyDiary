@@ -82,9 +82,7 @@
         android:layout_marginLeft="25dp"
         android:orientation="horizontal"
         android:background="@drawable/customborder"
-        android:layout_below="@+id/recordingLinearLayout"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:layout_below="@+id/recordingLinearLayout">
 
         <EditText
             android:id="@+id/answerEditText"
@@ -93,14 +91,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:inputType="text|textAutoCorrect|textMultiLine"
-            android:maxLines="5"
             android:scrollbars="vertical"
             android:background="@color/white"
             android:drawableRight="@android:drawable/ic_menu_edit"
             android:drawableEnd="@android:drawable/ic_menu_edit"
             android:hint="Answer here..."
             android:textSize="20dp"
-            android:imeOptions="flagNoFullscreen"/>
+            android:imeOptions="flagNoFullscreen">
+        <requestFocus />
+        </EditText>
     </LinearLayout>
 
 </RelativeLayout>

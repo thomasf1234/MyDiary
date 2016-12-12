@@ -21,7 +21,6 @@ import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
 import com.abstractx1.mydiary.jobs.StartRecordingJob;
 import com.abstractx1.mydiary.lib.states.State6;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -261,8 +260,9 @@ public class RecordHandler extends State6 implements View.OnClickListener {
                         // This gets executed on the UI thread so it can safely modify Views
                         //need to check here as this can be delayed until after recording has finished
                         try {
-                            if (state == RECORDING && hasRecorder())
+                            if (state == RECORDING && hasRecorder()) {
                                 recordingDurationTextView.setText(Utilities.formatMilliSecondsShort(recorder.getRecordingDurationMilliSeconds()));
+                            }
                             else if (hasRecordingPlayer()) {
                                 if (dataCollection.hasRecording())
                                     recordingDurationTextView.setText(Utilities.formatMilliSecondsShort(recordingPlayer.getCurrentPosition()));
@@ -275,7 +275,7 @@ public class RecordHandler extends State6 implements View.OnClickListener {
                     }
                 });
             }
-        }, 0, 10);
+        }, 0, 800);
     }
 
     private void cancelRecorder() {

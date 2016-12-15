@@ -56,7 +56,7 @@ public class Recorder {
     }
 
     private void createAndSetOutputFile() throws IOException {
-        outputFile = File.createTempFile(outputFileName, ".mp4");
+        outputFile = File.createTempFile(outputFileName, ".3gp");
         outputFile.deleteOnExit();
         microphone.setOutputFile(outputFile.getAbsolutePath());
     }

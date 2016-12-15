@@ -2,6 +2,9 @@ package com.abstractx1.mydiary;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
@@ -16,11 +19,19 @@ import com.abstractx1.mydiary.dialog_builders.DebugDialogBuilder;
 import com.abstractx1.mydiary.dialogs.ResetChosenEmailClientDialog;
 import com.example.demo.job.PermissionActivity;
 
+import java.io.File;
+
 /**
  * Created by tfisher on 23/11/2016.
  */
 
 public abstract class MyDiaryActivity extends PermissionActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        load(savedInstanceState);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -53,6 +64,9 @@ public abstract class MyDiaryActivity extends PermissionActivity {
             case R.id.clearCacheMenuOption:
                 Utilities.clearCache(getApplicationContext());
                 alert("Cleared cache");
+                return true;
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -107,4 +121,55 @@ public abstract class MyDiaryActivity extends PermissionActivity {
     protected boolean isInDebugMode() {
         return getResources().getBoolean(R.bool.debug_mode);
     }
+
+    protected void setupResearcher() {
+        Resources res = getResources();
+        String[] questions = res.getStringArray(R.array.questions);
+
+        for (int i=0; i<questions.length; ++i) {
+            String question = questions[i];
+            int questionNumber = i + 1;
+            Researcher.getInstance().getDataCollections().add(new DataCollection(questionNumber, question));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        for (DataCollection dataCollection : Researcher.getInstance().getDataCollections()) {
+            savedInstanceState.putString("answer" + dataCollection.getQuestionNumber(), dataCollection.getAnswer());
+            if(dataCollection.hasRecording()) {
+                if (isInDebugMode()) { alert("recording saved"); }
+                savedInstanceState.putString("recordingPath" + dataCollection.getQuestionNumber(), dataCollection.getRecording().getAbsolutePath());
+            }
+        }
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    protected void load(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            debugAlert("Loading");
+            if (!Researcher.getInstance().hasData()) {
+                setupResearcher();
+                for (DataCollection dataCollection : Researcher.getInstance().getDataCollections()) {
+                    dataCollection.setAnswer(savedInstanceState.getString("answer" + dataCollection.getQuestionNumber()));
+                    if (savedInstanceState.containsKey("recordingPath" + dataCollection.getQuestionNumber())) {
+                        debugAlert("recording loaded");
+                        dataCollection.setRecording(new File(savedInstanceState.getString("recordingPath" + dataCollection.getQuestionNumber())));
+                    }
+                }
+            }
+        } else {
+            setupResearcher();
+        }
+    }
+
+    protected void setKeyboardpushActivityUp() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
 }
+//60s (stereo) = 1.168MB
+//60s (mono)   = 1.176MB
+//60s (stereo 3gp) = 0.110MB

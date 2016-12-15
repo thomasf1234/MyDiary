@@ -33,7 +33,7 @@ import java.util.TimerTask;
  */
 
 
-public class RecordHandler extends State6 implements View.OnClickListener {
+public class RecordHandler extends State6 {
     public static State DISABLED = State.ONE;
     public static State EMPTY = State.TWO;
     public static State RECORDING = State.THREE;
@@ -70,17 +70,21 @@ public class RecordHandler extends State6 implements View.OnClickListener {
                          ImageButton clearRecordingButton,
                          SeekBar recordingSeekBar,
                          TextView recordingDurationTextView,
-                         DataCollection dataCollection) throws Exception {
+                         DataCollection dataCollection,
+                         int currentMilliseconds) throws Exception {
         initialize(activity, recordButton, playButton, clearRecordingButton, recordingSeekBar, recordingDurationTextView, dataCollection);
 
         if (dataCollection.hasRecording()) {
             setUpNewRecordingPlayer();
             transitionTo(READY);
+            setPlayFrom(currentMilliseconds);
         } else {
             State initialState = hasSystemMicrophoneFeature() ? EMPTY : DISABLED;
             transitionTo(initialState);
         }
     }
+
+
 
     private void initialize(MyDiaryActivity activity,
                             ImageButton recordButton,
@@ -260,7 +264,7 @@ public class RecordHandler extends State6 implements View.OnClickListener {
                         // This gets executed on the UI thread so it can safely modify Views
                         //need to check here as this can be delayed until after recording has finished
                         try {
-                            if (state == RECORDING && hasRecorder()) {
+                            if (state == RECORDING && hasRecorder() && recorder.isRecording()) {
                                 recordingDurationTextView.setText(Utilities.formatMilliSecondsShort(recorder.getRecordingDurationMilliSeconds()));
                             }
                             else if (hasRecordingPlayer()) {
@@ -303,9 +307,54 @@ public class RecordHandler extends State6 implements View.OnClickListener {
     }
 
     private void setEventListeners() {
-        recordButton.setOnClickListener(this);
-        playButton.setOnClickListener(this);
-        clearRecordingButton.setOnClickListener(this);
+        final RecordHandler recordHandler = this;
+        recordButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (recordingInProgress()) {
+                    try {
+                        view.playSoundEffect(SoundEffectConstants.CLICK);
+                        transitionTo(RecordHandler.READY);
+                    } catch (Exception e) {
+                        activity.alert("Error stopping recording: " + e.getMessage());
+                    }
+                } else {
+                    try {
+                        activity.triggerJob(new StartRecordingJob(activity, recordHandler));
+                    } catch (Exception e) {
+                        activity.alert("Error starting recording: " + e.getMessage());
+                    }
+                }
+            }
+
+        });
+        playButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (playingInProgress()) {
+                    try {
+                        transitionTo(RecordHandler.PAUSED);
+                    } catch (Exception e) {
+                        activity.alert("Error pausing recording: " + e.getMessage());
+                    }
+                } else {
+                    try {
+                        transitionTo(RecordHandler.PLAYING);
+                    } catch (Exception e) {
+                        activity.alert("Error playing recording: " + e.getMessage());
+                    }
+                }
+            }
+        });
+        clearRecordingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.playSoundEffect(SoundEffectConstants.CLICK);
+                clearRecordingDialog.show();
+            }
+        });
         recordingSeekBar.setOnTouchListener(new View.OnTouchListener()
         {
 
@@ -350,49 +399,6 @@ public class RecordHandler extends State6 implements View.OnClickListener {
                 recordingDurationTextView.setText(Utilities.formatMilliSecondsShort(progress));
             }
         });
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.recordButtonChild:
-                if (recordingInProgress()) {
-                    try {
-                        view.playSoundEffect(SoundEffectConstants.CLICK);
-                        transitionTo(RecordHandler.READY);
-                    } catch (Exception e) {
-                        activity.alert("Error stopping recording: " + e.getMessage());
-                    }
-                } else {
-                    try {
-                        activity.triggerJob(new StartRecordingJob(activity, this));
-                    } catch (Exception e) {
-                        activity.alert("Error starting recording: " + e.getMessage());
-                    }
-                }
-                break;
-            case R.id.playButtonChild:
-                if (playingInProgress()) {
-                    try {
-                        transitionTo(RecordHandler.PAUSED);
-                    } catch (Exception e) {
-                        activity.alert("Error pausing recording: " + e.getMessage());
-                    }
-                } else {
-                    try {
-                        transitionTo(RecordHandler.PLAYING);
-                    } catch (Exception e) {
-                        activity.alert("Error playing recording: " + e.getMessage());
-                    }
-                }
-                break;
-            case R.id.clearRecordingButtonChild:
-                view.playSoundEffect(SoundEffectConstants.CLICK);
-                clearRecordingDialog.show();
-                break;
-            default:
-                break;
-        }
     }
 
     private void initializeClearRecordingDialog() {

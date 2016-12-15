@@ -31,6 +31,10 @@ public class DataCollection {
         return question;
     }
 
+    public String getFullQuestion() {
+        return getQuestionNumber() + ") " + getQuestion();
+    }
+
     public String getAnswer() {
         return answer;
     }

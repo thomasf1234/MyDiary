@@ -18,7 +18,6 @@ import java.util.List;
  */
 
 public class EmailClient {
-    private static final String EMAIL_CLIENT_PACKAGE_NAME_KEY = "email_client_package_name";
     private static final String MESSAGE_TYPE = "message/rfc822";
     private Activity activity;
 
@@ -34,7 +33,7 @@ public class EmailClient {
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
 
         try {
-            emailIntent.setPackage(getChosenEmailAppPackage());
+            emailIntent.setPackage(getGmailAppPackage());
             Intent gmailIntent = Intent.createChooser(emailIntent, "Send mail...");
             activity.startActivity(gmailIntent);
             activity.finish();
@@ -57,7 +56,7 @@ public class EmailClient {
         }
 
         try {
-            emailIntent.setPackage(getChosenEmailAppPackage());
+            emailIntent.setPackage(getGmailAppPackage());
             Intent gmailIntent = Intent.createChooser(emailIntent, "Send mail...");
             activity.startActivity(gmailIntent);
             activity.finish();
@@ -67,7 +66,16 @@ public class EmailClient {
         }
     }
 
-    public List<AppInfo> getInstalledEmailApps() {
+    private String getGmailAppPackage() {
+        for (AppInfo appInfo : getInstalledEmailApps()) {
+            if(appInfo.getPackageName().endsWith(".gm") || appInfo.getName().toLowerCase().contains("gmail")) {
+                return appInfo.getPackageName();
+            }
+        }
+        return null;
+    }
+
+    private List<AppInfo> getInstalledEmailApps() {
         List<AppInfo> appInfos = new ArrayList<AppInfo>();
         PackageManager packageManager = activity.getPackageManager();
 
@@ -82,24 +90,5 @@ public class EmailClient {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType(MESSAGE_TYPE);
         return activity.getPackageManager().queryIntentActivities( emailIntent, 0);
-    }
-
-    public void setChosenEmailApp(AppInfo appInfo) {
-        SharedPreferences sharedpreferences = activity.getSharedPreferences(GlobalApplicationValues.USER_SETTINGS_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(EMAIL_CLIENT_PACKAGE_NAME_KEY, appInfo.getPackageName());
-        editor.commit();
-    }
-
-    public String getChosenEmailAppPackage() {
-        SharedPreferences sharedpreferences = activity.getSharedPreferences(GlobalApplicationValues.USER_SETTINGS_KEY, Context.MODE_PRIVATE);
-        if (sharedpreferences.contains(EMAIL_CLIENT_PACKAGE_NAME_KEY)) {
-            return sharedpreferences.getString(EMAIL_CLIENT_PACKAGE_NAME_KEY, "");
-        } else
-            return null;
-    }
-
-    public boolean hasChosenEmailAppPackage() {
-        return getChosenEmailAppPackage() != null;
     }
 }

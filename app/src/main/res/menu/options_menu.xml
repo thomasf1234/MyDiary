@@ -1,6 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/editResearcherEmailAddressMenuOption"
+        android:title="Edit Researcher Email Address"/>
+    <item
         android:id="@+id/contactResearcherMenuOption"
         android:title="Contact Researcher"/>
     <item

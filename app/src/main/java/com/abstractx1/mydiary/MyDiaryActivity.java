@@ -1,6 +1,6 @@
 package com.abstractx1.mydiary;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.abstractx1.mydiary.dialog_builders.DebugDialogBuilder;
+import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.example.demo.job.PermissionActivity;
 
 import java.io.File;
@@ -47,14 +47,18 @@ public abstract class MyDiaryActivity extends PermissionActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.editResearcherEmailAddressMenuOption:
+                AlertDialog editResearcherEmailAddressdialog =  ResearcherEmailDialog.create(this, "Settings", "Edit researcher email address:");
+                editResearcherEmailAddressdialog.show();
+                return true;
             case R.id.contactResearcherMenuOption:
                 EmailClient emailClient = new EmailClient(this);
                 emailClient.open(getResources().getString(R.string.to_email_address));
                 return true;
             case R.id.debugMenuOption:
-                AlertDialog.Builder builder = new DebugDialogBuilder(this);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                //AlertDialog.Builder builder = new DebugDialogBuilder(this);
+                //AlertDialog dialog = builder.create();
+                //dialog.show();
                 return true;
             case R.id.clearCacheMenuOption:
                 Utilities.clearCache(getApplicationContext());

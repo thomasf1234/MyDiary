@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
@@ -16,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.abstractx1.mydiary.dialog_builders.DebugDialogBuilder;
-import com.abstractx1.mydiary.dialogs.ResetChosenEmailClientDialog;
 import com.example.demo.job.PermissionActivity;
 
 import java.io.File;
@@ -49,9 +47,6 @@ public abstract class MyDiaryActivity extends PermissionActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.emailPreferenceMenuOption:
-                ResetChosenEmailClientDialog.create(this).show();
-                return true;
             case R.id.contactResearcherMenuOption:
                 EmailClient emailClient = new EmailClient(this);
                 emailClient.open(getResources().getString(R.string.to_email_address));

@@ -1,9 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/emailPreferenceMenuOption"
-        android:title="Email Preference"/>
-    <item
         android:id="@+id/contactResearcherMenuOption"
         android:title="Contact Researcher"/>
     <item

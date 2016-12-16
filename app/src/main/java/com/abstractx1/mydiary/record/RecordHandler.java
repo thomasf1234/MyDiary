@@ -43,6 +43,7 @@ public class RecordHandler extends State7 {
     public static State CANCELLED = State.SEVEN;
 
     private static final Map<State, State[]> validStateTransitions;
+
     static {
         Map<State, State[]> _validStateTransitions = new HashMap<State, State[]>();
         _validStateTransitions.put(DISABLED, new State[]{});
@@ -87,7 +88,6 @@ public class RecordHandler extends State7 {
     }
 
 
-
     private void initialize(MyDiaryActivity activity,
                             ImageButton recordButton,
                             ImageButton playButton,
@@ -124,14 +124,16 @@ public class RecordHandler extends State7 {
     @Override
     protected void onSetStateTWO() throws Exception {
         activity.keepScreenAwake(false);
-        if (dataCollection.hasRecording()) { dataCollection.clearRecording(); }
+        if (dataCollection.hasRecording()) {
+            dataCollection.clearRecording();
+        }
         ButtonHelper.enable(recordButton);
         ButtonHelper.disable(playButton);
         ButtonHelper.disable(clearRecordingButton);
         recordingSeekBar.setProgress(0);
         recordingSeekBar.setEnabled(false);
         recordingDurationTextView.setText(R.string.zero_seconds);
-        ButtonHelper.customizeAndroidStyle(activity, recordButton, android.R.drawable.ic_btn_speak_now, "Start Record");
+        ButtonHelper.customizeAndroidStyle(activity, recordButton, android.R.drawable.ic_btn_speak_now, activity.getString(R.string.record_button_tooltip));
         recordingDurationTextView.invalidate();
         MyDiaryApplication.log("transitioned to EMPTY state");
     }
@@ -143,7 +145,7 @@ public class RecordHandler extends State7 {
         recorder.record();
         activity.keepScreenAwake(true);
         ButtonHelper.enable(recordButton);
-        ButtonHelper.customizeAndroidStyle(activity, recordButton, R.drawable.ic_media_stop, "Stop Recording");
+        ButtonHelper.customizeAndroidStyle(activity, recordButton, R.drawable.ic_media_stop, activity.getString(R.string.stop_button_tooltip));
         ButtonHelper.disable(playButton);
         ButtonHelper.disable(clearRecordingButton);
         recordingSeekBar.setEnabled(false);
@@ -153,18 +155,20 @@ public class RecordHandler extends State7 {
     //LOADED
     @Override
     protected void onSetStateFOUR() throws Exception {
-        if (!hasRecorder()) { setUpNewRecorder(); }
+        if (!hasRecorder()) {
+            setUpNewRecorder();
+        }
         if (recorder.isRecording()) {
             recorder.stop();
             dataCollection.setRecording(recorder.getOutputFile());
             setUpNewRecordingPlayer();
         }
         activity.keepScreenAwake(false);
-        ButtonHelper.customizeAndroidStyle(activity, recordButton, android.R.drawable.ic_btn_speak_now, "Start Recording");
         ButtonHelper.disable(recordButton);
-        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_play, "Play Recording");
+        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_play, activity.getString(R.string.play_button_tooltip));
         ButtonHelper.enable(playButton);
         ButtonHelper.enable(clearRecordingButton);
+        ButtonHelper.customizeAndroidStyle(activity, clearRecordingButton, android.R.drawable.ic_menu_delete, activity.getString(R.string.clear_button_tooltip));
         recordingSeekBar.setMax(recordingPlayer.getDuration());
         recordingSeekBar.setEnabled(true);
         setPlayFrom(recordingPlayer.getDuration());
@@ -179,7 +183,7 @@ public class RecordHandler extends State7 {
         }
         recordingPlayer.play();
         activity.keepScreenAwake(true);
-        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_pause, "Pause Recording");
+        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_pause, activity.getString(R.string.pause_button_tooltip));
         ButtonHelper.disable(recordButton);
         ButtonHelper.enable(playButton);
         ButtonHelper.disable(clearRecordingButton);
@@ -192,7 +196,7 @@ public class RecordHandler extends State7 {
     protected void onSetStateSIX() throws Exception {
         recordingPlayer.pause();
         activity.keepScreenAwake(false);
-        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_play, "Resume Recording");
+        ButtonHelper.customizeAndroidStyle(activity, playButton, android.R.drawable.ic_media_play, activity.getString(R.string.play_button_tooltip));
         ButtonHelper.disable(recordButton);
         ButtonHelper.enable(playButton);
         ButtonHelper.enable(clearRecordingButton);
@@ -204,8 +208,12 @@ public class RecordHandler extends State7 {
     @Override
     protected void onSetStateSEVEN() throws Exception {
         cancelTimer();
-        if (hasRecorder()) { cancelRecorder(); }
-        if (hasRecordingPlayer()) { recordingPlayer.cancel(); }
+        if (hasRecorder()) {
+            cancelRecorder();
+        }
+        if (hasRecordingPlayer()) {
+            recordingPlayer.cancel();
+        }
         activity.keepScreenAwake(false);
         MyDiaryApplication.log("transitioned to CANCELLED state");
         transitionTo(DISABLED);
@@ -225,10 +233,6 @@ public class RecordHandler extends State7 {
         recordingDurationTextView.setText(Utilities.formatMilliSecondsShort(milliSeconds));
     }
 
-    public int getCurrentSelectedMilliSeconds() {
-        return recordingSeekBar.getProgress();
-    }
-
     public void cancelRecording() throws Exception {
         transitionTo(LOADED);
         transitionTo(EMPTY);
@@ -238,17 +242,25 @@ public class RecordHandler extends State7 {
         return activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE);
     }
 
-    private boolean hasRecorder() { return recorder != null; }
+    private boolean hasRecorder() {
+        return recorder != null;
+    }
 
-    private boolean hasRecordingPlayer() { return recordingPlayer != null; }
+    private boolean hasRecordingPlayer() {
+        return recordingPlayer != null;
+    }
 
     private void setUpNewRecorder() throws IOException {
-        if (hasRecorder()) { cancelRecorder(); }
+        if (hasRecorder()) {
+            cancelRecorder();
+        }
         this.recorder = new Recorder("question_" + dataCollection.getQuestionNumber());
     }
 
     private void setUpNewRecordingPlayer() throws IOException {
-        if (hasRecordingPlayer()) { recordingPlayer.cancel(); }
+        if (hasRecordingPlayer()) {
+            recordingPlayer.cancel();
+        }
         this.recordingPlayer = new RecordingPlayer();
         recordingPlayer.setInputFile(dataCollection.getRecording());
         recordingPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -258,7 +270,7 @@ public class RecordHandler extends State7 {
                 try {
                     transitionTo(LOADED);
                 } catch (Exception e) {
-                    activity.alert("Error when recording playback finished: " + e.getMessage());
+                    MyDiaryApplication.log(e, "Error when recording playback finished.");
                 }
             }
 
@@ -279,8 +291,7 @@ public class RecordHandler extends State7 {
                         try {
                             if (state == RECORDING && hasRecorder() && recorder.isRecording()) {
                                 recordingDurationTextView.setText(Utilities.formatMilliSecondsShort(recorder.getRecordingDurationMilliSeconds()));
-                            }
-                            else if (hasRecordingPlayer()) {
+                            } else if (hasRecordingPlayer()) {
                                 if (dataCollection.hasRecording())
                                     recordingDurationTextView.setText(Utilities.formatMilliSecondsShort(recordingPlayer.getCurrentPosition()));
                                 if (state == PLAYING)
@@ -323,13 +334,13 @@ public class RecordHandler extends State7 {
                         view.playSoundEffect(SoundEffectConstants.CLICK);
                         transitionTo(RecordHandler.LOADED);
                     } catch (Exception e) {
-                        activity.alert("Error stopping recording: " + e.getMessage());
+                        MyDiaryApplication.log(e, "Error stopping recording.");
                     }
                 } else {
                     try {
                         activity.triggerJob(new StartRecordingJob(activity, recordHandler));
                     } catch (Exception e) {
-                        activity.alert("Error starting recording: " + e.getMessage());
+                        MyDiaryApplication.log(e, "Error starting recording.");
                     }
                 }
             }
@@ -343,13 +354,13 @@ public class RecordHandler extends State7 {
                     try {
                         transitionTo(RecordHandler.PAUSED);
                     } catch (Exception e) {
-                        activity.alert("Error pausing recording: " + e.getMessage());
+                        MyDiaryApplication.log(e, "Error pausing recording.");
                     }
                 } else {
                     try {
                         transitionTo(RecordHandler.PLAYING);
                     } catch (Exception e) {
-                        activity.alert("Error playing recording: " + e.getMessage());
+                        MyDiaryApplication.log(e, "Error playing recording.");
                     }
                 }
             }
@@ -361,17 +372,15 @@ public class RecordHandler extends State7 {
                 clearRecordingDialog.show();
             }
         });
-        recordingSeekBar.setOnTouchListener(new View.OnTouchListener()
-        {
+        recordingSeekBar.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
+            public boolean onTouch(View v, MotionEvent event) {
                 if (playingInProgress()) {
                     try {
                         transitionTo(RecordHandler.PAUSED);
                     } catch (Exception e) {
-                        activity.alert("Error pausing recording: " + e.getMessage());
+                        MyDiaryApplication.log(e, "Error pausing recording.");
                     }
                 }
                 return false;
@@ -391,13 +400,13 @@ public class RecordHandler extends State7 {
             }
 
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     if (playingInProgress()) {
                         try {
                             transitionTo(RecordHandler.PAUSED);
                         } catch (Exception e) {
-                            activity.alert("Error pausing recording: " + e.getMessage());
+                            MyDiaryApplication.log(e, "Error pausing recording");
                         }
                     }
                     recordingPlayer.seekTo(progress);
@@ -414,7 +423,7 @@ public class RecordHandler extends State7 {
                 // User clicked Yes button
                 try {
                     transitionTo(RecordHandler.EMPTY);
-                    activity.alert("Cleared recording successfully");
+                    activity.alert(activity.getString(R.string.cleared_recording));
                 } catch (Exception e) {
                     activity.alert("Error clearing recording: " + e.getMessage());
                 }

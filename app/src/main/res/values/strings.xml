@@ -5,6 +5,12 @@
     <string name="introduction_dialog_title">Setup</string>
     <string name="to_email_address">test@test.com</string>
     <string name="zero_seconds">0:00</string>
+    <string name="record_button_tooltip">Record</string>
+    <string name="stop_button_tooltip">Stop</string>
+    <string name="play_button_tooltip">Play</string>
+    <string name="pause_button_tooltip">Pause</string>
+    <string name="clear_button_tooltip">Clear Recording</string>
+    <string name="cleared_recording">Cleared Recording</string>
     <string name="research_participant_permission_descriptions">collect and submit the data you input within the app to the researcher</string>
     <string name="accept_terms_and_conditions_check_box_text">I accept and agree to these terms and conditions</string>
     <string name="terms_and_conditions_text">

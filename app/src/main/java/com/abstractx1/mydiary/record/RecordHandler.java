@@ -15,11 +15,12 @@ import android.widget.TextView;
 import com.abstractx1.mydiary.ButtonHelper;
 import com.abstractx1.mydiary.DataCollection;
 import com.abstractx1.mydiary.MyDiaryActivity;
+import com.abstractx1.mydiary.MyDiaryApplication;
 import com.abstractx1.mydiary.R;
 import com.abstractx1.mydiary.Utilities;
 import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
 import com.abstractx1.mydiary.jobs.StartRecordingJob;
-import com.abstractx1.mydiary.lib.states.State6;
+import com.abstractx1.mydiary.lib.states.State7;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -32,24 +33,25 @@ import java.util.TimerTask;
  * Created by tfisher on 16/11/2016.
  */
 
-
-public class RecordHandler extends State6 {
+public class RecordHandler extends State7 {
     public static State DISABLED = State.ONE;
     public static State EMPTY = State.TWO;
     public static State RECORDING = State.THREE;
-    public static State READY = State.FOUR;
+    public static State LOADED = State.FOUR;
     public static State PLAYING = State.FIVE;
     public static State PAUSED = State.SIX;
+    public static State CANCELLED = State.SEVEN;
 
     private static final Map<State, State[]> validStateTransitions;
     static {
         Map<State, State[]> _validStateTransitions = new HashMap<State, State[]>();
         _validStateTransitions.put(DISABLED, new State[]{});
-        _validStateTransitions.put(EMPTY, new State[]{RECORDING});
-        _validStateTransitions.put(RECORDING, new State[]{READY});
-        _validStateTransitions.put(READY, new State[]{EMPTY, PLAYING});
-        _validStateTransitions.put(PLAYING, new State[]{READY, PAUSED});
-        _validStateTransitions.put(PAUSED, new State[]{PLAYING, READY, EMPTY});
+        _validStateTransitions.put(EMPTY, new State[]{RECORDING, CANCELLED});
+        _validStateTransitions.put(RECORDING, new State[]{LOADED, CANCELLED});
+        _validStateTransitions.put(LOADED, new State[]{EMPTY, PLAYING, CANCELLED});
+        _validStateTransitions.put(PLAYING, new State[]{LOADED, PAUSED, CANCELLED});
+        _validStateTransitions.put(PAUSED, new State[]{PLAYING, LOADED, EMPTY, CANCELLED});
+        _validStateTransitions.put(CANCELLED, new State[]{DISABLED});
         validStateTransitions = Collections.unmodifiableMap(_validStateTransitions);
     }
 
@@ -76,7 +78,7 @@ public class RecordHandler extends State6 {
 
         if (dataCollection.hasRecording()) {
             setUpNewRecordingPlayer();
-            transitionTo(READY);
+            transitionTo(LOADED);
             setPlayFrom(currentMilliseconds);
         } else {
             State initialState = hasSystemMicrophoneFeature() ? EMPTY : DISABLED;
@@ -115,6 +117,7 @@ public class RecordHandler extends State6 {
         ButtonHelper.disable(clearRecordingButton);
         recordingSeekBar.setEnabled(false);
         recordingDurationTextView.setText(R.string.zero_seconds);
+        MyDiaryApplication.log("transitioned to DISABLED state");
     }
 
     //EMPTY
@@ -130,6 +133,7 @@ public class RecordHandler extends State6 {
         recordingDurationTextView.setText(R.string.zero_seconds);
         ButtonHelper.customizeAndroidStyle(activity, recordButton, android.R.drawable.ic_btn_speak_now, "Start Record");
         recordingDurationTextView.invalidate();
+        MyDiaryApplication.log("transitioned to EMPTY state");
     }
 
     //RECORDING
@@ -143,12 +147,14 @@ public class RecordHandler extends State6 {
         ButtonHelper.disable(playButton);
         ButtonHelper.disable(clearRecordingButton);
         recordingSeekBar.setEnabled(false);
+        MyDiaryApplication.log("transitioned to RECORDING state");
     }
 
-    //READY
+    //LOADED
     @Override
     protected void onSetStateFOUR() throws Exception {
-        if (hasRecorder() && recorder.isRecording()) {
+        if (!hasRecorder()) { setUpNewRecorder(); }
+        if (recorder.isRecording()) {
             recorder.stop();
             dataCollection.setRecording(recorder.getOutputFile());
             setUpNewRecordingPlayer();
@@ -162,6 +168,7 @@ public class RecordHandler extends State6 {
         recordingSeekBar.setMax(recordingPlayer.getDuration());
         recordingSeekBar.setEnabled(true);
         setPlayFrom(recordingPlayer.getDuration());
+        MyDiaryApplication.log("transitioned to LOADED state");
     }
 
     //PLAYING
@@ -177,6 +184,7 @@ public class RecordHandler extends State6 {
         ButtonHelper.enable(playButton);
         ButtonHelper.disable(clearRecordingButton);
         recordingSeekBar.setEnabled(true);
+        MyDiaryApplication.log("transitioned to PLAYING state");
     }
 
     //PAUSED
@@ -189,6 +197,18 @@ public class RecordHandler extends State6 {
         ButtonHelper.enable(playButton);
         ButtonHelper.enable(clearRecordingButton);
         recordingSeekBar.setEnabled(true);
+        MyDiaryApplication.log("transitioned to PAUSED state");
+    }
+
+    //CANCELLED
+    @Override
+    protected void onSetStateSEVEN() throws Exception {
+        cancelTimer();
+        if (hasRecorder()) { cancelRecorder(); }
+        if (hasRecordingPlayer()) { recordingPlayer.cancel(); }
+        activity.keepScreenAwake(false);
+        MyDiaryApplication.log("transitioned to CANCELLED state");
+        transitionTo(DISABLED);
     }
 
     public boolean recordingInProgress() {
@@ -210,15 +230,8 @@ public class RecordHandler extends State6 {
     }
 
     public void cancelRecording() throws Exception {
-        transitionTo(READY);
+        transitionTo(LOADED);
         transitionTo(EMPTY);
-    }
-
-    public void onDestroy() {
-        cancelTimer();
-        if (hasRecorder()) { cancelRecorder(); }
-        if (hasRecordingPlayer()) { cancelRecordingPlayer(); }
-        activity.keepScreenAwake(false);
     }
 
     private boolean hasSystemMicrophoneFeature() {
@@ -235,7 +248,7 @@ public class RecordHandler extends State6 {
     }
 
     private void setUpNewRecordingPlayer() throws IOException {
-        if (hasRecordingPlayer()) { cancelRecordingPlayer(); }
+        if (hasRecordingPlayer()) { recordingPlayer.cancel(); }
         this.recordingPlayer = new RecordingPlayer();
         recordingPlayer.setInputFile(dataCollection.getRecording());
         recordingPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -243,7 +256,7 @@ public class RecordHandler extends State6 {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 try {
-                    transitionTo(READY);
+                    transitionTo(LOADED);
                 } catch (Exception e) {
                     activity.alert("Error when recording playback finished: " + e.getMessage());
                 }
@@ -289,13 +302,6 @@ public class RecordHandler extends State6 {
         recorder.release();
     }
 
-    private void cancelRecordingPlayer() {
-        if (recordingPlayer.isPlaying()) {
-            recordingPlayer.stop();
-        }
-        recordingPlayer.release();
-    }
-
     private void cancelTimer() {
         timer.cancel();
         timer.purge();
@@ -315,7 +321,7 @@ public class RecordHandler extends State6 {
                 if (recordingInProgress()) {
                     try {
                         view.playSoundEffect(SoundEffectConstants.CLICK);
-                        transitionTo(RecordHandler.READY);
+                        transitionTo(RecordHandler.LOADED);
                     } catch (Exception e) {
                         activity.alert("Error stopping recording: " + e.getMessage());
                     }

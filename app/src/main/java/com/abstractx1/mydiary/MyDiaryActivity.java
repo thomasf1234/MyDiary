@@ -136,11 +136,17 @@ public abstract class MyDiaryActivity extends PermissionActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
+        MyDiaryApplication.log("Entered OnSaveInstanceState");
         for (DataCollection dataCollection : Researcher.getInstance().getDataCollections()) {
-            savedInstanceState.putString("answer" + dataCollection.getQuestionNumber(), dataCollection.getAnswer());
+            String key = "answer" + dataCollection.getQuestionNumber();
+            String value = dataCollection.getAnswer();
+            MyDiaryApplication.log("storing key: '" + key + "' value: '" + value +"' on savedInstanceState");
+            savedInstanceState.putString(key, value);
             if(dataCollection.hasRecording()) {
-                if (isInDebugMode()) { alert("recording saved"); }
-                savedInstanceState.putString("recordingPath" + dataCollection.getQuestionNumber(), dataCollection.getRecording().getAbsolutePath());
+                key = "recordingPath" + dataCollection.getQuestionNumber();
+                value = dataCollection.getRecording().getAbsolutePath();
+                MyDiaryApplication.log("storing key: '" + key + "' value: '" + value +"' on savedInstanceState");
+                savedInstanceState.putString(key, value);
             }
         }
 
@@ -149,9 +155,15 @@ public abstract class MyDiaryActivity extends PermissionActivity {
     }
 
     protected void load(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            debugAlert("Loading");
-            if (!Researcher.getInstance().hasData()) {
+        if (Researcher.getInstance().hasData()) {
+            MyDiaryApplication.log("Researcher has data so not loading from savedInstanceState");
+        } else {
+            MyDiaryApplication.log("Researcher has no data so possibly loading from savedInstanceState");
+            if (savedInstanceState == null) {
+                MyDiaryApplication.log("savedInstanceState is null so initializing new dataCollections");
+                setupResearcher();
+            } else {
+                MyDiaryApplication.log("savedInstanceState is not null so loading from savedInstanceState");
                 setupResearcher();
                 for (DataCollection dataCollection : Researcher.getInstance().getDataCollections()) {
                     dataCollection.setAnswer(savedInstanceState.getString("answer" + dataCollection.getQuestionNumber()));
@@ -161,8 +173,6 @@ public abstract class MyDiaryActivity extends PermissionActivity {
                     }
                 }
             }
-        } else {
-            setupResearcher();
         }
     }
 
@@ -170,6 +180,3 @@ public abstract class MyDiaryActivity extends PermissionActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 }
-//60s (stereo) = 1.168MB
-//60s (mono)   = 1.176MB
-//60s (stereo 3gp) = 0.110MB

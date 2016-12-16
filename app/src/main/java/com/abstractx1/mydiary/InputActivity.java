@@ -111,7 +111,7 @@ public class InputActivity extends MyDiaryActivity {
     @Override
     public void onBackPressed() {
         try {
-            recordHandler.onDestroy();
+            recordHandler.transitionTo(RecordHandler.CANCELLED);
         } catch (Exception e) {
             MyDiaryApplication.log(e, "Error Destroying the Record Handler");
         }
@@ -127,7 +127,9 @@ public class InputActivity extends MyDiaryActivity {
     @Override
     protected void onDestroy() {
         try {
-            recordHandler.onDestroy();
+            if (recordHandler.getState() != RecordHandler.DISABLED) {
+                recordHandler.transitionTo(RecordHandler.CANCELLED);
+            }
         } catch (Exception e) {
             MyDiaryApplication.log(e, "Error Destroying the Record Handler");
         }

@@ -9,8 +9,8 @@ import java.util.Map;
  * Created by tfisher on 17/11/2016.
  */
 
-public abstract class State6 {
-    public enum State { ONE, TWO, THREE, FOUR, FIVE, SIX }
+public abstract class State7 {
+    public enum State { ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN }
 
     protected State state;
 
@@ -48,6 +48,9 @@ public abstract class State6 {
             case SIX:
                 onSetStateSIX();
                 break;
+            case SEVEN:
+                onSetStateSEVEN();
+                break;
 
         }
     }
@@ -77,6 +80,10 @@ public abstract class State6 {
     }
 
     protected void onSetStateSIX() throws Exception {
+
+    }
+
+    protected void onSetStateSEVEN() throws Exception {
 
     }
 

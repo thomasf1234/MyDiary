@@ -1,15 +1,20 @@
 package com.abstractx1.mydiary;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
+import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.record.RecordHandler;
 
 public class InputActivity extends MyDiaryActivity {
@@ -23,6 +28,7 @@ public class InputActivity extends MyDiaryActivity {
     private SeekBar recordingSeekBar;
     private TextView recordingDurationTextView;
     private EditText answerEditText;
+    private android.app.AlertDialog saveRecordingDialog;
     private int startCurrentMilliseconds=0;
 
 
@@ -32,6 +38,7 @@ public class InputActivity extends MyDiaryActivity {
         setContentView(R.layout.activity_input);
         setKeyboardpushActivityUp();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initializeSaveRecordingDialog();
 
         Intent intent = getIntent();
         int questionNumber = intent.getIntExtra(KEY_EXTRA_MESSAGE, 0);
@@ -109,16 +116,6 @@ public class InputActivity extends MyDiaryActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        try {
-            recordHandler.transitionTo(RecordHandler.CANCELLED);
-        } catch (Exception e) {
-            MyDiaryApplication.log(e, "Error Destroying the Record Handler");
-        }
-        super.onBackPressed();
-    }
-
-    @Override
     protected void onPause() {
         halt();
         super.onPause();
@@ -144,5 +141,57 @@ public class InputActivity extends MyDiaryActivity {
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.editResearcherEmailAddressMenuOption:
+                AlertDialog editResearcherEmailAddressdialog =  ResearcherEmailDialog.create(this, "Settings", "Edit researcher email address:");
+                editResearcherEmailAddressdialog.show();
+                return true;
+            case R.id.contactResearcherMenuOption:
+                EmailClient emailClient = new EmailClient(this);
+                emailClient.open(GlobalApplicationValues.getResearcherEmailAddress(this), "Contact Researcher");
+                return true;
+            case android.R.id.home:
+                if (recordHandler.getState() == RecordHandler.RECORDING) {
+                    saveRecordingDialog.show();
+                } else {
+                    onBackPressed();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void initializeSaveRecordingDialog() {
+        ConfirmationDialogBuilder builder = new ConfirmationDialogBuilder(this, "Do you want to save the current recording?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked Yes button
+                try {
+                    recordHandler.transitionTo(RecordHandler.LOADED);
+                } catch (Exception e) {
+                    MyDiaryApplication.log(e, "Error stopping recording.");
+                }
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked No button
+                try {
+                    recordHandler.transitionTo(RecordHandler.CANCELLED);
+                } catch (Exception e) {
+                    MyDiaryApplication.log(e, "Error Destroying the Record Handler");
+                }
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+        this.saveRecordingDialog = builder.create();
     }
 }

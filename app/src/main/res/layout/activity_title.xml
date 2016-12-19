@@ -9,6 +9,15 @@
     android:background="@android:color/white"
                 tools:context="com.abstractx1.mydiary.TitleActivity">
 
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/titeTextView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp"
+              android:padding="10dp"
+              android:textSize="12sp"
+              android:text="These questions are designed to help you reflect on your perceptions, emotions, and actions that are evoked from using your technology (E.G: health/fitness/wellbeing application; self-tracking device; wearable). Please be as detailed as possible when answering each question. Upon finishing submit your answers via the send button in the toolbar:"/>
+
     <ListView
         android:id="@+id/questionsListView"
         android:layout_height="wrap_content"
@@ -18,5 +27,8 @@
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/transparent"
         android:choiceMode="singleChoice"
-        android:descendantFocusability="beforeDescendants"/>
+        android:fadeScrollbars="false"
+        android:requiresFadingEdge="vertical"
+        android:descendantFocusability="beforeDescendants"
+        android:layout_below="@+id/titeTextView"/>
 </RelativeLayout>

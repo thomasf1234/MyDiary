@@ -25,32 +25,17 @@ public class EmailClient {
         this.activity = activity;
     }
 
-    public void open(String toAddress) {
-        String[] TO = {toAddress};
-
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType(MESSAGE_TYPE);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-
-        try {
-            emailIntent.setPackage(getGmailAppPackage());
-            Intent gmailIntent = Intent.createChooser(emailIntent, "Send mail...");
-            activity.startActivity(gmailIntent);
-            activity.finish();
-        }
-        catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(activity, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
+    public void open(String toAddress, String subject) {
+        open(toAddress, subject, new String[]{});
     }
 
-    public void open(String toAddress, String[] attachments) {
+    public void open(String toAddress, String subject, String[] attachments) {
         String[] TO = {toAddress};
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType(MESSAGE_TYPE);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        String subjectTitle = "Test";
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subjectTitle);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         for (String file_path : attachments) {
             emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file_path)));
         }

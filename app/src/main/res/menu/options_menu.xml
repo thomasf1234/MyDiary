@@ -1,20 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/editResearcherEmailAddressMenuOption"
-        android:title="Edit Researcher Email Address"/>
+            android:id="@+id/editResearcherEmailAddressMenuOption"
+            android:title="Edit Researcher email address"/>
     <item
-        android:id="@+id/contactResearcherMenuOption"
-        android:title="Contact Researcher"/>
+            android:id="@+id/debugMenuOption"
+            android:title="List Files"/>
     <item
-        android:id="@+id/debugMenuOption"
-        android:title="Files"/>
+            android:id="@+id/clearCacheMenuOption"
+            android:title="Clear Cache"/>
     <item
-        android:id="@+id/clearCacheMenuOption"
-        android:title="Clear Cache"/>
+            android:id="@+id/sendButtonMenuOption"
+            android:icon="@android:drawable/ic_menu_send"
+            app:showAsAction="ifRoom|withText"
+            android:title="Send Data"/>
     <item
-        android:id="@+id/sendButtonMenuOption"
-        android:icon="@android:drawable/ic_menu_send"
-        app:showAsAction="ifRoom|withText"
-        android:title="Send Data"/>
+            android:id="@+id/contactResearcherMenuOption"
+            android:title="Contact Researcher"
+            app:showAsAction="ifRoom"
+            android:icon="@android:drawable/ic_menu_help"/>
 </menu>

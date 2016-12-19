@@ -1,9 +1,11 @@
 <resources>
     <string-array name="questions">
-        <item>How many zeroes in 100?</item>
-        <item>How many hairs in a piece of horse hair?</item>
-        <item>How many rain drops make up the sea</item>
-        <item>How many neutrons are in the most common isotope of carbon?</item>
-        <item>How much do I love Rachel?</item>
+        <item>Please describe the main things that you have done today</item>
+        <item>Tell me about your use of particular technology(s) today. (I.E: if you used your technology, how have you interacted with specific features? when did you use the technology(s) and what was happening at the time(s)? why did you interact with particular features? If you did not use your technology, why not?).</item>
+        <item>How have interactions with your technology and its particular features affected your feelings and thoughts today? (I.E: tell me specifically about any positive, negative, or unanticipated feelings and thoughts that you have had before using the technology; whilst using the technology; afterwards).</item>
+        <item>With regards to how you felt whilst using the technology and afterwards, in what ways did this impact your actions? Why? (I.E: Please be specific about how this impacted your motivation and/or engagement to do or not do something to feel a certain way and/or satisfy needs/wants/urges)</item>
+        <item>Have you interacted with any other tool or person(s) other than the aforementioned technologies, to serve your motivations? Why?</item>
+        <item>What was the most meaningful experience you had with your technology or other tool or person(s) today and why?</item>
+        <item>Any additional thoughts?</item>
     </string-array>
 </resources>

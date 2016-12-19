@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.abstractx1.mydiary.DataCollection;
+import com.abstractx1.mydiary.MyDiaryApplication;
 import com.abstractx1.mydiary.R;
 
 import java.util.List;
@@ -34,9 +36,21 @@ public class QuestionsArrayAdapter extends ArrayAdapter<DataCollection> {
         View view = inflater.inflate(R.layout.questions_listview_item, parent, false);
 
         TextView questionTextView = (TextView) view.findViewById(R.id.questionsListViewElementQuestionTextView);
+        ImageView questionsListViewElementHasAnswerImageView = (ImageView) view.findViewById(R.id.questionsListViewElementHasAnswerImageView);
+        TextView answerTextView = (TextView) view.findViewById(R.id.questionsListViewElementAnswerTextView);
 
-        String question = dataCollection.getQuestionNumber() + ") " + dataCollection.getQuestion();
-        questionTextView.setText(question);
+        questionTextView.setText(dataCollection.getShortQuestion());
+
+        if(dataCollection.hasAnswer()) {
+            MyDiaryApplication.log("question: " + dataCollection.getQuestionNumber() + ", has answer: '" + dataCollection.getAnswer() + "'");
+            MyDiaryApplication.log("Setting questionsListViewElementHasAnswerImageView to VISIBLE");
+
+            answerTextView.setText(dataCollection.getShortAnswer());
+            questionsListViewElementHasAnswerImageView.setVisibility(View.VISIBLE);
+        } else {
+            MyDiaryApplication.log("Setting questionsListViewElementHasAnswerImageView to INVISIBLE");
+            questionsListViewElementHasAnswerImageView.setVisibility(View.INVISIBLE);
+        }
 
         return view;
     }

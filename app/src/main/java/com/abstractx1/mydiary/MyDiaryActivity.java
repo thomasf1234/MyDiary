@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
+import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
+import com.abstractx1.mydiary.jobs.SendDataJob;
 import com.example.demo.job.PermissionActivity;
 
 import java.io.File;
@@ -53,12 +55,21 @@ public abstract class MyDiaryActivity extends PermissionActivity {
                 return true;
             case R.id.contactResearcherMenuOption:
                 EmailClient emailClient = new EmailClient(this);
-                emailClient.open(getResources().getString(R.string.to_email_address));
+                emailClient.open(GlobalApplicationValues.getResearcherEmailAddress(this), "Contact Researcher");
+                return true;
+            case R.id.sendButtonMenuOption:
+                try {
+                    triggerJob(new SendDataJob(this));
+                } catch (Exception e) {
+                    alert("Please contact the researcher, for some reason we could not send data.");
+                }
                 return true;
             case R.id.debugMenuOption:
-                //AlertDialog.Builder builder = new DebugDialogBuilder(this);
-                //AlertDialog dialog = builder.create();
-                //dialog.show();
+                try {
+                    triggerJob(new DebugPrintFilesJob(this));
+                } catch (Exception e) {
+                    alert("Could not print files");
+                }
                 return true;
             case R.id.clearCacheMenuOption:
                 Utilities.clearCache(getApplicationContext());

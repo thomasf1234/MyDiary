@@ -1,17 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--  Single List Item Design -->
+<?xml version="1.0" encoding="utf-8"?><!--  Single List Item Design -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-       android:id="@+id/questionsListViewElementQuestionTextView"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:padding="10dip"
-       android:textSize="16sp" />
+    <RelativeLayout
+            android:id="@+id/questionLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/questionsListViewElementQuestionTextView"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_margin="10dp"
+                  android:layout_marginRight="15dp"
+                  android:paddingTop="10dp"
+                  android:paddingLeft="10dp"
+                  android:paddingRight="10dp"
+                  android:textSize="12sp"
+                  android:textStyle="bold"
+                  android:layout_alignParentLeft="true"/>
+
+        <ImageView
+                android:id="@+id/questionsListViewElementQuestionImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="Question icon"
+                app:srcCompat="@android:drawable/ic_menu_zoom"
+                android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/progressLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/questionLinearLayout">
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/questionsListViewElementAnswerTextView"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_marginRight="15dp"
+                  android:layout_marginLeft="15dp"
+                  android:paddingLeft="15dp"
+                  android:paddingRight="15dp"
+                  android:textSize="10sp"
+                  android:layout_alignParentLeft="true"/>
+
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                   android:id="@+id/questionsListViewElementHasAnswerImageView"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="10dp"
+                   android:layout_marginEnd="10dp"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentEnd="true"
+                   android:contentDescription="Has Answer icon"
+                   app:srcCompat="@android:drawable/checkbox_on_background"/>
+    </RelativeLayout>
 </RelativeLayout>

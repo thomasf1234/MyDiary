@@ -41,6 +41,16 @@ public class TitleActivity extends MyDiaryActivity {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        MyDiaryApplication.log("Resuming TitleActivity");
+
+        if (questionsListView != null) {
+            ((QuestionsArrayAdapter) questionsListView.getAdapter()).notifyDataSetChanged();
+        }
+    }
+
     private void showIntroductionDialog() {
         AlertDialog alertDialog = IntroductionDialog.create(this);
         alertDialog.show();

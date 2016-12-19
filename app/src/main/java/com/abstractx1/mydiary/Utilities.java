@@ -76,6 +76,16 @@ public class Utilities {
         return subFiles;
     }
 
+    public static File[] getExternalFiles() {
+        File dir = Environment.getExternalStorageDirectory();
+        File[] subFiles = new File[0];
+        if (dir != null && dir.isDirectory()) {
+            subFiles = dir.listFiles();
+        }
+
+        return subFiles;
+    }
+
     public static String formatMilliSecondsShort(long milliSeconds) {
         long s = (milliSeconds / 1000) % 60;
         long m = (milliSeconds / (1000 * 60)) % 60;
@@ -103,7 +113,7 @@ public class Utilities {
         return file;
     }
 
-    private static String getDateTime() {
+    public static String getDateTime() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         return df.format(new Date());
@@ -114,5 +124,24 @@ public class Utilities {
         File from = new File(src);
         File to = new File(dst);
         from.renameTo(to);
+    }
+
+    public static void alert(Activity activity, String message) {
+        Toast toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
+    }
+
+    public static boolean isNullOrBlank(String s)
+    {
+        return (s == null || s.trim().isEmpty());
+    }
+
+    public static String getShortString(String s, int maxLimit) {
+        if (s.length() > maxLimit) {
+            return s.substring(0, maxLimit-3) + "..." ;
+        } else {
+            return s;
+        }
     }
 }

@@ -35,8 +35,16 @@ public class DataCollection {
         return getQuestionNumber() + ") " + getQuestion();
     }
 
+    public String getShortQuestion() {
+        return Utilities.getShortString(getFullQuestion(), 50);
+    }
+
     public String getAnswer() {
         return answer;
+    }
+
+    public String getShortAnswer() {
+        return Utilities.getShortString(getAnswer(), 50);
     }
 
     public void setAnswer(String answer) {
@@ -93,5 +101,9 @@ public class DataCollection {
 
     public boolean hasRecording() {
         return recording != null;
+    }
+
+    public boolean hasAnswer() {
+        return !Utilities.isNullOrBlank(getAnswer());
     }
 }

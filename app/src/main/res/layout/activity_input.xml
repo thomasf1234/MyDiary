@@ -16,7 +16,6 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="16dp"
-        android:text="2) Please give detailed descriptions about the following: \n\n   a) What technology(s), and specific features of them have you used today? \n   b) When did you use the technology(s) and what was happening in your day at each time? \n   c) Why did you use the technology(s)?"
         android:textSize="12sp" />
 
     <LinearLayout

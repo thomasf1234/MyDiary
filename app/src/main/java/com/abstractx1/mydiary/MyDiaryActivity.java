@@ -1,6 +1,6 @@
 package com.abstractx1.mydiary;
 
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -43,6 +43,10 @@ public abstract class MyDiaryActivity extends PermissionActivity {
             menu.findItem(R.id.clearCacheMenuOption).setVisible(false);
         }
 
+        if (getClass() == InputActivity.class) {
+            menu.findItem(R.id.sendButtonMenuOption).setVisible(false);
+        }
+
         return true;
     }
 
@@ -50,7 +54,7 @@ public abstract class MyDiaryActivity extends PermissionActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.editResearcherEmailAddressMenuOption:
-                AlertDialog editResearcherEmailAddressdialog =  ResearcherEmailDialog.create(this, "Settings", "Edit researcher email address:");
+                AlertDialog editResearcherEmailAddressdialog =  ResearcherEmailDialog.create(this);
                 editResearcherEmailAddressdialog.show();
                 return true;
             case R.id.contactResearcherMenuOption:

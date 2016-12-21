@@ -81,6 +81,7 @@ public class RecordHandler extends State7 {
         if (dataCollection.hasRecording()) {
             setUpNewRecordingPlayer();
             transitionTo(LOADED);
+            Thread.sleep(100);
             setPlayFrom(currentMilliseconds);
         } else {
             State initialState = hasSystemMicrophoneFeature() ? EMPTY : DISABLED;

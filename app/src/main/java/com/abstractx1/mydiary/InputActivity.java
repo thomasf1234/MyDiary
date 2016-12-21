@@ -79,6 +79,7 @@ public class InputActivity extends MyDiaryActivity {
         }
 
         try {
+            MyDiaryApplication.log("startCurrentMilliseconds: " + startCurrentMilliseconds);
             this.recordHandler = new RecordHandler(this,
                     recordButton,
                     playButton,

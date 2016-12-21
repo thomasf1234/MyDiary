@@ -18,7 +18,10 @@ public class TitleActivity extends MyDiaryActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(!isInDebugMode() && !GlobalApplicationValues.hasAcceptedTermsAndConditions(this)) { showIntroductionDialog();}
+        if(!isInDebugMode() && !GlobalApplicationValues.hasAcceptedTermsAndConditions(this)) {
+            GlobalApplicationValues.editResearcherEmailAddress(this, getString(R.string.default_researcher_email_address));
+            showIntroductionDialog();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);

@@ -156,6 +156,11 @@ public class InputActivity extends MyDiaryActivity {
                 return true;
             case android.R.id.home:
                 if (recordHandler.getState() == RecordHandler.RECORDING) {
+                    try {
+                        recordHandler.transitionTo(RecordHandler.LOADED);
+                    } catch (Exception e) {
+                        MyDiaryApplication.log(e, "Error stopping recording.");
+                    }
                     saveRecordingDialog.show();
                 } else {
                     onBackPressed();
@@ -171,11 +176,7 @@ public class InputActivity extends MyDiaryActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked Yes button
-                try {
-                    recordHandler.transitionTo(RecordHandler.LOADED);
-                } catch (Exception e) {
-                    MyDiaryApplication.log(e, "Error stopping recording.");
-                }
+                alert("Recording saved.");
                 dialog.dismiss();
                 onBackPressed();
             }
@@ -184,7 +185,9 @@ public class InputActivity extends MyDiaryActivity {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked No button
                 try {
+                    recordHandler.transitionTo(RecordHandler.EMPTY);
                     recordHandler.transitionTo(RecordHandler.CANCELLED);
+                    alert(getString(R.string.recording_not_saved));
                 } catch (Exception e) {
                     MyDiaryApplication.log(e, "Error Destroying the Record Handler");
                 }

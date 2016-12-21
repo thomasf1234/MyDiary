@@ -66,6 +66,7 @@ public class RecordHandler extends State7 {
     private Handler handler;
     private Timer timer;
     private AlertDialog clearRecordingDialog;
+    private AlertDialog saveRecordingDialog;
 
     public RecordHandler(MyDiaryActivity activity,
                          ImageButton recordButton,
@@ -104,6 +105,7 @@ public class RecordHandler extends State7 {
         this.dataCollection = dataCollection;
         this.handler = new Handler();
         initializeClearRecordingDialog();
+        initializeSaveRecordingDialog();
         setEventListeners();
         setUpUpdateUISchedule();
     }
@@ -155,10 +157,7 @@ public class RecordHandler extends State7 {
     //LOADED
     @Override
     protected void onSetStateFOUR() throws Exception {
-        if (!hasRecorder()) {
-            setUpNewRecorder();
-        }
-        if (recorder.isRecording()) {
+        if (hasRecorder() && recorder.isRecording()) {
             recorder.stop();
             dataCollection.setRecording(recorder.getOutputFile());
             setUpNewRecordingPlayer();
@@ -331,8 +330,8 @@ public class RecordHandler extends State7 {
             public void onClick(View view) {
                 if (recordingInProgress()) {
                     try {
-                        view.playSoundEffect(SoundEffectConstants.CLICK);
                         transitionTo(RecordHandler.LOADED);
+                        saveRecordingDialog.show();
                     } catch (Exception e) {
                         MyDiaryApplication.log(e, "Error stopping recording.");
                     }
@@ -437,6 +436,30 @@ public class RecordHandler extends State7 {
             }
         });
         this.clearRecordingDialog = builder.create();
+    }
+
+    private void initializeSaveRecordingDialog() {
+        ConfirmationDialogBuilder builder = new ConfirmationDialogBuilder(activity, "Do you want to save the current recording?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked Yes button
+                activity.alert("Recording saved.");
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked Yes button
+                try {
+                    transitionTo(RecordHandler.EMPTY);
+                    activity.alert(activity.getString(R.string.recording_not_saved));
+                } catch (Exception e) {
+                    activity.alert("Error discarding recording: " + e.getMessage());
+                }
+                dialog.dismiss();
+            }
+        });
+        this.saveRecordingDialog = builder.create();
     }
 }
 

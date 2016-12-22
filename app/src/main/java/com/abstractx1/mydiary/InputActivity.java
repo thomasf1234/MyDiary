@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
+import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
 import com.abstractx1.mydiary.record.RecordHandler;
 
 public class InputActivity extends MyDiaryActivity {
@@ -167,13 +170,41 @@ public class InputActivity extends MyDiaryActivity {
                     onBackPressed();
                 }
                 return true;
+            case R.id.debugMenuOption:
+                try {
+                    triggerJob(new DebugPrintFilesJob(this));
+                } catch (Exception e) {
+                    alert("Could not print files");
+                }
+                return true;
+            case R.id.clearCacheMenuOption:
+                Utilities.clearCache(getApplicationContext());
+                alert("Cleared cache");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        if (!isInDebugMode())
+        {
+            menu.findItem(R.id.debugMenuOption).setVisible(false);
+            menu.findItem(R.id.clearCacheMenuOption).setVisible(false);
+        }
+
+        menu.findItem(R.id.sendButtonMenuOption).setVisible(false);
+        menu.findItem(R.id.imageButtonMenuOption).setVisible(false);
+
+        return true;
+    }
+
     private void initializeSaveRecordingDialog() {
-        ConfirmationDialogBuilder builder = new ConfirmationDialogBuilder(this, "Do you want to save the current recording?");
+        ConfirmationDialogBuilder builder = new ConfirmationDialogBuilder(this, "Do you want to save the current recording?", android.R.drawable.ic_menu_save);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked Yes button

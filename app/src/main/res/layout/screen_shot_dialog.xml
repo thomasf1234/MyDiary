@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageContainerRelativeLayout"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/screenShotDialogImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:antialias="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2">
+
+        <LinearLayout
+            android:id="@+id/buttonsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/screenShotButton"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Take Picture"
+                android:textAllCaps="false"
+                android:background="?attr/selectableItemBackground"/>
+
+            <Button
+                android:id="@+id/uploadButton"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Upload"
+                android:textAllCaps="false"
+                android:background="?attr/selectableItemBackground"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/screenShotDialogCaptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:background="@drawable/customborder"
+        android:hint="Caption..."
+        android:imeOptions="flagNoFullscreen"
+        android:inputType="text|textAutoCorrect|textMultiLine"
+        android:maxLines="3"
+        android:scrollbars="vertical"
+        android:textSize="14sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <requestFocus />
+    </EditText>
+</LinearLayout>

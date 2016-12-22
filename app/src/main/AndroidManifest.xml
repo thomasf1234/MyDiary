@@ -44,6 +44,7 @@
             android:name=".InputActivity"
             android:parentActivityName="com.abstractx1.mydiary.TitleActivity"
             android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustResize|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

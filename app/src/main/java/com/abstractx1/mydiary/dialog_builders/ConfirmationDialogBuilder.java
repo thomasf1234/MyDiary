@@ -15,4 +15,12 @@ public class ConfirmationDialogBuilder extends AlertDialog.Builder {
         setTitle("Confirmation");
         setMessage(message);
     }
+
+    public ConfirmationDialogBuilder(Context context, String message, int icon) {
+        super(context);
+        setCancelable(false);
+        setTitle("Confirmation");
+        setIcon(icon);
+        setMessage(message);
+    }
 }

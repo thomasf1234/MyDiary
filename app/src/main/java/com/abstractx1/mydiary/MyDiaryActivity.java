@@ -20,6 +20,7 @@ import com.abstractx1.mydiary.jobs.SendDataJob;
 import com.example.demo.job.PermissionActivity;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by tfisher on 23/11/2016.
@@ -30,61 +31,6 @@ public abstract class MyDiaryActivity extends PermissionActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         load(savedInstanceState);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        if (!isInDebugMode())
-        {
-            menu.findItem(R.id.debugMenuOption).setVisible(false);
-            menu.findItem(R.id.clearCacheMenuOption).setVisible(false);
-        }
-
-        if (getClass() == InputActivity.class) {
-            menu.findItem(R.id.sendButtonMenuOption).setVisible(false);
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.editResearcherEmailAddressMenuOption:
-                AlertDialog editResearcherEmailAddressdialog =  ResearcherEmailDialog.create(this);
-                editResearcherEmailAddressdialog.show();
-                return true;
-            case R.id.contactResearcherMenuOption:
-                EmailClient emailClient = new EmailClient(this);
-                emailClient.open(GlobalApplicationValues.getResearcherEmailAddress(this), "Contact Researcher");
-                return true;
-            case R.id.sendButtonMenuOption:
-                try {
-                    triggerJob(new SendDataJob(this));
-                } catch (Exception e) {
-                    alert("Please contact the researcher, for some reason we could not send data.");
-                }
-                return true;
-            case R.id.debugMenuOption:
-                try {
-                    triggerJob(new DebugPrintFilesJob(this));
-                } catch (Exception e) {
-                    alert("Could not print files");
-                }
-                return true;
-            case R.id.clearCacheMenuOption:
-                Utilities.clearCache(getApplicationContext());
-                alert("Cleared cache");
-                return true;
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     public int getDisplayWidth() {
@@ -164,6 +110,19 @@ public abstract class MyDiaryActivity extends PermissionActivity {
             }
         }
 
+        if (Researcher.getInstance().hasImagePath()) {
+            String key = "imagePath";
+            String value = Researcher.getInstance().getImagePath();
+            savedInstanceState.putString(key, value);
+            MyDiaryApplication.log("storing key: '" + key + "' value: '" + value +"' on savedInstanceState");
+        }
+
+        if (Researcher.getInstance().hasCaption()) {
+            String key = "imageCaption";
+            String value = Researcher.getInstance().getCaption();
+            savedInstanceState.putString(key, value);
+            MyDiaryApplication.log("storing key: '" + key + "' value: '" + value +"' on savedInstanceState");
+        }
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -179,6 +138,19 @@ public abstract class MyDiaryActivity extends PermissionActivity {
             } else {
                 MyDiaryApplication.log("savedInstanceState is not null so loading from savedInstanceState");
                 setupResearcher();
+                if (savedInstanceState.containsKey("imagePath")) {
+                    debugAlert("image loaded");
+                    try {
+                        Researcher.getInstance().setImagePath(savedInstanceState.getString("imagePath"));
+                    } catch (IOException e) {
+                        MyDiaryApplication.log(e, "An error occurred loading the photo file.");
+                        alert("An error occurred loading the photo file.");
+                    }
+                }
+                if (savedInstanceState.containsKey("imageCaption")) {
+                    debugAlert("image caption loaded");
+                    Researcher.getInstance().setCaption(savedInstanceState.getString("imageCaption"));
+                }
                 for (DataCollection dataCollection : Researcher.getInstance().getDataCollections()) {
                     dataCollection.setAnswer(savedInstanceState.getString("answer" + dataCollection.getQuestionNumber()));
                     if (savedInstanceState.containsKey("recordingPath" + dataCollection.getQuestionNumber())) {

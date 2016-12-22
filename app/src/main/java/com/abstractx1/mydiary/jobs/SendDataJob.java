@@ -53,8 +53,19 @@ public class SendDataJob extends PermissionJob {
                     MyDiaryApplication.log("Adding: " + dataCollection.getRecording().getAbsolutePath() + " to the zip");
                 }
             }
+
+            if (Researcher.getInstance().hasCaption()) {
+                writer.write("Caption: ");
+                writer.write(Researcher.getInstance().getCaption());
+                writer.write("\n\n");
+            }
+
             writer.close();
             files.add(file);
+
+            if (Researcher.getInstance().hasImagePath()) {
+                files.add(new File(Researcher.getInstance().getImagePath()));
+            }
 
             String[] filePaths = new String[files.size()];
             for (int i=0; i< filePaths.length; ++i) {

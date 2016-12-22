@@ -62,7 +62,13 @@ public class SendDataJob extends PermissionJob {
             }
             /** Closing the writer object */
             String subject = "MyDiary entry";
-            String zipPath = Environment.getExternalStorageDirectory() + File.separator + Utilities.getDateTime() + "-MyDiary.zip";
+
+            File externalDir = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDiary_data");
+            if (!(externalDir.exists() && externalDir.isDirectory())) {
+                externalDir.mkdir();
+            }
+
+            String zipPath = externalDir.getAbsolutePath() + File.separator + Utilities.getDateTime() + "-MyDiary.zip";
             new Compress(filePaths, zipPath).zip();
             sendDataEmailClient.open(GlobalApplicationValues.getResearcherEmailAddress(appCompatActivity), subject, new String[]{zipPath});
         } catch (Exception e) {

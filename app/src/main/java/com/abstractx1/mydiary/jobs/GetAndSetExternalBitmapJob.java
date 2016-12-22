@@ -1,15 +1,13 @@
 package com.abstractx1.mydiary.jobs;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
-import android.widget.ImageView;
-
-import com.abstractx1.mydiary.ButtonHelper;
-import com.abstractx1.mydiary.DataCollection;
+import com.abstractx1.mydiary.Researcher;
+import com.abstractx1.mydiary.TitleActivity;
+import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
 import com.example.demo.job.PermissionJob;
 
 import java.io.IOException;
@@ -25,23 +23,19 @@ public class GetAndSetExternalBitmapJob extends PermissionJob {
     public static final int PERMISSION_REQUEST_ID = 0;
 
     private Uri imageUri;
-    private ImageView imageView;
-    private Button clearPictureButton;
+    private TitleActivity titleActivity;
 
-
-    public GetAndSetExternalBitmapJob(AppCompatActivity appCompatActivity, Uri imageUri, ImageView imageView, Button clearPicturButton) {
-        super(appCompatActivity);
-        this.imageView = imageView;
+    public GetAndSetExternalBitmapJob(TitleActivity titleActivity, Uri imageUri) {
+        super(titleActivity);
         this.imageUri = imageUri;
-        this.clearPictureButton = clearPicturButton;
+        this.titleActivity = titleActivity;
     }
 
     @Override
     public void perform() throws IOException {
-        //DataCollection.getInstance().setImage(getImagePath(imageUri));
-        //imageView.setImageBitmap(DataCollection.getInstance().getImage());
-        //imageView.invalidate();
-        //ButtonHelper.enable(clearPictureButton);
+        Researcher.getInstance().setImagePath(getImagePath(imageUri));
+        AlertDialog alertDialog = ScreenShotDialog.create(titleActivity);
+        alertDialog.show();
     }
 
     @Override

@@ -303,7 +303,7 @@ public class RecordHandler extends State7 {
                     }
                 });
             }
-        }, 0, 800);
+        }, 0, 100);
     }
 
     private void cancelRecorder() {

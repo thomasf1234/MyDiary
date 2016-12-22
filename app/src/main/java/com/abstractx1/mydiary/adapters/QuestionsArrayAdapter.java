@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.abstractx1.mydiary.DataCollection;
@@ -36,20 +36,20 @@ public class QuestionsArrayAdapter extends ArrayAdapter<DataCollection> {
         View view = inflater.inflate(R.layout.questions_listview_item, parent, false);
 
         TextView questionTextView = (TextView) view.findViewById(R.id.questionsListViewElementQuestionTextView);
-        ImageView questionsListViewElementHasAnswerImageView = (ImageView) view.findViewById(R.id.questionsListViewElementHasAnswerImageView);
+        final CheckBox hasAnswerCheckBox = (CheckBox) view.findViewById(R.id.hasAnswerCheckBox);
         TextView answerTextView = (TextView) view.findViewById(R.id.questionsListViewElementAnswerTextView);
 
         questionTextView.setText(dataCollection.getShortQuestion());
 
-        if(dataCollection.hasAnswer()) {
+        if(dataCollection.hasAnswer() || dataCollection.hasRecording()) {
             MyDiaryApplication.log("question: " + dataCollection.getQuestionNumber() + ", has answer: '" + dataCollection.getAnswer() + "'");
-            MyDiaryApplication.log("Setting questionsListViewElementHasAnswerImageView to VISIBLE");
+            MyDiaryApplication.log("Setting hasAnswerCheckBox to Checked");
 
             answerTextView.setText(dataCollection.getShortAnswer());
-            questionsListViewElementHasAnswerImageView.setVisibility(View.VISIBLE);
+            hasAnswerCheckBox.setChecked(true);
         } else {
-            MyDiaryApplication.log("Setting questionsListViewElementHasAnswerImageView to INVISIBLE");
-            questionsListViewElementHasAnswerImageView.setVisibility(View.INVISIBLE);
+            MyDiaryApplication.log("Setting hasAnswerCheckBox to unChecked");
+            hasAnswerCheckBox.setChecked(false);
         }
 
         return view;

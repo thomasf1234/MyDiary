@@ -15,7 +15,6 @@ import java.io.IOException;
 public class DataCollection {
     private int questionNumber;
     private String question;
-    private Bitmap image;
     private File recording;
     private String answer;
 
@@ -49,41 +48,6 @@ public class DataCollection {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public void setImage(String path) throws IOException {
-        Bitmap bmp = BitmapFactory.decodeFile(path);
-        ExifInterface exif = new ExifInterface(path);
-        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        Matrix matrix = new Matrix();
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.postRotate(90);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.postRotate(180);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.postRotate(270);
-                break;
-            default:
-                break;
-        }
-
-        this.image = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
-
-    }
-
-    public Bitmap getImage() {
-        return image;
-    }
-
-    public boolean hasImage() {
-        return image != null;
-    }
-
-    public void clearImage() {
-        this.image = null;
     }
 
     public void setRecording(File recording) {

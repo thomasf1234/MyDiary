@@ -2,6 +2,7 @@ package com.abstractx1.mydiary;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.view.Menu;
@@ -18,12 +19,14 @@ import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
+import com.abstractx1.mydiary.jobs.GetAndSetExternalBitmapJob;
 import com.abstractx1.mydiary.jobs.SendDataJob;
 
 import java.io.IOException;
 
 
 public class TitleActivity extends MyDiaryActivity {
+    public static int REQUEST_GET_FROM_GALLERY = 2;
     public ListView questionsListView;
     public CameraHandler cameraHandler;
 
@@ -126,6 +129,15 @@ public class TitleActivity extends MyDiaryActivity {
                 AlertDialog alertDialog = ScreenShotDialog.create(this);
                 alertDialog.show();
             } catch (IOException e) {
+                MyDiaryApplication.log(e, "An error occurred reading the photo file.");
+                alert("An error occurred reading the photo file.");
+            }
+        } else if(requestCode == REQUEST_GET_FROM_GALLERY && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            try {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                triggerJob(new GetAndSetExternalBitmapJob(this, selectedImage));
+            } catch (Exception e) {
                 MyDiaryApplication.log(e, "An error occurred reading the photo file.");
                 alert("An error occurred reading the photo file.");
             }

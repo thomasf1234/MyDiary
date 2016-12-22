@@ -2,6 +2,7 @@ package com.abstractx1.mydiary.dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.text.Editable;
@@ -40,7 +41,7 @@ public class ScreenShotDialog {
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         ;
-                   }
+                    }
                 });
 
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -59,7 +60,7 @@ public class ScreenShotDialog {
                     imageView.setImageBitmap(Researcher.getInstance().getImage());
                 }
 
-                if(!activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+                if (!activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
                     Button screenShotButton = (Button) alertDialog.findViewById(R.id.screenShotButton);
                     screenShotButton.setEnabled(false);
                     screenShotButton.setVisibility(View.GONE);
@@ -76,6 +77,15 @@ public class ScreenShotDialog {
                             MyDiaryApplication.log(e, "An error occurred while taking the photo.");
                             activity.alert("An error occurred while taking the photo.");
                         }
+                    }
+                });
+
+                Button uploadButton = (Button) alertDialog.findViewById(R.id.uploadButton);
+                uploadButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MyDiaryApplication.log("About to upload picture");
+                        activity.startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), TitleActivity.REQUEST_GET_FROM_GALLERY);
                     }
                 });
 

@@ -1,10 +1,12 @@
-package com.abstractx1.mydiary;
+package com.abstractx1.mydiary.camera;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+
+import com.abstractx1.mydiary.Utilities;
 
 import java.io.File;
 import java.io.IOException;

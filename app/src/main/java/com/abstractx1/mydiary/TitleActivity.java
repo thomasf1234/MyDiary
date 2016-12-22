@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 
 import com.abstractx1.mydiary.adapters.QuestionsArrayAdapter;
+import com.abstractx1.mydiary.camera.CameraHandler;
 import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;

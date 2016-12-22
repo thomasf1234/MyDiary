@@ -20,8 +20,8 @@ import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
+import com.abstractx1.mydiary.dialogs.SendDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
-import com.abstractx1.mydiary.jobs.SendDataJob;
 
 import java.io.IOException;
 
@@ -84,11 +84,7 @@ public class TitleActivity extends MyDiaryActivity {
                 alertDialog.show();
                 return true;
             case R.id.sendButtonMenuOption:
-                try {
-                    triggerJob(new SendDataJob(this));
-                } catch (Exception e) {
-                    alert("Please contact the researcher, for some reason we could not send data.");
-                }
+                SendDialog.create(this).show();
                 return true;
             case R.id.debugMenuOption:
                 try {

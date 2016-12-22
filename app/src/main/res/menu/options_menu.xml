@@ -13,7 +13,7 @@
             android:id="@+id/sendButtonMenuOption"
             android:icon="@android:drawable/ic_menu_send"
             app:showAsAction="always|withText"
-            android:title="Send Data"/>
+            android:title="Submit Answers"/>
     <item
         android:id="@+id/imageButtonMenuOption"
         android:title="Take/Upload Picture"

@@ -21,11 +21,13 @@
                   android:layout_centerVertical="true"
                   android:layout_margin="10dp"
                   android:layout_marginRight="15dp"
+                  android:layout_marginEnd="15dp"
                   android:paddingTop="10dp"
                   android:paddingLeft="10dp"
-                  android:paddingRight="10dp"
+                  android:paddingRight="15dp"
                   android:textSize="12sp"
                   android:textStyle="bold"
+            android:layout_alignParentStart="true"
                   android:layout_alignParentLeft="true"/>
 
         <ImageView
@@ -37,7 +39,8 @@
                 android:layout_marginEnd="10dp"
                 android:contentDescription="Question icon"
                 app:srcCompat="@android:drawable/ic_menu_zoom"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/progressLinearLayout"
@@ -55,7 +58,8 @@
                   android:paddingLeft="15dp"
                   android:paddingRight="15dp"
                   android:textSize="10sp"
-                  android:layout_alignParentLeft="true"/>
+                  android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
         <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
                    android:id="@+id/hasAnswerCheckBox"

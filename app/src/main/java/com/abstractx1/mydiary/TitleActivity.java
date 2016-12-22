@@ -16,11 +16,11 @@ import android.widget.ListView;
 
 import com.abstractx1.mydiary.adapters.QuestionsArrayAdapter;
 import com.abstractx1.mydiary.camera.CameraHandler;
+import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
-import com.abstractx1.mydiary.jobs.GetAndSetExternalBitmapJob;
 import com.abstractx1.mydiary.jobs.SendDataJob;
 
 import java.io.IOException;
@@ -77,8 +77,7 @@ public class TitleActivity extends MyDiaryActivity {
                 editResearcherEmailAddressdialog.show();
                 return true;
             case R.id.contactResearcherMenuOption:
-                EmailClient emailClient = new EmailClient(this);
-                emailClient.open(GlobalApplicationValues.getResearcherEmailAddress(this), "Contact Researcher");
+                HelpDialog.create(this).show();
                 return true;
             case R.id.imageButtonMenuOption:
                 AlertDialog alertDialog = ScreenShotDialog.create(this);
@@ -137,7 +136,9 @@ public class TitleActivity extends MyDiaryActivity {
             Uri selectedImage = data.getData();
             try {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                triggerJob(new GetAndSetExternalBitmapJob(this, selectedImage));
+                Researcher.getInstance().setImagePath(CameraHandler.getImagePath(this, selectedImage));
+                AlertDialog alertDialog = ScreenShotDialog.create(this);
+                alertDialog.show();
             } catch (Exception e) {
                 MyDiaryApplication.log(e, "An error occurred reading the photo file.");
                 alert("An error occurred reading the photo file.");

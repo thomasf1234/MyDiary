@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
+import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
 import com.abstractx1.mydiary.record.RecordHandler;
@@ -155,8 +156,7 @@ public class InputActivity extends MyDiaryActivity {
                 editResearcherEmailAddressdialog.show();
                 return true;
             case R.id.contactResearcherMenuOption:
-                EmailClient emailClient = new EmailClient(this);
-                emailClient.open(GlobalApplicationValues.getResearcherEmailAddress(this), "Contact Researcher");
+                HelpDialog.create(this).show();
                 return true;
             case android.R.id.home:
                 if (recordHandler.getState() == RecordHandler.RECORDING) {

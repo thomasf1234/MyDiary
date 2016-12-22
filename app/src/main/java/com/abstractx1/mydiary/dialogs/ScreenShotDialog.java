@@ -18,6 +18,7 @@ import com.abstractx1.mydiary.MyDiaryApplication;
 import com.abstractx1.mydiary.R;
 import com.abstractx1.mydiary.Researcher;
 import com.abstractx1.mydiary.TitleActivity;
+import com.abstractx1.mydiary.jobs.GetAndSetExternalBitmapJob;
 
 import java.io.IOException;
 
@@ -85,7 +86,12 @@ public class ScreenShotDialog {
                     @Override
                     public void onClick(View view) {
                         MyDiaryApplication.log("About to upload picture");
-                        activity.startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), TitleActivity.REQUEST_GET_FROM_GALLERY);
+                        try {
+                            activity.triggerJob(new GetAndSetExternalBitmapJob(activity));
+                        } catch (Exception e) {
+                            MyDiaryApplication.log(e, "An error occurred reading the photo file.");
+                            activity.alert("An error occurred reading the photo file.");
+                        }
                     }
                 });
 

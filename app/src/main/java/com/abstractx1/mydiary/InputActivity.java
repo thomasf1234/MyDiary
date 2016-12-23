@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
+import com.abstractx1.mydiary.dialogs.EditAlarmDialog;
 import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
@@ -154,6 +155,9 @@ public class InputActivity extends MyDiaryActivity {
             case R.id.editResearcherEmailAddressMenuOption:
                 AlertDialog editResearcherEmailAddressdialog =  ResearcherEmailDialog.create(this);
                 editResearcherEmailAddressdialog.show();
+                return true;
+            case R.id.editAlarmMenuOption:
+                EditAlarmDialog.create(this).show();
                 return true;
             case R.id.contactResearcherMenuOption:
                 HelpDialog.create(this).show();

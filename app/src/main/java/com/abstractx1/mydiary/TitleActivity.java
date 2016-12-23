@@ -1,8 +1,5 @@
 package com.abstractx1.mydiary;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -20,6 +17,7 @@ import android.widget.ListView;
 import com.abstractx1.mydiary.adapters.QuestionsArrayAdapter;
 import com.abstractx1.mydiary.broadcast_receivers.MyDiaryBroadcastReceiver;
 import com.abstractx1.mydiary.camera.CameraHandler;
+import com.abstractx1.mydiary.dialogs.EditAlarmDialog;
 import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
@@ -28,7 +26,6 @@ import com.abstractx1.mydiary.dialogs.SendDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 
 public class TitleActivity extends MyDiaryActivity {
@@ -42,7 +39,7 @@ public class TitleActivity extends MyDiaryActivity {
             GlobalApplicationValues.editResearcherEmailAddress(this, getString(R.string.default_researcher_email_address));
             showIntroductionDialog();
         }
-        initializeAlarm();
+        MyDiaryApplication.initializeAlarm(this);
         this.cameraHandler = new CameraHandler(this, getCacheDir() + "/image.jpg");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
@@ -81,6 +78,9 @@ public class TitleActivity extends MyDiaryActivity {
             case R.id.editResearcherEmailAddressMenuOption:
                 AlertDialog editResearcherEmailAddressdialog =  ResearcherEmailDialog.create(this);
                 editResearcherEmailAddressdialog.show();
+                return true;
+            case R.id.editAlarmMenuOption:
+                EditAlarmDialog.create(this).show();
                 return true;
             case R.id.contactResearcherMenuOption:
                 HelpDialog.create(this).show();
@@ -162,25 +162,4 @@ public class TitleActivity extends MyDiaryActivity {
         AlertDialog alertDialog = IntroductionDialog.create(this);
         alertDialog.show();
     }
-
-    private void initializeAlarm() {
-        Calendar alarmStartTime = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-        alarmStartTime.set(Calendar.HOUR_OF_DAY, 21);
-        alarmStartTime.set(Calendar.MINUTE, 0);
-        alarmStartTime.set(Calendar.SECOND, 0);
-        if (now.after(alarmStartTime)) {
-            alarmStartTime.add(Calendar.DATE, 1);
-        }
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        Intent intent = new Intent(this, MyDiaryBroadcastReceiver.class);
-        intent.setAction(MyDiaryBroadcastReceiver.NOTIFICATION);
-        intent.putExtra(MyDiaryBroadcastReceiver.ACTION_ID, MyDiaryBroadcastReceiver.ACTION_REMINDER);
-        PendingIntent pendingIntent  = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendingIntent);
-    }
-
 }

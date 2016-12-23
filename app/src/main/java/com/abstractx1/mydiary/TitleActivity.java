@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 
 import com.abstractx1.mydiary.adapters.QuestionsArrayAdapter;
+import com.abstractx1.mydiary.broadcast_receivers.MyDiaryBroadcastReceiver;
 import com.abstractx1.mydiary.camera.CameraHandler;
 import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.IntroductionDialog;
@@ -79,6 +80,12 @@ public class TitleActivity extends MyDiaryActivity {
             case R.id.contactResearcherMenuOption:
                 HelpDialog.create(this).show();
                 return true;
+            case R.id.testNotificationMenuOption:
+                Intent intent = new Intent(this, MyDiaryBroadcastReceiver.class);
+                intent.setAction(MyDiaryBroadcastReceiver.NOTIFICATION);
+                intent.putExtra(MyDiaryBroadcastReceiver.ACTION_ID, MyDiaryBroadcastReceiver.ACTION_REMINDER);
+                sendBroadcast(intent);
+                return true;
             case R.id.imageButtonMenuOption:
                 AlertDialog alertDialog = ScreenShotDialog.create(this);
                 alertDialog.show();
@@ -111,6 +118,7 @@ public class TitleActivity extends MyDiaryActivity {
         {
             menu.findItem(R.id.debugMenuOption).setVisible(false);
             menu.findItem(R.id.clearCacheMenuOption).setVisible(false);
+            menu.findItem(R.id.testNotificationMenuOption).setVisible(false);
         }
 
         return true;

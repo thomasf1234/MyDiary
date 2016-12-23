@@ -195,10 +195,12 @@ public class InputActivity extends MyDiaryActivity {
         {
             menu.findItem(R.id.debugMenuOption).setVisible(false);
             menu.findItem(R.id.clearCacheMenuOption).setVisible(false);
+            menu.findItem(R.id.testNotificationMenuOption).setVisible(false);
         }
 
         menu.findItem(R.id.sendButtonMenuOption).setVisible(false);
         menu.findItem(R.id.imageButtonMenuOption).setVisible(false);
+        menu.findItem(R.id.testNotificationMenuOption).setVisible(false);
 
         return true;
     }

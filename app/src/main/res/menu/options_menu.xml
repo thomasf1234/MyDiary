@@ -10,6 +10,10 @@
             android:id="@+id/clearCacheMenuOption"
             android:title="Clear Cache"/>
     <item
+        android:id="@+id/testNotificationMenuOption"
+        android:title="Test Notification"/>
+
+    <item
             android:id="@+id/sendButtonMenuOption"
             android:icon="@android:drawable/ic_menu_send"
             app:showAsAction="always|withText"

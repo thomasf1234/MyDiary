@@ -1,22 +1,15 @@
 package com.abstractx1.mydiary;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
-import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
-import com.abstractx1.mydiary.jobs.SendDataJob;
 import com.example.demo.job.PermissionActivity;
 
 import java.io.File;

@@ -32,27 +32,25 @@ public class MyDiaryBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         MyDiaryApplication.log("NotificationService onHandleIntent received action: " + action.toString());
 
-        switch (action) {
-            case NOTIFICATION:
-                Bundle extras = intent.getExtras();
-                if (extras.containsKey(ACTION_ID)) {
-                    String actionType = extras.getString(ACTION_ID);
-                    MyDiaryApplication.log("NotificationService onHandleIntent received actionType " + actionType);
-                    switch (actionType) {
-                        case ACTION_REMINDER:
-                            sendReminderNotification(context);
-                            break;
-                        default:
-                            MyDiaryApplication.log("NotificationService onHandleIntent received unknown actionType " + actionType);
-                            break;
-                    }
-                }
-                break;
-            default:
-                MyDiaryApplication.log("NotificationService onHandleIntent received unknown intent action" + action);
-                break;
-        }
+        if (action.equals(NOTIFICATION)) {
+            Bundle extras = intent.getExtras();
 
+            if (extras.containsKey(ACTION_ID)) {
+                String actionType = extras.getString(ACTION_ID);
+                MyDiaryApplication.log("NotificationService onHandleIntent received actionType " + actionType);
+
+                if (actionType.equals(ACTION_REMINDER)) {
+                    sendReminderNotification(context);
+                } else {
+                    MyDiaryApplication.log("NotificationService onHandleIntent received unknown actionType " + actionType);
+                }
+            }
+        } else if (action.equals(android.content.Intent.ACTION_BOOT_COMPLETED)) {
+            MyDiaryApplication.log("NotificationService onHandleIntent received ACTION_BOOT_COMPLETED");
+
+        } else {
+            MyDiaryApplication.log("NotificationService onHandleIntent received unknown intent action" + action);
+        }
     }
 
     private void sendReminderNotification(Context context) {

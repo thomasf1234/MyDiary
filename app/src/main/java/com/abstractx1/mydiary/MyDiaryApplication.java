@@ -5,6 +5,7 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import com.abstractx1.mydiary.broadcast_receivers.MyDiaryBroadcastReceiver;
@@ -59,13 +60,13 @@ public class MyDiaryApplication extends Application {
         return "DEBUG-" + getClassName();
     }
 
-    public static void initializeAlarm(Context context) {
+    public static void setAlarm(Context context, boolean forTommorrow) {
         Calendar alarmStartTime = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
         alarmStartTime.set(Calendar.HOUR_OF_DAY, GlobalApplicationValues.getNotificationHour(context));
         alarmStartTime.set(Calendar.MINUTE, GlobalApplicationValues.getNotificationMinute(context));
         alarmStartTime.set(Calendar.SECOND, 0);
-        if (now.after(alarmStartTime)) {
+        if (now.after(alarmStartTime) || forTommorrow) {
             alarmStartTime.add(Calendar.DATE, 1);
         }
 
@@ -74,8 +75,18 @@ public class MyDiaryApplication extends Application {
         Intent intent = new Intent(context, MyDiaryBroadcastReceiver.class);
         intent.setAction(MyDiaryBroadcastReceiver.NOTIFICATION);
         intent.putExtra(MyDiaryBroadcastReceiver.ACTION_ID, MyDiaryBroadcastReceiver.ACTION_REMINDER);
+
         PendingIntent pendingIntent  = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            MyDiaryApplication.log("Setting ExactAndAllowWhileIdle Alarm for API 23 at: " + alarmStartTime.getTimeInMillis());
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(), pendingIntent);
+        } else if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            MyDiaryApplication.log("Setting Exact Alarm for API 19 at: " + alarmStartTime.getTimeInMillis());
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(), pendingIntent);
+        } else {
+            MyDiaryApplication.log("Setting Alarm for API < 19 at: " + alarmStartTime.getTimeInMillis());
+            alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(), pendingIntent);
+        }
     }
 }

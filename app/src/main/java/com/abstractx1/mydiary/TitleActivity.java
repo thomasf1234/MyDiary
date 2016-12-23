@@ -39,7 +39,7 @@ public class TitleActivity extends MyDiaryActivity {
             GlobalApplicationValues.editResearcherEmailAddress(this, getString(R.string.default_researcher_email_address));
             showIntroductionDialog();
         }
-        MyDiaryApplication.initializeAlarm(this);
+        MyDiaryApplication.setAlarm(this, false);
         this.cameraHandler = new CameraHandler(this, getCacheDir() + "/image.jpg");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);

@@ -41,12 +41,14 @@ public class MyDiaryBroadcastReceiver extends BroadcastReceiver {
 
                 if (actionType.equals(ACTION_REMINDER)) {
                     sendReminderNotification(context);
+                    MyDiaryApplication.setAlarm(context, true);
                 } else {
                     MyDiaryApplication.log("NotificationService onHandleIntent received unknown actionType " + actionType);
                 }
             }
         } else if (action.equals(android.content.Intent.ACTION_BOOT_COMPLETED)) {
-            MyDiaryApplication.log("NotificationService onHandleIntent received ACTION_BOOT_COMPLETED");
+            MyDiaryApplication.log("NotificationService onHandleIntent received ACTION_BOOT_COMPLETED. Resetting alarm.");
+            MyDiaryApplication.setAlarm(context, false);
 
         } else {
             MyDiaryApplication.log("NotificationService onHandleIntent received unknown intent action" + action);
@@ -67,6 +69,7 @@ public class MyDiaryBroadcastReceiver extends BroadcastReceiver {
                         .setContentText("Reminder to input entry.")
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setAutoCancel(true)
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentIntent(contentIntent);
 
         // Add as notification

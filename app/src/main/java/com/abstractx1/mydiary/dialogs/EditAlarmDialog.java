@@ -28,12 +28,12 @@ public class EditAlarmDialog {
                                           int minute) {
                         GlobalApplicationValues.editNotificationHour(activity, hourOfDay);
                         GlobalApplicationValues.editNotificationMinute(activity, minute);
-                        MyDiaryApplication.initializeAlarm(activity);
+                        MyDiaryApplication.setAlarm(activity, false);
                     }
                 }, GlobalApplicationValues.getNotificationHour(activity),
                 GlobalApplicationValues.getNotificationMinute(activity), false);
 
-        timePickerDialog.setTitle("Edit Reminder");
+        timePickerDialog.setTitle("Edit Daily Reminder");
 
         return timePickerDialog;
     }

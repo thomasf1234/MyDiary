@@ -1,5 +1,6 @@
 package com.abstractx1.mydiary;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import java.io.IOException;
  */
 
 public abstract class MyDiaryActivity extends PermissionActivity {
+    protected AlertDialog currentDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

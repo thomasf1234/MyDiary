@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 
@@ -94,6 +95,7 @@ public class TitleActivity extends MyDiaryActivity {
             case R.id.imageButtonMenuOption:
                 AlertDialog alertDialog = ScreenShotDialog.create(this);
                 alertDialog.show();
+                this.currentDialog = alertDialog;
                 return true;
             case R.id.sendButtonMenuOption:
                 SendDialog.create(this).show();
@@ -135,8 +137,10 @@ public class TitleActivity extends MyDiaryActivity {
             try {
                 Researcher.getInstance().setImagePath(cameraHandler.getImagePath());
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                AlertDialog alertDialog = ScreenShotDialog.create(this);
-                alertDialog.show();
+                if (this.currentDialog != null) {
+                    ImageView screenShotImageView = (ImageView) currentDialog.findViewById(R.id.screenShotDialogImage);
+                    screenShotImageView.setImageBitmap(Researcher.getInstance().getImage());
+                }
             } catch (IOException e) {
                 MyDiaryApplication.log(e, "An error occurred reading the photo file.");
                 alert("An error occurred reading the photo file.");
@@ -146,8 +150,10 @@ public class TitleActivity extends MyDiaryActivity {
             try {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 Researcher.getInstance().setImagePath(CameraHandler.getImagePath(this, selectedImage));
-                AlertDialog alertDialog = ScreenShotDialog.create(this);
-                alertDialog.show();
+                if (this.currentDialog != null) {
+                    ImageView screenShotImageView = (ImageView) currentDialog.findViewById(R.id.screenShotDialogImage);
+                    screenShotImageView.setImageBitmap(Researcher.getInstance().getImage());
+                }
             } catch (Exception e) {
                 MyDiaryApplication.log(e, "An error occurred reading the photo file.");
                 alert("An error occurred reading the photo file.");

@@ -18,11 +18,6 @@
         android:title="Edit Reminder"/>
 
     <item
-            android:id="@+id/sendButtonMenuOption"
-            android:icon="@android:drawable/ic_menu_send"
-            app:showAsAction="always|withText"
-            android:title="Submit Answers"/>
-    <item
         android:id="@+id/imageButtonMenuOption"
         android:title="Take/Upload Picture"
         app:showAsAction="always"

@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ import java.io.IOException;
 public class TitleActivity extends MyDiaryActivity {
     public static int REQUEST_GET_FROM_GALLERY = 2;
     public ListView questionsListView;
+    public FloatingActionButton sendFloatingActionButton;
     public CameraHandler cameraHandler;
 
     @Override
@@ -61,6 +63,26 @@ public class TitleActivity extends MyDiaryActivity {
                 startActivity(intent);
             }
         });
+
+        sendFloatingActionButton = (FloatingActionButton) findViewById(R.id.sendFloatingActionButton);
+        sendFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                SendDialog.create(TitleActivity.this).show();
+            }
+
+        });
+
+        sendFloatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                toolTipUnderView(view, "Submit Answers");
+                return true;
+            }
+        });
+
+
     }
 
     @Override
@@ -96,9 +118,6 @@ public class TitleActivity extends MyDiaryActivity {
                 AlertDialog alertDialog = ScreenShotDialog.create(this);
                 alertDialog.show();
                 this.currentDialog = alertDialog;
-                return true;
-            case R.id.sendButtonMenuOption:
-                SendDialog.create(this).show();
                 return true;
             case R.id.debugMenuOption:
                 try {

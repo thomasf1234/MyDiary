@@ -18,7 +18,7 @@
               android:layout_margin="5dp"
               android:padding="10dp"
               android:textSize="12sp"
-              android:text="These questions are designed to help you reflect on your perceptions, emotions, and actions that are evoked from using your technology (E.G: health/fitness/wellbeing application; self-tracking device; wearable). Please be as detailed as possible when answering each question."/>
+              android:text="@string/prompt"/>
 
     <ListView
         android:id="@+id/questionsListView"

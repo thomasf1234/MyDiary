@@ -1,11 +1,11 @@
 <resources>
     <string-array name="questions">
-        <item>Please describe the main things that you have done today</item>
-        <item>Tell me about your use of particular technology(s) today. (I.E: if you used your technology, how have you interacted with specific features? when did you use the technology(s) and what was happening at the time(s)? why did you interact with particular features? If you did not use your technology, why not?).</item>
-        <item>How have interactions with your technology and its particular features affected your feelings and thoughts today? (I.E: tell me specifically about any positive, negative, or unanticipated feelings and thoughts that you have had before using the technology; whilst using the technology; afterwards).</item>
-        <item>With regards to how you felt whilst using the technology and afterwards, in what ways did this impact your actions? Why? (I.E: Please be specific about how this impacted your motivation and/or engagement to do or not do something to feel a certain way and/or satisfy needs/wants/urges)</item>
-        <item>Have you interacted with any other tool or person(s) other than the aforementioned technologies, to serve your motivations? Why?</item>
-        <item>What was the most meaningful experience you had with your technology or other tool or person(s) today and why?</item>
+        <item>How was your day today? (I.e: Did you have a positive or not so positive day, and why? Was your day successful – why/why not?)</item>
+        <item>How has your day impacted your use of technology(s)? (I.e: Why did you interact with specific technology(s) more or less than other days? For example, as a result of: what you did or did not do during the day; how you were feeling; anything you saw, and anything you heard)</item>
+        <item>If you used your technology today, how have you interacted with specific features? Why did you interact with these features?</item>
+        <item>How has using your technology and its features today impacted your feelings and thoughts (I.e: please tell me specifically about any positive, not so positive, and/or unanticipated feelings or thoughts you had during, and after, each interaction with your technology, and why)</item>
+        <item>With regards to what you felt and/or thought whilst using the technology and afterwards, in what ways did this impact your behaviour? (I.E: How did each interaction with technology impact your motivation and/or engagement to do or not do something, in order to feel a certain way and/or serve needs/wants/urges.</item>
+        <item>Have you interacted with anything else or anybody else other than the aforementioned technologies, to serve your health and wellbeing motivations today? Why?</item>
         <item>Any additional thoughts?</item>
     </string-array>
 </resources>

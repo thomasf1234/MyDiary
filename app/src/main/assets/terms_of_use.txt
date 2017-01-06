@@ -1,0 +1,45 @@
+Copyright (C) 2017 Rachel Clare Spence.
+
+Last revised January, 2017 
+
+TERMS AND CONDITIONS
+
+END-USER LICENSE AGREEMENT
+FOR THIS SOFTWARE APPLICATION KNOWN AS “MYDIARY”
+
+1. Introduction
+
+1.1. MyDiary Provides an interface that allows you to submit data to the researcher for the purposes of the research carried out by Rachel Clare Spence. Please read this  END-USER LICENSE AGREEMENT carefully so you understand your use of the MyDiary application.
+
+1.2 The following terms used through this END-USER LICENSE AGREEMENT are defined here for clarity:
+  (a) “EULA” means “END-USER LICENSE AGREEMENT”
+  (b) “Provider” means Rachel Clare Spence, and all contributors to the MyDiary application, and her research.
+  (c) “Researcher”  means Rachel Clare Spence
+  (c) “MyDiary” means this application
+  (d) “Device” means any Phone/Tablet/Computer that can be used to run MyDiary
+  (e) “Answer/s” means any of the following data that is specifically inputted into MyDiary through the interface supplied by MyDiary: images captured with the camera, images uploaded, audio recordings created, and textual answers written.
+
+2. Accepting the EULA
+
+2.1 In order to use MyDiary, you must first agree to the EULA. You may not use MyDiary if you do not accept the EULA.
+
+2.2 By clicking to accept (checking the checkbox and continuing) you acknowledge that you have read this AGREEMENT and hereby agree to be bound by its terms and conditions.
+
+2.3 You may not use MyDiary, and may not accept the EULA if you are NOT currently living within the United Kingdom.
+
+2.4 If you are agreeing to be bound by the EULA on behalf of your employer or other entity, you represent and warrant that you have full legal authority to bind your employer or such entity to all the terms and conditions of this EULA. If you do not have the requisite authority, you may not accept the EULA or use MyDiary on behalf of your employer or other entity.
+
+
+10. DISCLAIMER OF WARRANTIES
+
+10.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT YOUR USE OF MYDIARY IS AT YOUR SOLE RISK AND THAT MYDIARY IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND FROM THE PROVIDER.
+
+10.2 YOUR USE OF MYDIARY AND ANY MATERIAL DOWNLOADED OR OTHERWISE OBTAINED THROUGH THE USE OF THE SDK IS AT YOUR OWN DISCRETION AND RISK AND YOU ARE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR COMPUTER SYSTEM OR OTHER DEVICE OR LOSS OF DATA THAT RESULTS FROM SUCH USE.
+
+10.3 GOOGLE FURTHER EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+
+
+11. LIMITATION OF LIABILITY
+
+11.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT GOOGLE, ITS SUBSIDIARIES AND AFFILIATES, AND ITS LICENSORS SHALL NOT BE LIABLE TO YOU UNDER ANY THEORY OF LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES THAT MAY BE INCURRED BY YOU, INCLUDING ANY LOSS OF DATA, WHETHER OR NOT GOOGLE OR ITS REPRESENTATIVES HAVE BEEN ADVISED OF OR SHOULD HAVE BEEN AWARE OF THE POSSIBILITY OF ANY SUCH LOSSES ARISING.
+

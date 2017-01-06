@@ -20,11 +20,13 @@ import com.abstractx1.mydiary.adapters.QuestionsArrayAdapter;
 import com.abstractx1.mydiary.broadcast_receivers.MyDiaryBroadcastReceiver;
 import com.abstractx1.mydiary.camera.CameraHandler;
 import com.abstractx1.mydiary.dialogs.EditAlarmDialog;
+import com.abstractx1.mydiary.dialogs.ExpiredDialog;
 import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
 import com.abstractx1.mydiary.dialogs.SendDialog;
+import com.abstractx1.mydiary.dialogs.ViewTermsAndConditionsDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
 
 import java.io.IOException;
@@ -105,6 +107,12 @@ public class TitleActivity extends MyDiaryActivity {
             case R.id.editAlarmMenuOption:
                 EditAlarmDialog.create(this).show();
                 return true;
+            case R.id.termsAndConditionsMenuOption:
+                ViewTermsAndConditionsDialog.create(this).show();
+                return true;
+            case R.id.uninstallMenuOption:
+                ((MyDiaryApplication) getApplication()).uninstall(this);
+                return true;
             case R.id.contactResearcherMenuOption:
                 HelpDialog.create(this).show();
                 return true;
@@ -130,6 +138,9 @@ public class TitleActivity extends MyDiaryActivity {
                 Utilities.clearCache(getApplicationContext());
                 alert("Cleared cache");
                 return true;
+            case R.id.expireMenuOption:
+                ExpiredDialog.show(this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -145,6 +156,7 @@ public class TitleActivity extends MyDiaryActivity {
             menu.findItem(R.id.debugMenuOption).setVisible(false);
             menu.findItem(R.id.clearCacheMenuOption).setVisible(false);
             menu.findItem(R.id.testNotificationMenuOption).setVisible(false);
+            menu.findItem(R.id.expireMenuOption).setVisible(false);
         }
 
         return true;

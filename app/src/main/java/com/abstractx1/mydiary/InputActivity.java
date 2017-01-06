@@ -17,8 +17,10 @@ import android.widget.TextView;
 
 import com.abstractx1.mydiary.dialog_builders.ConfirmationDialogBuilder;
 import com.abstractx1.mydiary.dialogs.EditAlarmDialog;
+import com.abstractx1.mydiary.dialogs.ExpiredDialog;
 import com.abstractx1.mydiary.dialogs.HelpDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
+import com.abstractx1.mydiary.dialogs.ViewTermsAndConditionsDialog;
 import com.abstractx1.mydiary.jobs.DebugPrintFilesJob;
 import com.abstractx1.mydiary.record.RecordHandler;
 
@@ -159,6 +161,12 @@ public class InputActivity extends MyDiaryActivity {
             case R.id.editAlarmMenuOption:
                 EditAlarmDialog.create(this).show();
                 return true;
+            case R.id.termsAndConditionsMenuOption:
+                ViewTermsAndConditionsDialog.create(this).show();
+                return true;
+            case R.id.uninstallMenuOption:
+                ((MyDiaryApplication) getApplication()).uninstall(this);
+                return true;
             case R.id.contactResearcherMenuOption:
                 HelpDialog.create(this).show();
                 return true;
@@ -185,6 +193,9 @@ public class InputActivity extends MyDiaryActivity {
                 Utilities.clearCache(getApplicationContext());
                 alert("Cleared cache");
                 return true;
+            case R.id.expireMenuOption:
+                ExpiredDialog.show(this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -200,6 +211,7 @@ public class InputActivity extends MyDiaryActivity {
             menu.findItem(R.id.debugMenuOption).setVisible(false);
             menu.findItem(R.id.clearCacheMenuOption).setVisible(false);
             menu.findItem(R.id.testNotificationMenuOption).setVisible(false);
+            menu.findItem(R.id.expireMenuOption).setVisible(false);
         }
 
         menu.findItem(R.id.imageButtonMenuOption).setVisible(false);

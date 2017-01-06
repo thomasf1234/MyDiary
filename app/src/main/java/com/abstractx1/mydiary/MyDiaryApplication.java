@@ -1,10 +1,12 @@
 package com.abstractx1.mydiary;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -19,6 +21,7 @@ import java.util.Calendar;
 public class MyDiaryApplication extends Application {
     // uncaught exception handler variable
     private Thread.UncaughtExceptionHandler defaultUEH;
+    private static final int EXPIRY_YEAR = 2018;
 
     // handler listener
     private Thread.UncaughtExceptionHandler _unCaughtExceptionHandler =
@@ -88,5 +91,23 @@ public class MyDiaryApplication extends Application {
             MyDiaryApplication.log("Setting Alarm for API < 19 at: " + alarmStartTime.getTimeInMillis());
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime.getTimeInMillis(), pendingIntent);
         }
+    }
+
+    public void uninstall(MyDiaryActivity activity) {
+        Uri packageURI = Uri.parse("package:"+ getClass().getPackage().getName());
+        log("PackageName: package:"+ getClass().getPackage().getName());
+        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+        activity.startActivity(uninstallIntent);
+    }
+
+    public boolean hasExpired() {
+        boolean expired = false;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        log(String.format("Current year is %d", year));
+        if (year >= EXPIRY_YEAR) {
+            expired = true;
+        }
+
+        return expired;
     }
 }

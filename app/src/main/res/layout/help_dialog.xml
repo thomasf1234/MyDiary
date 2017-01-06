@@ -4,9 +4,16 @@
     android:layout_height="fill_parent"
     android:padding="12dp" >
 
-    <TextView
-        android:id="@+id/helpMessageTextView"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10sp" />
+        android:fadeScrollbars="false">
+
+        <TextView
+            android:id="@+id/helpMessageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:paddingBottom="10sp"/>
+    </ScrollView>
 </RelativeLayout>

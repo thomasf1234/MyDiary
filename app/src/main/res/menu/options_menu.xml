@@ -2,7 +2,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
             android:id="@+id/editResearcherEmailAddressMenuOption"
-            android:title="Edit Researcher email address"/>
+            android:title="Researcher settings"/>
     <item
             android:id="@+id/debugMenuOption"
             android:title="List Files"/>
@@ -16,6 +16,18 @@
     <item
         android:id="@+id/editAlarmMenuOption"
         android:title="Edit Reminder"/>
+
+    <item
+        android:id="@+id/termsAndConditionsMenuOption"
+        android:title="Terms And Conditions"/>
+
+    <item
+        android:id="@+id/uninstallMenuOption"
+        android:title="Uninstall"/>
+
+    <item
+        android:id="@+id/expireMenuOption"
+        android:title="Expire"/>
 
     <item
         android:id="@+id/imageButtonMenuOption"

@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.abstractx1.mydiary.dialogs.ExpiredDialog;
 import com.example.demo.job.PermissionActivity;
 
 import java.io.File;
@@ -25,6 +26,7 @@ public abstract class MyDiaryActivity extends PermissionActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        validateExpiry();
         super.onCreate(savedInstanceState);
         load(savedInstanceState);
     }
@@ -160,5 +162,12 @@ public abstract class MyDiaryActivity extends PermissionActivity {
 
     protected void setKeyboardpushActivityUp() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
+
+    protected void validateExpiry() {
+        MyDiaryApplication application = (MyDiaryApplication) getApplication();
+        if (application.hasExpired()) {
+            ExpiredDialog.show(this);
+        }
     }
 }

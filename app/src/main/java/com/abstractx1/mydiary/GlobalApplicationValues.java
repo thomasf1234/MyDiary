@@ -39,6 +39,7 @@ public class GlobalApplicationValues {
     }
 
     public static void editResearcherEmailAddress(Context context, String value) {
+        MyDiaryApplication.log(String.format("Editing shared preferences key '%s' to value '%s'", RESEARCHER_EMAIL_ADDRESS_KEY, value));
         SharedPreferences sharedpreferences = context.getSharedPreferences(GlobalApplicationValues.USER_SETTINGS_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(RESEARCHER_EMAIL_ADDRESS_KEY, value);

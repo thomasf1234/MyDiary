@@ -139,7 +139,7 @@ public class TitleActivity extends MyDiaryActivity {
                 alert("Cleared cache");
                 return true;
             case R.id.expireMenuOption:
-                ExpiredDialog.show(this);
+                expireApplication();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

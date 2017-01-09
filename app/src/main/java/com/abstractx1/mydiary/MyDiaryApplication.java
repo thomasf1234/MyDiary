@@ -12,7 +12,11 @@ import android.util.Log;
 
 import com.abstractx1.mydiary.broadcast_receivers.MyDiaryBroadcastReceiver;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by tfisher on 15/12/2016.
@@ -21,7 +25,6 @@ import java.util.Calendar;
 public class MyDiaryApplication extends Application {
     // uncaught exception handler variable
     private Thread.UncaughtExceptionHandler defaultUEH;
-    private static final int EXPIRY_YEAR = 2018;
 
     // handler listener
     private Thread.UncaughtExceptionHandler _unCaughtExceptionHandler =
@@ -95,19 +98,26 @@ public class MyDiaryApplication extends Application {
 
     public void uninstall(MyDiaryActivity activity) {
         Uri packageURI = Uri.parse("package:"+ getClass().getPackage().getName());
-        log("PackageName: package:"+ getClass().getPackage().getName());
+        log("Displaying uninstall prompt for PackageName: package:"+ getClass().getPackage().getName());
         Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
         activity.startActivity(uninstallIntent);
     }
 
-    public boolean hasExpired() {
+    public boolean hasExpired() throws ParseException {
         boolean expired = false;
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        log(String.format("Current year is %d", year));
-        if (year >= EXPIRY_YEAR) {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+        Date expiry_date = dateFormat.parse("2017/01/09 22:00:00");
+
+        if (currentTime().after(expiry_date)) {
             expired = true;
         }
 
         return expired;
+    }
+
+    public static Date currentTime() {
+        return new Date();
     }
 }

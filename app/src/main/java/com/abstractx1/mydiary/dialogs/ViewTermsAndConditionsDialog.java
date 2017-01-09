@@ -34,10 +34,6 @@ public class ViewTermsAndConditionsDialog {
         View view = inflater.inflate(R.layout.help_dialog, null);
         TextView messageTextView = (TextView) view.findViewById(R.id.helpMessageTextView);
 
-
-
-
-        //String message = activity.getResources().getString(R.string.terms_and_conditions_text);
         String message = getTermsOfUse(activity);
 
         float currentInputTextSize = messageTextView.getTextSize();

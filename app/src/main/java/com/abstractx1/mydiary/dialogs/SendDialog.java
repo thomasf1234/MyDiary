@@ -28,7 +28,7 @@ public class SendDialog {
 
         View view = inflater.inflate(R.layout.help_dialog, null);
         TextView messageTextView = (TextView) view.findViewById(R.id.helpMessageTextView);
-        String message = "Do you wish to save, finish, and submit your answers to the researcher?";
+        String message = "Do you wish to save your answers on your device, and open your Gmail client with the answers attached, enabling you to submit your answers to the researcher?";
 
         messageTextView.setText(message);
         alertDialogBuilder.setTitle("Submit Answers");

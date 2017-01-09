@@ -16,12 +16,14 @@ import com.example.demo.job.PermissionActivity;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 
 /**
  * Created by tfisher on 23/11/2016.
  */
 
 public abstract class MyDiaryActivity extends PermissionActivity {
+    public static final String BLANK = "";
     protected AlertDialog currentDialog;
 
     @Override
@@ -166,8 +168,17 @@ public abstract class MyDiaryActivity extends PermissionActivity {
 
     protected void validateExpiry() {
         MyDiaryApplication application = (MyDiaryApplication) getApplication();
-        if (application.hasExpired()) {
-            ExpiredDialog.show(this);
+        try {
+            if (application.hasExpired()) {
+                expireApplication();
+            }
+        } catch (ParseException e) {
+            MyDiaryApplication.log("Could not parse a date, could not validate this application expiry");
         }
+    }
+
+    public void expireApplication() {
+        GlobalApplicationValues.editResearcherEmailAddress(this, BLANK);
+        ExpiredDialog.show(this);
     }
 }

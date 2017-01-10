@@ -49,6 +49,7 @@ public class InputActivity extends MyDiaryActivity {
 
         Intent intent = getIntent();
         int questionNumber = intent.getIntExtra(KEY_EXTRA_MESSAGE, 0);
+        setTitle(String.format("Question %d", questionNumber));
         dataCollection = Researcher.getInstance().getDataCollection(questionNumber);
 
         questionTextView = (TextView) findViewById(R.id.questionTextView);

@@ -28,7 +28,7 @@ public class SendDialog {
 
         View view = inflater.inflate(R.layout.help_dialog, null);
         TextView messageTextView = (TextView) view.findViewById(R.id.helpMessageTextView);
-        String message = "Do you wish to save your answers on your device, and open your Gmail client with the answers attached, enabling you to submit your answers to the researcher?";
+        String message = "Do you wish to save your answers on your device, and open your Gmail client with the answers attached, enabling you to submit your answers to the researcher? (It is advisable to be connected to wi-fi due to file size)";
 
         messageTextView.setText(message);
         alertDialogBuilder.setTitle("Submit Answers");
@@ -40,7 +40,7 @@ public class SendDialog {
                 try {
                     activity.triggerJob(new SendDataJob(activity));
                 } catch (Exception e) {
-                    activity.alert("Please contact the researcher, for some reason we could not submit data.");
+                    activity.alert("Please contact the researcher, for some reason we could not continue.");
                 }
                 dialog.dismiss();
             }

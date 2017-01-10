@@ -16,6 +16,16 @@ public class ButtonHelper {
         button.setVisibility(View.VISIBLE);
     }
 
+    public static void toggleAvailable(View button, boolean enabled) {
+        if(enabled) {
+            button.setEnabled(true);
+            button.setAlpha(1);
+        } else {
+            button.setEnabled(false);
+            button.setAlpha(0.4f);
+        }
+    }
+
     public static void disable(View button) {
         button.setEnabled(false);
         button.setVisibility(View.INVISIBLE);

@@ -16,5 +16,5 @@
     <color name="darkpurple">#FF9933CC</color>
     <color name="darkgreen">#FF669900</color>
     <color name="darkorange">#FFFF8800</color>
-    <color name="darkred">#FFCC0000</color>
+    <color name="darkred">#cc0000</color>
 </resources>

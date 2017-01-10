@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_tos"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.abstractx1.mydiary.TosActivity">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/introTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:textSize="12sp"
+        android:text="Thank you for using MyDiary! It is important to please read the following sections carefully before accepting the terms and privacy."/>
+
+    <ExpandableListView
+        android:id="@+id/tosListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:layout_weight="4"
+        android:cacheColorHint="@android:color/transparent"
+        android:choiceMode="singleChoice"
+        android:requiresFadingEdge="vertical"
+        android:fadeScrollbars="false"
+        android:descendantFocusability="afterDescendants"/>
+    <CheckBox
+        android:id="@+id/acceptTosCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:text="@string/accept_terms_and_conditions_check_box_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:text="Decline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/declineButton"
+            android:textColor="@color/darkred" />
+
+        <Button
+            android:text="Accept"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/acceptButton"
+            android:enabled="false"
+            android:textColor="@color/blue"
+            android:alpha="0.4"/>
+    </LinearLayout>
+
+</LinearLayout>

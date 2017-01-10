@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 
+import com.abstractx1.mydiary.Device;
 import com.abstractx1.mydiary.Utilities;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class CameraHandler {
     }
 
     public void dispatchTakePictureIntent() throws IOException {
-        if (hasCameraApp()) {
+        if (Device.hasCameraApp(activity)) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File photoFile = Utilities.createFile(this.imagePath);
             Uri photoURI = FileProvider.getUriForFile(activity, CAPTURE_IMAGE_FILE_PROVIDER, photoFile);
@@ -43,11 +44,6 @@ public class CameraHandler {
         } else {
             throw new RuntimeException("No camera apps installed");
         }
-    }
-
-    private boolean hasCameraApp() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        return takePictureIntent.resolveActivity(activity.getPackageManager()) != null;
     }
 
     public String getImagePath() {

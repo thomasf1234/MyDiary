@@ -20,9 +20,7 @@ import com.abstractx1.mydiary.adapters.QuestionsArrayAdapter;
 import com.abstractx1.mydiary.broadcast_receivers.MyDiaryBroadcastReceiver;
 import com.abstractx1.mydiary.camera.CameraHandler;
 import com.abstractx1.mydiary.dialogs.EditAlarmDialog;
-import com.abstractx1.mydiary.dialogs.ExpiredDialog;
 import com.abstractx1.mydiary.dialogs.HelpDialog;
-import com.abstractx1.mydiary.dialogs.IntroductionDialog;
 import com.abstractx1.mydiary.dialogs.ResearcherEmailDialog;
 import com.abstractx1.mydiary.dialogs.ScreenShotDialog;
 import com.abstractx1.mydiary.dialogs.SendDialog;
@@ -40,10 +38,6 @@ public class TitleActivity extends MyDiaryActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(!isInDebugMode() && !GlobalApplicationValues.hasAcceptedTermsAndConditions(this)) {
-            GlobalApplicationValues.editResearcherEmailAddress(this, getString(R.string.default_researcher_email_address));
-            showIntroductionDialog();
-        }
         MyDiaryApplication.setAlarm(this, false);
         this.cameraHandler = new CameraHandler(this, getCacheDir() + "/image.jpg");
         super.onCreate(savedInstanceState);
@@ -194,9 +188,5 @@ public class TitleActivity extends MyDiaryActivity {
 
     public CameraHandler getCameraHandler() {
         return cameraHandler;
-    }
-    private void showIntroductionDialog() {
-        AlertDialog alertDialog = IntroductionDialog.create(this);
-        alertDialog.show();
     }
 }

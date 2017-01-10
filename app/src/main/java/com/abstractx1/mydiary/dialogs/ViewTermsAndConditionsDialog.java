@@ -7,19 +7,22 @@ package com.abstractx1.mydiary.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.abstractx1.mydiary.MyDiaryActivity;
 import com.abstractx1.mydiary.MyDiaryApplication;
 import com.abstractx1.mydiary.R;
+import com.abstractx1.mydiary.adapters.TosExpandableListAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -32,17 +35,24 @@ public class ViewTermsAndConditionsDialog {
         LayoutInflater inflater = (LayoutInflater) activity.getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.help_dialog, null);
-        TextView messageTextView = (TextView) view.findViewById(R.id.helpMessageTextView);
 
-        String message = getTermsOfUse(activity);
+        alertDialogBuilder.setTitle("Privacy & Terms");
 
-        float currentInputTextSize = messageTextView.getTextSize();
-        float newInputTextSize = currentInputTextSize * 0.7f;
-        messageTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, newInputTextSize);
+        List<String> sectionTitles = new ArrayList<>();
+        sectionTitles.add(activity.getResources().getString(R.string.eula_title));
+        sectionTitles.add(activity.getResources().getString(R.string.tos_title));
+        sectionTitles.add(activity.getResources().getString(R.string.privacy_policy_title));
 
-        messageTextView.setText(message);
-        alertDialogBuilder.setTitle("Terms And Conditions");
-        alertDialogBuilder.setView(view);
+        List<String> sectionDetails = new ArrayList<>();
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTermsOfUse(activity));
+        sectionDetails.add("To be added...");
+        sectionDetails.add(ViewTermsAndConditionsDialog.getPrivacyPolicy(activity));
+
+        ExpandableListView myList = new ExpandableListView(activity);
+        ExpandableListAdapter tosExpandableListViewAdapter = new TosExpandableListAdapter(activity, sectionTitles, sectionDetails);
+        myList.setAdapter(tosExpandableListViewAdapter);
+
+        alertDialogBuilder.setView(myList);
 
         alertDialogBuilder.setPositiveButton("Back", new DialogInterface.OnClickListener() {
             @Override
@@ -56,12 +66,20 @@ public class ViewTermsAndConditionsDialog {
         return alertDialog;
     }
 
-    private static String getTermsOfUse(MyDiaryActivity activity) {
+    public static String getTermsOfUse(MyDiaryActivity activity) {
+        return getTxtFileString(activity, "terms_of_use.txt");
+    }
+
+    public static String getPrivacyPolicy(MyDiaryActivity activity) {
+        return getTxtFileString(activity, "privacy_policy.txt");
+    }
+
+    public static String getTxtFileString(MyDiaryActivity activity, String fileName) {
         BufferedReader reader = null;
         StringBuilder text = new StringBuilder();
         try {
             reader = new BufferedReader(
-                    new InputStreamReader(activity.getAssets().open("terms_of_use.txt")));
+                    new InputStreamReader(activity.getAssets().open(fileName)));
 
             // do reading, usually loop until end of file reading
             String mLine;

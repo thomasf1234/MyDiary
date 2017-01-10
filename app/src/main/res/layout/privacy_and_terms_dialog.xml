@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="12dp" >
+
+    <ExpandableListView
+        android:id="@+id/viewTosListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:choiceMode="singleChoice"
+        android:requiresFadingEdge="vertical"
+        android:descendantFocusability="afterDescendants"/>
+</RelativeLayout>

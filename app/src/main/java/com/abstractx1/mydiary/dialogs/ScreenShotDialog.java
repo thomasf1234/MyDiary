@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.app.AlertDialog;
 
+import com.abstractx1.mydiary.ButtonHelper;
+import com.abstractx1.mydiary.Device;
 import com.abstractx1.mydiary.MyDiaryApplication;
 import com.abstractx1.mydiary.R;
 import com.abstractx1.mydiary.Researcher;
@@ -80,6 +82,10 @@ public class ScreenShotDialog {
                         }
                     }
                 });
+
+                if (!Device.hasCameraApp(activity)) {
+                    ButtonHelper.toggleAvailable(screenShotButton, false);
+                }
 
                 Button uploadButton = (Button) alertDialog.findViewById(R.id.uploadButton);
                 uploadButton.setOnClickListener(new View.OnClickListener() {

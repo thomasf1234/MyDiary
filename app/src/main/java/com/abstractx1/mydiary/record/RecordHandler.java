@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.abstractx1.mydiary.ButtonHelper;
 import com.abstractx1.mydiary.DataCollection;
+import com.abstractx1.mydiary.Device;
 import com.abstractx1.mydiary.MyDiaryActivity;
 import com.abstractx1.mydiary.MyDiaryApplication;
 import com.abstractx1.mydiary.R;
@@ -84,7 +85,7 @@ public class RecordHandler extends State7 {
             Thread.sleep(100);
             setPlayFrom(currentMilliseconds);
         } else {
-            State initialState = hasSystemMicrophoneFeature() ? EMPTY : DISABLED;
+            State initialState = Device.hasSystemFeatureMicrophone(activity) ? EMPTY : DISABLED;
             transitionTo(initialState);
         }
     }
@@ -236,10 +237,6 @@ public class RecordHandler extends State7 {
     public void cancelRecording() throws Exception {
         transitionTo(LOADED);
         transitionTo(EMPTY);
-    }
-
-    private boolean hasSystemMicrophoneFeature() {
-        return activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE);
     }
 
     private boolean hasRecorder() {

@@ -46,17 +46,17 @@ public class MyDiaryApplication extends Application {
     }
 
     public static void log(Throwable e) {
-        Log.e(getLogKey(), "ERROR", e);
-        Log.e(getLogKey(), Log.getStackTraceString(e));
+//        Log.e(getLogKey(), "ERROR", e);
+//        Log.e(getLogKey(), Log.getStackTraceString(e));
     }
 
     public static void log(Throwable e, String message) {
-        Log.e(getLogKey(), message, e);
-        Log.e(getLogKey(), Log.getStackTraceString(e));
+//        Log.e(getLogKey(), message, e);
+//        Log.e(getLogKey(), Log.getStackTraceString(e));
     }
 
     public static void log(String message) {
-        Log.v(getLogKey(), message);
+//        Log.v(getLogKey(), message);
     }
 
     public static String getClassName() {
@@ -108,7 +108,7 @@ public class MyDiaryApplication extends Application {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        Date expiry_date = dateFormat.parse("2017/01/09 22:00:00");
+        Date expiry_date = dateFormat.parse("2017/01/10 22:00:00");
 
         if (currentTime().after(expiry_date)) {
             expired = true;

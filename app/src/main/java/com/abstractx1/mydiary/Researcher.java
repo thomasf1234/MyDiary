@@ -1,5 +1,6 @@
 package com.abstractx1.mydiary;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -78,7 +79,7 @@ public class Researcher {
             default:
                 break;
         }
-        this.image = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+        setImage(Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true));
     }
 
     public String getImagePath() {
@@ -87,7 +88,15 @@ public class Researcher {
 
     public void setImagePath(String imagePath) throws IOException {
         this.imagePath = imagePath;
-        loadImage();
+        if (imagePath == null) {
+            setImage(null);
+        } else {
+            loadImage();
+        }
+    }
+
+    public void setImage(Bitmap bitmap) {
+        this.image = bitmap;
     }
 
     public String getCaption() {
@@ -100,5 +109,16 @@ public class Researcher {
 
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public void reset(Context context) throws IOException {
+        Utilities.purgeDirectory(context.getFilesDir());
+        Utilities.purgeDirectory(context.getCacheDir());
+        for (DataCollection dataCollection : dataCollections) {
+            dataCollection.setAnswer("");
+            dataCollection.setRecording(null);
+        }
+        setCaption("");
+        setImagePath(null);
     }
 }

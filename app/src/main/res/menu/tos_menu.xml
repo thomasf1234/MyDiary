@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/uninstallMenuOption"
+        android:title="Uninstall"/>
+
+    <item
+            android:id="@+id/contactResearcherMenuOption"
+            android:title="Help"
+            app:showAsAction="always"
+            android:icon="@android:drawable/ic_menu_help"/>
+</menu>

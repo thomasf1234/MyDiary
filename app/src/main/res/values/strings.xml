@@ -15,13 +15,9 @@
     <string name="recording_not_saved">Recording discarded</string>
     <string name="research_participant_permission_descriptions">collect and submit the data you input within the app to the researcher</string>
     <string name="accept_terms_and_conditions_check_box_text">I accept and agree to these terms and conditions</string>
-    <string name="terms_and_conditions_text">
-        Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern [business name]\'s relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.
-
-The term \'[business name]\' or \'us\' or \'we\' refers to the owner of the website whose registered office is [address]. Our company registration number is [company registration number and place of registration]. The term \'you\' refers to the user or viewer of our website.
-
-The use of this website is subject to the following terms of use:
-    </string>
+    <string name="eula_title">End-User License Agreement</string>
+    <string name="tos_title">Terms of Service (Tos)</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

@@ -81,6 +81,10 @@ public class SendDataJob extends PermissionJob {
 
             String zipPath = externalDir.getAbsolutePath() + File.separator + Utilities.getDateTime() + "-MyDiary.zip";
             new Compress(filePaths, zipPath).zip();
+            if (!new File(zipPath).exists()) {
+                throw new RuntimeException("Compressed file not created");
+            }
+            Researcher.getInstance().reset(appCompatActivity.getApplicationContext());
             sendDataEmailClient.open(GlobalApplicationValues.getResearcherEmailAddress(appCompatActivity), subject, new String[]{zipPath});
         } catch (Exception e) {
             Utilities.alert(appCompatActivity, "Error compressing: " + e.getMessage());

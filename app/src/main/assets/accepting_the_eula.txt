@@ -1,0 +1,9 @@
+2.1 In order to use MyDiary, you must first agree to the EULA. You may not use MyDiary if you do not accept the EULA.
+
+2.2 By clicking to accept (checking the checkbox and continuing) you acknowledge that you have read this EULA and hereby agree to be bound by its terms and conditions.
+
+2.3 You understand that this EULA is governed by and construed in accordance with the laws of England, and that: you may not use MyDiary, and may not accept the EULA if you are not currently living within England, during the periods you are outside of England, or within any location where the courts of England do not have jurisdiction. 
+
+2.4 You may not use MyDiary unless you are currently an active participant in the research, and the Researcher has explicitly granted you permission to both accept this EULA and use MyDiary.
+
+2.5 If you are agreeing to this EULA on behalf of your employer or other entity, you represent and warrant that you have full legal authority to bind your employer or such entity to all the terms and conditions of this EULA. If you do not have the requisite authority, you may not accept the EULA or use MyDiary on behalf of your employer or other entity.

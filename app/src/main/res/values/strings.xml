@@ -14,11 +14,20 @@
     <string name="cleared_recording">Cleared Recording</string>
     <string name="recording_not_saved">Recording discarded</string>
     <string name="research_participant_permission_descriptions">collect and submit the data you input within the app to the researcher</string>
-    <string name="accept_terms_and_conditions_check_box_text">I accept and agree to these terms and conditions</string>
-    <string name="eula_title">End-User License Agreement</string>
+    <string name="accept_terms_and_conditions_check_box_text">I understand, accept and agree to all terms and conditions.</string>
+    <string name="eula_title">End-User License Agreement/Terms of Service</string>
     <string name="tos_title">Terms of Service (Tos)</string>
-    <string name="privacy_policy_title">Privacy Policy</string>
     <string name="title_activity_settings">Settings</string>
+
+    <string name="introduction_title">1. Introduction</string>
+    <string name="accepting_the_eula_title">2. Accepting the EULA</string>
+    <string name="intellectual_property_rights_title">3. Intellectual Property Rights</string>
+    <string name="use_of_mydiary_by_you_title">4. Use of MyDiary by You</string>
+    <string name="disclaimer_of_warranties_title">5. DISCLAIMER OF WARRANTIES</string>
+    <string name="limitation_of_liability_title">6. LIMITATION OF LIABILITY</string>
+    <string name="idemnification_title">7. Indemnification</string>
+    <string name="termination_of_service_title">8. Termination of Service</string>
+    <string name="privacy_policy_title">9. Privacy Policy</string>
 
     <!-- Strings related to Settings -->
 

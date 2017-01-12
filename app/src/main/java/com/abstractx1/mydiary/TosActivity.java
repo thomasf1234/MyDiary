@@ -46,14 +46,28 @@ public class TosActivity extends MyDiaryActivity {
 
 
         List<String> sectionTitles = new ArrayList<>();
-        sectionTitles.add(getResources().getString(R.string.eula_title));
-        sectionTitles.add(getResources().getString(R.string.tos_title));
+        sectionTitles.add(getResources().getString(R.string.introduction_title));
+        sectionTitles.add(getResources().getString(R.string.accepting_the_eula_title));
+        sectionTitles.add(getResources().getString(R.string.intellectual_property_rights_title));
+        sectionTitles.add(getResources().getString(R.string.use_of_mydiary_by_you_title));
+        sectionTitles.add(getResources().getString(R.string.disclaimer_of_warranties_title));
+        sectionTitles.add(getResources().getString(R.string.limitation_of_liability_title));
+        sectionTitles.add(getResources().getString(R.string.idemnification_title));
+        sectionTitles.add(getResources().getString(R.string.termination_of_service_title));
         sectionTitles.add(getResources().getString(R.string.privacy_policy_title));
 
         List<String> sectionDetails = new ArrayList<>();
-        sectionDetails.add(ViewTermsAndConditionsDialog.getTermsOfUse(this));
-        sectionDetails.add("To be added...");
-        sectionDetails.add(ViewTermsAndConditionsDialog.getPrivacyPolicy(this));
+
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "introduction.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "accepting_the_eula.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "intellectual_property_rights.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "use_of_mydiary_by_you.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "disclaimer_of_warranties.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "limitation_of_liability.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "idemnification.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "termination_of_service.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "privacy_policy.txt"));
+
 
         ExpandableListAdapter tosExpandableListViewAdapter = new TosExpandableListAdapter(this, sectionTitles, sectionDetails);
         tosExpandableListView.setAdapter(tosExpandableListViewAdapter);

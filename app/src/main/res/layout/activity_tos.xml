@@ -18,7 +18,7 @@
         android:layout_margin="5dp"
         android:padding="10dp"
         android:textSize="12sp"
-        android:text="Thank you for using MyDiary! It is important to please read the following sections carefully before accepting the terms and privacy."/>
+        android:text="Thank you for using MyDiary! To continue, please read the following sections carefully before accepting and agreeing to this agreement, and the terms and conditions."/>
 
     <ExpandableListView
         android:id="@+id/tosListView"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:text="Decline"
+            android:text="Cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -56,7 +56,7 @@
             android:textColor="@color/darkred" />
 
         <Button
-            android:text="Accept"
+            android:text="Continue"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

@@ -2,13 +2,11 @@ Copyright (C) 2017 Rachel Clare Spence.
 
 Last revised January, 2017 
 
-PRIVACY AND TERMS OF SERVICE
-
 END-USER LICENSE AGREEMENT FOR THIS SOFTWARE APPLICATION KNOWN AS “MYDIARY”
 
 1. Introduction
 
-1.1. MyDiary Provides an interface that allows you to submit data to the researcher for the purposes of the research carried out by Rachel Clare Spence. Please read this  END-USER LICENSE AGREEMENT carefully so you understand your use of the MyDiary application.
+1.1. MyDiary Provides an interface that allows you to submit data to the researcher for the purposes of the research carried out by Rachel Clare Spence. Please read this  END-USER LICENSE AGREEMENT carefully so you understand your use of the MyDiary application. If you do not or cannot agree to the terms of this Agreement, please uninstall this application.
 
 1.2 The following terms used throughout this END-USER LICENSE AGREEMENT are defined here for clarity:
   (a) “EULA” means “END-USER LICENSE AGREEMENT”
@@ -33,9 +31,9 @@ END-USER LICENSE AGREEMENT FOR THIS SOFTWARE APPLICATION KNOWN AS “MYDIARY”
 
 2.5 If you are agreeing to be bound by the EULA on behalf of your employer or other entity, you represent and warrant that you have full legal authority to bind your employer or such entity to all the terms and conditions of this EULA. If you do not have the requisite authority, you may not accept the EULA or use MyDiary on behalf of your employer or other entity.
 
-3. Cannot redistribute the application
+3. Intellectual Property Rights
 
-
+3.1 You agree not to reproduce, modify, rent, lease, loan, sell, distribute, mirror, frame, republish, download, transmit, or create derivative works of the Content of others, in whole or in part, by any means. You must not modify, decompile, or reverse engineer any MyDiary, and you must not remove or modify any copyright or trademark notice, or other notice of ownership.
 
 4. Use of MyDiary by You
 
@@ -49,36 +47,28 @@ END-USER LICENSE AGREEMENT FOR THIS SOFTWARE APPLICATION KNOWN AS “MYDIARY”
 
 4.5 You agree that you are solely responsible for (and that the Providers have no responsibility to you or to any third party for) any breach of your obligations under the EULA, any applicable third party contract or Terms of Service, or any applicable law or regulation, and for the consequences (including any loss or damage which the Providers or any third party may suffer) of any such breach.
 
+5. DISCLAIMER OF WARRANTIES
 
-5.0 Privacy Policy
+5.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT YOUR USE OF MYDIARY IS AT YOUR SOLE RISK, AND THAT MYDIARY IS PROVIDED ON AN "AS IS" "AS AVAILABLE" AND "WITH ALL FAULTS" BASIS, WITHOUT WARRANTY OF ANY KIND FROM THE PROVIDER. THE PROVIDERS DISCLAIMS ALL EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS, AND WARRANTIES OF ANY KIND, INCLUDING ANY IMPLIED WARRANTY OR CONDITION OF MERCHANTABILITY, SATISFACTORY QUALITY, FITNESS FOR A PARTICULAR PURPOSE, OR NONINFRINGEMENT. THE PROVIDERS MAKES NO REPRESENTATIONS, WARRANTIES, CONDITIONS OR GUARANTEES AS TO THE USEFULNESS QUALITY, SUITABILITY, TRUTH, ACCURACY OR COMPLETENESS OF MYDIARY.
 
-5.1 MyDiary does not transmit (and thus cannot store) any answers/information/data outside the boundaries of the storage accessed by the device.
+5.2 YOUR USE OF MYDIARY IS AT YOUR OWN DISCRETION AND RISK AND YOU ARE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR DEVICE, COMPUTER SYSTEM OR OTHER DEVICE OR LOSS OF DATA THAT RESULTS FROM SUCH USE.
 
-5.2 Upon clicking the submit answers button within MyDiary you will be presented with a dialog/popup informing you that the answers inputted into the current active/running MyDiary application instance, will be saved and submitted. After confirming the Submit answers dialog,  your answers will be compressed and saved/stored onto the external storage on your device under a folder named “MyDiary_data”. A request to open the Gmail client with this compressed file attached will then be subsequently performed. When you agree to this EULA you understand and accept that at this point (post confirmation of the Submit answers dialog) you are solely responsible for any action you choose to make regarding the answers that have been saved, and/or any other data: i.e. sending an email from third party applications (such as the Gmail). You also understand and agree that the Providers take no responsibility with regards to the process of actually transmitting any data, and that any data you do transmit is done so at your own risk.
-
-
-10. DISCLAIMER OF WARRANTIES
-
-10.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT YOUR USE OF MYDIARY IS AT YOUR SOLE RISK AND THAT MYDIARY IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND FROM THE PROVIDER.
-
-10.2 YOUR USE OF MYDIARY IS AT YOUR OWN DISCRETION AND RISK AND YOU ARE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR DEVICE, COMPUTER SYSTEM OR OTHER DEVICE OR LOSS OF DATA THAT RESULTS FROM SUCH USE.
-
-10.3 THE PROVIDERS FURTHER EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+5.3 THE PROVIDERS FURTHER EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
 
 
-11. LIMITATION OF LIABILITY
+6. LIMITATION OF LIABILITY
 
-11.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT THE PROVIDERS, ITS SUBSIDIARIES AND AFFILIATES, AND ITS LICENSORS SHALL NOT BE LIABLE TO YOU UNDER ANY THEORY OF LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES THAT MAY BE INCURRED BY YOU, INCLUDING ANY LOSS OF DATA, WHETHER OR NOT THE PROVIDERS OR ITS REPRESENTATIVES HAVE BEEN ADVISED OF OR SHOULD HAVE BEEN AWARE OF THE POSSIBILITY OF ANY SUCH LOSSES ARISING.
+6.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT THE PROVIDERS, ITS SUBSIDIARIES AND AFFILIATES, AND ITS LICENSORS SHALL NOT BE LIABLE TO YOU UNDER ANY THEORY OF LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES THAT MAY BE INCURRED BY YOU, INCLUDING ANY LOSS OF DATA, WHETHER OR NOT THE PROVIDERS OR ITS REPRESENTATIVES HAVE BEEN ADVISED OF OR SHOULD HAVE BEEN AWARE OF THE POSSIBILITY OF ANY SUCH LOSSES ARISING.
 
-12. Indemnification
+7. Indemnification
 
-12.1 To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless the Providers, its affiliates and their respective directors, officers, employees and agents from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing from (a) your use of the SDK, (b) any application you develop on the SDK that infringes any copyright, trademark, trade secret, trade dress, patent or other intellectual property right of any person or defames any person or violates their rights of publicity or privacy, and (c) any non-compliance by you with the License Agreement.
+7.1 To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless the Providers from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing from (a) your use of MyDiary and (b) any non-compliance by you with this EULA.
 
-13.0 Termination of Service
+8. Termination of Service
 
-13.1 You may discontinue the use of MyDiary at anytime by ceasing all activity with the service, and uninstalling MyDiary, (There is a setting option provided in MyDiary specifically for this use). Alternatively you can perform a manual uninstallation via at the provided interface on your device. This will also stop the daily reminders/notifications that are produced by MyDiary after the first time the application is run.
+8.1 You may discontinue the use of MyDiary at anytime by ceasing all activity with the service, and uninstalling MyDiary, (There is a setting option provided in MyDiary specifically for this use). Alternatively you can perform a manual uninstallation via at the provided interface on your device. This will also stop the daily reminders/notifications that are produced by MyDiary after the first time the application is run.
 
-13.2 When you agree to this EULA you understand and accept that the Researcher can revoke your status as a participant in the research at any point in time, and can inform you to terminate the use of MyDiary. At which point you must comply with the Researchers instructions to the maximum extent permitted by law regarding the termination of this service. (e.g. uninstall MyDiary)
+8.2 When you agree to this EULA you understand and accept that the Researcher can revoke your status as a participant in the research at any point in time, and can inform you to terminate the use of MyDiary. At which point you must comply with the Researchers instructions to the maximum extent permitted by law regarding the termination of this service. (e.g. uninstall MyDiary)
 
-13.3 When you agree to this EULA you understand and accept MyDiary has an expiration date of 2018-01-01, at which point MyDiary will no longer operate. You will be presented with a dialog with the option to exit the application, or uninstall the application. 
+8.3 When you agree to this EULA you understand and accept MyDiary has an expiration date of 2018-01-01, at which point MyDiary will no longer operate. You will be presented with a dialog with the option to exit the application, or uninstall the application. 
 

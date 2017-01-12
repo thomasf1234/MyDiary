@@ -39,14 +39,27 @@ public class ViewTermsAndConditionsDialog {
         alertDialogBuilder.setTitle("Privacy & Terms");
 
         List<String> sectionTitles = new ArrayList<>();
-        sectionTitles.add(activity.getResources().getString(R.string.eula_title));
-        sectionTitles.add(activity.getResources().getString(R.string.tos_title));
+        sectionTitles.add(activity.getResources().getString(R.string.introduction_title));
+        sectionTitles.add(activity.getResources().getString(R.string.accepting_the_eula_title));
+        sectionTitles.add(activity.getResources().getString(R.string.intellectual_property_rights_title));
+        sectionTitles.add(activity.getResources().getString(R.string.use_of_mydiary_by_you_title));
+        sectionTitles.add(activity.getResources().getString(R.string.disclaimer_of_warranties_title));
+        sectionTitles.add(activity.getResources().getString(R.string.limitation_of_liability_title));
+        sectionTitles.add(activity.getResources().getString(R.string.idemnification_title));
+        sectionTitles.add(activity.getResources().getString(R.string.termination_of_service_title));
         sectionTitles.add(activity.getResources().getString(R.string.privacy_policy_title));
 
         List<String> sectionDetails = new ArrayList<>();
-        sectionDetails.add(ViewTermsAndConditionsDialog.getTermsOfUse(activity));
-        sectionDetails.add("To be added...");
-        sectionDetails.add(ViewTermsAndConditionsDialog.getPrivacyPolicy(activity));
+
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "introduction.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "accepting_the_eula.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "intellectual_property_rights.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "use_of_mydiary_by_you.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "disclaimer_of_warranties.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "limitation_of_liability.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "idemnification.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "termination_of_service.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "privacy_policy.txt"));
 
         ExpandableListView myList = new ExpandableListView(activity);
         ExpandableListAdapter tosExpandableListViewAdapter = new TosExpandableListAdapter(activity, sectionTitles, sectionDetails);

@@ -1,0 +1,18 @@
+Copyright (C) 2017 Rachel Clare Spence.
+
+Last revised January, 2017 
+
+END-USER LICENSE AGREEMENT FOR THIS SOFTWARE APPLICATION KNOWN AS “MYDIARY”
+
+1.1. MyDiary Provides an interface that allows you to submit data to the researcher for the purposes of the research carried out by Rachel Clare Spence. Please read all sections of this END-USER LICENSE AGREEMENT carefully so you understand your use of the MyDiary application. If you do not or cannot agree to the terms of this Agreement, please uninstall this application.
+
+1.2 The following terms used throughout this END-USER LICENSE AGREEMENT are defined here for clarity:
+  (a) “EULA” means “END-USER LICENSE AGREEMENT”
+  (b) “Provider” means Rachel Clare Spence, and all contributors to the MyDiary application, and her research.
+  (c) “Researcher”  means Rachel Clare Spence
+  (d) “The Research” means the research that is being carried out by the Researcher.
+  (e) “MyDiary” means this application
+  (f) “current MyDiary instance” means the current active/running MyDiary application instance 
+  (f) “Device” means any Phone/Tablet/Computer that can be used to run MyDiary
+  (g) “Answer/s” means any of the following data that is specifically inputted into MyDiary through the interface supplied by MyDiary: images captured with the camera, images uploaded, audio recordings created, and textual answers written.
+  (h) the “Submit Answers Dialog” means the popup/dialog requesting confirmation to save the answers on the external storage of the device, and open the gmail client on the device with the answers attached.  

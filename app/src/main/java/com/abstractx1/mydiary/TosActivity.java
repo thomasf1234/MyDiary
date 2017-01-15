@@ -1,7 +1,6 @@
 package com.abstractx1.mydiary;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,8 +11,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.abstractx1.mydiary.adapters.TosExpandableListAdapter;
 import com.abstractx1.mydiary.dialogs.HelpDialog;
@@ -29,15 +26,9 @@ public class TosActivity extends MyDiaryActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(!isInDebugMode() && !GlobalApplicationValues.hasAcceptedTermsAndConditions(this)) {
-            GlobalApplicationValues.editResearcherEmailAddress(this, getString(R.string.default_researcher_email_address));
-        } else {
-            startActivity(new Intent(this, TitleActivity.class));
-            finish();
-        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tos);
-        setTitle("MyDiary Privacy & Terms");
+        setTitle("Privacy & Terms");
 
         tosExpandableListView = (ExpandableListView) findViewById(R.id.tosListView);
         acceptCheckBox = (CheckBox) findViewById(R.id.acceptTosCheckBox);

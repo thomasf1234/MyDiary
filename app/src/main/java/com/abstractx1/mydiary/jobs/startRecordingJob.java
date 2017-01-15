@@ -7,6 +7,7 @@ package com.abstractx1.mydiary.jobs;
 import android.Manifest;
 import android.support.v7.app.AppCompatActivity;
 
+import com.abstractx1.mydiary.Utilities;
 import com.abstractx1.mydiary.record.RecordHandler;
 import com.example.demo.job.PermissionJob;
 
@@ -27,7 +28,12 @@ public class StartRecordingJob extends PermissionJob {
 
     @Override
     public void perform() throws Exception {
-        recordHandler.transitionTo(RecordHandler.RECORDING);
+        try {
+            recordHandler.transitionTo(RecordHandler.RECORDING);
+        } catch (Exception e) {
+            recordHandler.transitionTo(RecordHandler.CANCELLED);
+            Utilities.alert(appCompatActivity, "We apologize, but the recording feature is not supported on this phone.");
+        }
     }
 
     @Override

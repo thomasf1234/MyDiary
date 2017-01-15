@@ -58,9 +58,11 @@ public class ScreenShotDialog {
                 imageView.getLayoutParams().width = imageWidth;
                 imageView.getLayoutParams().height = imageHeight;
 
-                imageView.setBackgroundColor(Color.DKGRAY);
+                imageView.setBackgroundColor(Color.LTGRAY);
                 if (Researcher.getInstance().hasImage()) {
                     imageView.setImageBitmap(Researcher.getInstance().getImage());
+                } else {
+                    imageView.setImageResource(android.R.drawable.ic_menu_gallery);
                 }
 
                 if (!activity.getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {

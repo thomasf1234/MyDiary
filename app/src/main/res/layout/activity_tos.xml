@@ -18,7 +18,7 @@
         android:layout_margin="5dp"
         android:padding="10dp"
         android:textSize="12sp"
-        android:text="Thank you for using MyDiary! To continue, please read the following sections carefully before accepting and agreeing to this agreement, and the terms and conditions."/>
+        android:text="To continue, please read the following sections carefully before accepting and agreeing to this agreement, and the terms and conditions."/>
 
     <ExpandableListView
         android:id="@+id/tosListView"

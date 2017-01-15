@@ -6,6 +6,8 @@ package com.abstractx1.mydiary.record;
 
 import android.media.MediaRecorder;
 
+import com.abstractx1.mydiary.MyDiaryApplication;
+
 import java.io.IOException;
 
 public class Microphone extends MediaRecorder {
@@ -20,9 +22,9 @@ public class Microphone extends MediaRecorder {
     }
 
     public void record() throws IOException {
-        setState(State.RECORDING);
         prepare();
         start();
+        setState(State.RECORDING);
     }
 
     public void finish() {

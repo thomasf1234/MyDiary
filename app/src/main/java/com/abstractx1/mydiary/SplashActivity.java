@@ -9,7 +9,7 @@ public class SplashActivity extends MyDiaryActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!GlobalApplicationValues.hasAcceptedTermsAndConditions(this)) {
+        if(!isInDebugMode() && !GlobalApplicationValues.hasAcceptedTermsAndConditions(this)) {
             startActivity(new Intent(this, WelcomeActivity.class));
         } else {
             startActivity(new Intent(this, TitleActivity.class));

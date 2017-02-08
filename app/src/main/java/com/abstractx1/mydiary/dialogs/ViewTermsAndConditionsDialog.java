@@ -55,7 +55,7 @@ public class ViewTermsAndConditionsDialog {
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "introduction.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "accepting_the_eula.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "intellectual_property_rights.txt"));
-        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "use_of_mydiary_by_you.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "use_of_myowndiary_by_you.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "disclaimer_of_warranties.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "limitation_of_liability.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "idemnification.txt"));

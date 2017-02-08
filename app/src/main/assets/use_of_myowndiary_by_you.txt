@@ -1,0 +1,28 @@
+4.1 You agree to use MyOwnDiary only for legal, and acceptable purposes that are permitted by the Researcher and agree to protect the Providers by using MyOwnDiary to gather information and/or submit answers that always exclude any data whatsoever which would a) violate, misappropriate, or infringe the rights of a subset, or all of the Providers, or others, including privacy, publicity, intellectual property, or other proprietary rights; b) potentially hold the Providers liable and/or at risk to legal consequences as a result of your actions; (c) are illegal, obscene, defamatory, threatening, intimidating, harassing, hateful, racially, or ethnically offensive, or instigate or encourage conduct that would be illegal, or otherwise inappropriate, including promoting violent crimes;  (d) make you appear to impersonate someone; An example of such data includes but is not limited to the following: images that are illegal to own, any illegal/criminal activity, direct debit account number(s) and/or sort code(s), credit card account details, personal information that is not relevant to the purposes of the research. 
+
+4.2 You will protect the privacy and legal rights of the Providers. This includes, but is not limited to: the email address of the Researcher, or any personal information gained about the Researcher. i.e. You will not distribute the email address of the Researcher to unauthorised person(s). If the Providers provide you with any personal information, you must provide legally adequate privacy notice and protection for them.
+
+4.3 You understand that the default email address of the researcher provided is the current confirmed and verified email address of the researcher at the time of writing the EULA (06-01-2017) but is potentially subject to change in the future. You agree that you will edit the email address used by MyOwnDiary via the “Researcher settings” menu option within MyOwnDiary, to a new email address supplied and authorised by the researcher in the event that the researcher makes this requirement known to you. You also understand and agree that the email address in the settings must not be changed to an email address other than the up to date email address currently approved by the Researcher. 
+
+The Researcher will give you notice in advance of any change to the email address. The changes to the email address will be notified to you by your preferred method of contact (e.g. email, phone, in-person).
+
+4.4 You agree that you are solely responsible for (and that the Providers have no responsibility to you or to any third party for) any data, content, or resources that you create, or display through MyOwnDiary, and for the consequences of your actions (including any loss or damage which the Providers may suffer) by doing so save as set out in the privacy policy section below.
+
+4.5 You agree that you are solely responsible for (and that the Providers have no responsibility to you or to any third party for) any breach of your obligations under the EULA, any applicable third party contract or Terms of Service, or any applicable law or regulation, and for the consequences (including any loss or damage which the Providers or any third party may suffer) of any such breach.
+
+4.6 The Researcher is giving you personally the right to use MyOwnDiary. You may not otherwise transfer MyOwnDiary to someone else, whether for money, for anything else or for free. If you sell any device on which MyOwnDiary is installed, you must remove MyOwnDiary from it.
+
+4.7 From time to time we may require you to update MyOwnDiary (which will be free of charge). This may for example be to improve performance, enhance functionality, reflect changes to the operating system or address security issues. You will be notified by the researcher if such a requirement arises.
+
+4.8 You agree that you will:
+
+  (i) not rent, lease, sub-license, loan, provide, or otherwise make available, MyOwnDiary in any form, in whole or in part to any person without prior written consent from us;
+
+  (ii) not copy MyOwnDiary;
+
+  (iii) not translate, merge, adapt, vary, alter or modify, the whole or any part of MyOwnDiary or any part of it to be combined with, or become incorporated in, any other programs;
+
+  (iv) not disassemble, de-compile, reverse engineer or create derivative works based on the whole or any part of MyOwnDiary nor attempt to do any such things, except to the extent that (by virtue of sections 50B and 296A of the Copyright, Designs and Patents Act 1988);
+
+  (v) comply with all applicable technology control or export laws and regulations that apply to the technology used or supported by the MyOwnDiary.
+ 

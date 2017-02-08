@@ -53,7 +53,7 @@ public class TosActivity extends MyDiaryActivity {
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "introduction.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "accepting_the_eula.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "intellectual_property_rights.txt"));
-        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "use_of_mydiary_by_you.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "use_of_myowndiary_by_you.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "disclaimer_of_warranties.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "limitation_of_liability.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "idemnification.txt"));

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyDiary</string>
+    <string name="app_name">MyOwnDiary</string>
     <string name="default_researcher_email_address">r.spence@liverpool.ac.uk</string>
     <string name="debug_dialog_title">Debug</string>
     <string name="screen_shot_dialog_title">Screen Shot Details</string>
@@ -22,7 +22,7 @@
     <string name="introduction_title">1. Introduction</string>
     <string name="accepting_the_eula_title">2. Accepting the EULA</string>
     <string name="intellectual_property_rights_title">3. Intellectual Property Rights</string>
-    <string name="use_of_mydiary_by_you_title">4. Use of MyDiary by You</string>
+    <string name="use_of_mydiary_by_you_title">4. Use of MyOwnDiary by You</string>
     <string name="disclaimer_of_warranties_title">5. DISCLAIMER OF WARRANTIES</string>
     <string name="limitation_of_liability_title">6. LIMITATION OF LIABILITY</string>
     <string name="idemnification_title">7. Indemnification</string>

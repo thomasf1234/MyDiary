@@ -1,10 +1,10 @@
-9.1 MyDiary does not transmit (and thus cannot store) any answers/information/data outside the boundaries of the storage accessed by the device.
+9.1 MyOwnDiary does not transmit (and thus cannot store) any answers/information/data outside the boundaries of the storage accessed by the device.
 
-9.2 Upon clicking the submit answers button within MyDiary you will be presented with a dialog/popup informing you that the answers inputted into the current active/running MyDiary application instance, will be saved and submitted. After confirming the Submit answers dialog,  your answers will be compressed and saved/stored onto the external storage on your device under a folder named “MyDiary_data”. A request to open the Gmail client with this compressed file attached will then be subsequently performed. When you agree to this EULA you understand and accept that at this point (post confirmation of the Submit answers dialog) you are solely responsible for any action you choose to make regarding the answers that have been saved, and/or any other data: i.e. sending an email from third party applications (such as the Gmail). You also understand and agree that the Providers take no responsibility with regards to the process of actually transmitting any data, and that any data you do transmit is done so at your own risk. Please be aware that internet transmissions are never completely private or secure and that any message or information you send using email may be read or intercepted by others, even if there is a special notice that a particular transmission is encrypted.  We are not liable for any such interception.
+9.2 Upon clicking the submit answers button within MyOwnDiary you will be presented with a dialog/popup informing you that the answers inputted into the current active/running MyOwnDiary application instance, will be saved and submitted. After confirming the Submit answers dialog,  your answers will be compressed and saved/stored onto the external storage on your device under a folder named “MyOwnDiary_data”. A request to open the Gmail client with this compressed file attached will then be subsequently performed. When you agree to this EULA you understand and accept that at this point (post confirmation of the Submit answers dialog) you are solely responsible for any action you choose to make regarding the answers that have been saved, and/or any other data: i.e. sending an email from third party applications (such as the Gmail). You also understand and agree that the Providers take no responsibility with regards to the process of actually transmitting any data, and that any data you do transmit is done so at your own risk. Please be aware that internet transmissions are never completely private or secure and that any message or information you send using email may be read or intercepted by others, even if there is a special notice that a particular transmission is encrypted.  We are not liable for any such interception.
 
-9.3 Please read this Privacy Policy carefully and ensure that you understand it. Your acceptance of the Privacy Policy is deemed to occur upon your first use of MyDiary.
+9.3 Please read this Privacy Policy carefully and ensure that you understand it. Your acceptance of the Privacy Policy is deemed to occur upon your first use of MyOwnDiary.
 
-This Privacy Policy applies only to your use of MyDiary..
+This Privacy Policy applies only to your use of MyOwnDiary..
 
 We may collect some or all of the following data:
   (i) [name;]
@@ -13,7 +13,7 @@ We may collect some or all of the following data:
 
 All personal data is stored securely in accordance with the principles of the Data Protection Act 1998.
 
-We use your data to: Providing and managing your access to MyDiary; Responding to communications from you; and Research.
+We use your data to: Providing and managing your access to MyOwnDiary; Responding to communications from you; and Research.
 
 We only keep your data for as long as we need to in order to use it as described above, and/or for as long as We have your permission to keep it.
 
@@ -25,6 +25,6 @@ In certain circumstances the Provider may be legally required to share certain d
 
 You have the legal right to ask for a copy of any of your personal data held by us (where such data is held) on payment of a small fee which will not exceed £15.00. Please contact us for more details at r.spence@liverpool.ac.uk.
 
-If you have any questions or complaints regarding MyDiary, please email us at r.spence@liverpool.ac.uk.
+If you have any questions or complaints regarding MyOwnDiary, please email us at r.spence@liverpool.ac.uk.
 
-The Provider may change this Privacy Policy as we may deem necessary from time to time, or as may be required by law. Any changes will be immediately posted on MyDiary and you will be deemed to have accepted the terms of the Privacy Policy on your first use of MyDiary following the alterations. You will be notified if such an event arises which will require an app update.
+The Provider may change this Privacy Policy as we may deem necessary from time to time, or as may be required by law. Any changes will be immediately posted on MyOwnDiary and you will be deemed to have accepted the terms of the Privacy Policy on your first use of MyOwnDiary following the alterations. You will be notified if such an event arises which will require an app update.

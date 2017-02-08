@@ -1,3 +1,3 @@
 8.1 You may discontinue the use of MyOwnDiary at anytime by ceasing all activity with the service, and uninstalling MyOwnDiary, (There is a setting option provided in MyOwnDiary specifically for this use). Alternatively you can perform a manual uninstallation via at the provided interface on your device. This will also stop the daily reminders/notifications that are produced by MyOwnDiary after the first time the application is run.
 
-8.2 When you agree to this EULA you understand and accept MyOwnDiary has an expiration date of 2018-01-01, at which point MyOwnDiary will no longer operate. You will be presented with a dialog with the option to exit the application, or uninstall the application.
+8.2 When you agree to this EULA you understand and accept MyOwnDiary has an expiration date of 2019-09-30, at which point MyOwnDiary should no longer operate. You should be presented with a dialog with the option to exit the application, or uninstall the application.

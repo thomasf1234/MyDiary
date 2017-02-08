@@ -108,7 +108,7 @@ public class MyDiaryApplication extends Application {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        Date expiry_date = dateFormat.parse("2018/01/01 00:00:00");
+        Date expiry_date = dateFormat.parse("2019/09/30 00:00:00");
 
         if (currentTime().after(expiry_date)) {
             expired = true;

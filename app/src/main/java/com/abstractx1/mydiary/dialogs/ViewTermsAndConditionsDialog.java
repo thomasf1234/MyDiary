@@ -48,6 +48,7 @@ public class ViewTermsAndConditionsDialog {
         sectionTitles.add(activity.getResources().getString(R.string.idemnification_title));
         sectionTitles.add(activity.getResources().getString(R.string.termination_of_service_title));
         sectionTitles.add(activity.getResources().getString(R.string.privacy_policy_title));
+        sectionTitles.add(activity.getResources().getString(R.string.general_title));
 
         List<String> sectionDetails = new ArrayList<>();
 
@@ -60,6 +61,7 @@ public class ViewTermsAndConditionsDialog {
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "idemnification.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "termination_of_service.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "privacy_policy.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(activity, "general.txt"));
 
         ExpandableListView myList = new ExpandableListView(activity);
         ExpandableListAdapter tosExpandableListViewAdapter = new TosExpandableListAdapter(activity, sectionTitles, sectionDetails);

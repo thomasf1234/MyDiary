@@ -46,6 +46,7 @@ public class TosActivity extends MyDiaryActivity {
         sectionTitles.add(getResources().getString(R.string.idemnification_title));
         sectionTitles.add(getResources().getString(R.string.termination_of_service_title));
         sectionTitles.add(getResources().getString(R.string.privacy_policy_title));
+        sectionTitles.add(getResources().getString(R.string.general_title));
 
         List<String> sectionDetails = new ArrayList<>();
 
@@ -58,6 +59,7 @@ public class TosActivity extends MyDiaryActivity {
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "idemnification.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "termination_of_service.txt"));
         sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "privacy_policy.txt"));
+        sectionDetails.add(ViewTermsAndConditionsDialog.getTxtFileString(this, "general.txt"));
 
 
         ExpandableListAdapter tosExpandableListViewAdapter = new TosExpandableListAdapter(this, sectionTitles, sectionDetails);

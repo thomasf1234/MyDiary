@@ -4,7 +4,7 @@ Last revised January, 2017
 
 END-USER LICENSE AGREEMENT FOR THIS SOFTWARE APPLICATION KNOWN AS “MYDIARY”
 
-1.1. MyDiary Provides an interface that allows you to submit data to the researcher for the purposes of the research carried out by Rachel Clare Spence. Please read all sections of this END-USER LICENSE AGREEMENT carefully so you understand your use of the MyDiary application. If you do not or cannot agree to the terms of this Agreement, please uninstall this application.
+1.1. MyDiary Provides an interface that allows you to submit data to the researcher for the purposes of the research carried out by Rachel Clare Spence at the University of Liverpool. Please read all sections of this END-USER LICENSE AGREEMENT carefully so you understand your use of the MyDiary application. If you do not or cannot agree to the terms of this Agreement, please uninstall this application.
 
 1.2 The following terms used throughout this END-USER LICENSE AGREEMENT are defined here for clarity:
   (a) “EULA” means “END-USER LICENSE AGREEMENT”

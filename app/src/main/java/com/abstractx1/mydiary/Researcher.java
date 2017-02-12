@@ -35,6 +35,20 @@ public class Researcher {
         return dataCollections;
     }
 
+    public int getQuestionCount() { return dataCollections.size(); }
+
+    public int getAnsweredQuestionsCount() {
+        int count = 0;
+
+        for (DataCollection dataCollection : dataCollections) {
+            if (dataCollection.hasAnswer() || dataCollection.hasRecording()) {
+                ++count;
+            }
+        }
+
+        return count;
+    }
+
     public DataCollection getDataCollection(int questionNumber) {
         for (DataCollection dataCollection : dataCollections) {
             if (dataCollection.getQuestionNumber() == questionNumber) {

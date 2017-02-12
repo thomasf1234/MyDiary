@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.abstractx1.mydiary.GlobalApplicationValues;
 import com.abstractx1.mydiary.MyDiaryActivity;
 import com.abstractx1.mydiary.R;
+import com.abstractx1.mydiary.Researcher;
 import com.abstractx1.mydiary.jobs.SendDataJob;
 
 
@@ -28,7 +29,7 @@ public class SendDialog {
 
         View view = inflater.inflate(R.layout.help_dialog, null);
         TextView messageTextView = (TextView) view.findViewById(R.id.helpMessageTextView);
-        String message = "Do you wish to save your answers on your device, and open your Gmail client with the answers attached, enabling you to submit your answers to the researcher? (It is advisable to be connected to wi-fi due to file size)";
+        String message = String.format("Do you wish to save your %d/%d answered questions on your device, and open your Gmail client with the answers attached, enabling you to submit your answers to the researcher? (It is advisable to be connected to wi-fi due to file size)", Researcher.getInstance().getAnsweredQuestionsCount(), Researcher.getInstance().getQuestionCount());
 
         messageTextView.setText(message);
         alertDialogBuilder.setTitle("Submit Answers");

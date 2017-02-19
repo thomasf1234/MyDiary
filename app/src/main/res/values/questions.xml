@@ -1,11 +1,10 @@
 <resources>
     <string-array name="questions">
-        <item>How was your day today? (I.e: Did you have a positive or not so positive day, and why? How have you generally been feeling today and why?)</item>
-        <item>How has your day impacted your use of technology(s)? (I.e: Why did you interact with specific applications and/or wearable devices more or less than other days? For example, as a result of: what you did or did not do during the day; how you were feeling; anything you saw, and anything you heard)</item>
-        <item>If you used your application(s) and/or wearable device(s) today, how have you interacted with specific features and how often? Why did you interact with these features?</item>
-        <item>How has using the features of your application(s) and/or wearable device(s) impacted your feelings and thoughts today? (I.e: tell me about any positive, not so positive, and/or unanticipated feelings or thoughts you had during, and after, each interaction with your technology and why; and whether you wish to keep engaging with features interacted with, and why/why not)</item>
-        <item>With regards to what you felt and/or thought from using the technology, in what ways did this impact your actions? Why? (I.e: please be specific about how this impacted you to do or not do something in order to feel a certain way and/or satisfy needs/wants/urges)</item>
-        <item>Have you interacted with anything else or anybody else to serve your health and wellbeing interests today? Why/why not?</item>
-        <item>Any additional thoughts?</item>
+        <item>How was your day today? (I.e: did you have a positive or not so positive day, and why? How have you generally been feeling today and why?)</item>
+        <item>Did you use your application(s) and/or wearable device(s) today? If so, please be detailed about what technology(s) and specific features were interacted with; how often; why you interacted with these features; and why you interacted with these features more or less than other days. If not, please be detailed about why not.</item>
+        <item>How has using or not using your technology(s) impacted your feelings and thoughts today? (I.e: Tell me what positive, not so positive, mixed, and/or unanticipated feelings or thoughts you had during, and after, interacting with features of your technology(s); any feelings and/or thoughts you had from not interacting with features of your technology(s); and why you felt and/or thought this way)</item>
+        <item>With regards to what you felt and/or thought from using or not using your technology(s), in what ways did this impact you to do, or not do something, in order to feel a certain way, and/or satisfy needs/wants/urges?</item>
+        <item>Have you interacted with anything else or anybody else to serve your health and wellbeing interests today? If so, please tell me why, and how this impacted you. If not, then why not?</item>
+        <item>Please use this space to add any other comments that you think may be relevant</item>
     </string-array>
 </resources>

@@ -72,14 +72,14 @@ public class SendDataJob extends PermissionJob {
                 filePaths[i] = files.get(i).getAbsolutePath();
             }
             /** Closing the writer object */
-            String subject = "MyDiary entry";
+            String subject = "MyOwnDiary entry";
 
-            File externalDir = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDiary_data");
+            File externalDir = new File(Environment.getExternalStorageDirectory() + File.separator + "MyOwnDiary_data");
             if (!(externalDir.exists() && externalDir.isDirectory())) {
                 externalDir.mkdir();
             }
 
-            String zipPath = externalDir.getAbsolutePath() + File.separator + Utilities.getDateTime() + "-MyDiary.zip";
+            String zipPath = externalDir.getAbsolutePath() + File.separator + Utilities.getDateTime() + "-MyOwnDiary.zip";
             new Compress(filePaths, zipPath).zip();
             if (!new File(zipPath).exists()) {
                 throw new RuntimeException("Compressed file not created");

@@ -2,8 +2,8 @@
     <string-array name="questions">
         <item>How was your day today? (I.e: did you have a positive or not so positive day, and why? How have you generally been feeling today and why?)</item>
         <item>Have you used your application(s) and/or wearable device(s) today? If so, please be detailed about: what technology(s) and specific features were interacted with; when and how often; why you interacted with these features; and why you interacted with these features more or less than other days. If not, please be detailed about why not</item>
-        <item>How has using or not using your technology(s) impacted your feelings and thoughts today? (I.e: Tell me what positive, not so positive, mixed, and/or unanticipated feelings or thoughts you had during, and after, interacting with features of your technology(s); any feelings and/or thoughts you had from not interacting with features of your technology(s); and why you felt and/or thought this way)</item>
-        <item>With regards to what you felt and/or thought from using or not using your technology(s), in what ways did this impact you to do, or not do something, in order to feel a certain way, and/or satisfy needs/wants/urges?</item>
+        <item>How has using or not using your technology(s) impacted your feelings and thoughts today? (I.e: please tell me what positive, not so positive, mixed, and/or unanticipated feelings or thoughts you had during, and after, interacting with features of your technology(s); any feelings and/or thoughts you had from not interacting with features of your technology(s); and why you felt and/or thought this way)</item>
+        <item>Following on from the previous question, in what ways did such feelings/thoughts influence your actions, in order to feel a certain way and/or satisfy needs/wants/urges?</item>
         <item>Have you interacted with anything else or anybody else to serve your health and wellbeing interests today? If so, please tell me why, and how this impacted you.</item>
         <item>Please use this space to add any other comments that you think may be relevant</item>
     </string-array>
